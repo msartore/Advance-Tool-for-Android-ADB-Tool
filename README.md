@@ -20,6 +20,7 @@ ATA Tool V 0.2  Features:
 - Emulate device (Resize Screen) 
 - Emulate device (Change Density) 
 - Reset (Emulate device)  
+
 You must put this batch file in the adb folder to make it works 
 
 PS : I am not responsible for bricked devices use Fastboot Flasher, Build Prop editor and sideload at your own risks ! 

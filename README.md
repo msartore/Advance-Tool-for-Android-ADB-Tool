@@ -1,6 +1,6 @@
 # Advance-Tool-for-Android
 Hello dear developpers,I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
-ATA Tool V 0.1  Features: 
+ATA Tool V 0.2  Features: 
 - UNLOCK BOOTLOADER  
 - FORMAT DATA PARTITION (EXT4) 
 - FORMAT DATA PARTITION (F2FS)  

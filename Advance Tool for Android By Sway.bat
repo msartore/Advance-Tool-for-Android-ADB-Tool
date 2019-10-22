@@ -7,7 +7,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.3              ::
+ECHO  	:: ATA Tool V0.4              ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::
@@ -19,12 +19,20 @@ echo a >> settings.txt
 :prelaunch
 for /f %%a in (settings.txt) do (
 if %%a==827361536237637183256253671867278168 (
-goto :menu
+goto :devicecheck
 ) else (
 goto :disclaimer
 )
 )
 
+:devicecheck
+set dinfb=1
+set dinos=1
+echo Loading...
+fastboot devices >nul
+adb devices >nul
+)
+goto :menu
 
 :disclaimer
 echo *** Disclaimer ***
@@ -38,7 +46,7 @@ SET inputd=827361536237637183256253671867278168
 set inputd=546s578eehds7s6553445401x
 )
 echo %inputd% > settings.txt
-if %inputd%==827361536237637183256253671867278168 goto menu
+if %inputd%==827361536237637183256253671867278168 goto :devicecheck
 if %inputd%==546s578eehds7s6553445401x exit
 
 
@@ -47,12 +55,9 @@ cls
 echo ========================================================
 echo DEVICE INFO
 echo ========================================================
-echo Device in Fastboot mode:
-fastboot devices 
-echo.
-adb devices
-echo Device Version: 
-adb shell getprop ro.build.version.release
+if %dinos%==1 adb devices 2>nul && fastboot devices 2>nul && echo Device version: && adb shell getprop ro.build.version.release 2>nul
+if %dinfb%==0 echo no devices connected in fastboot mode
+if %dinos%==0 echo no devices connected
 echo ========================================================
 echo MAIN MENU
 echo ========================================================
@@ -76,7 +81,8 @@ if %inputmm%==0 exit
 :menubootloader
 cls
 echo ========================================================
-echo.
+echo BOOTLOADER/FASTBOOT MENU
+echo ========================================================
 echo What do you want to do?
 echo.
 echo 1) UNLOCK BOOTLOADER
@@ -96,14 +102,13 @@ echo.
 echo 8) Boot into ROM
 echo.
 echo 9) Boot into recovery
-echo.
 echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
 SET /P inputmb=Please Select:
 
-if %inputmb%==0 goto menu
+if %inputmb%==0 goto :devicecheck
 
 if %inputmb%==1 fastboot oem device-info && fastboot oem unlock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
 
@@ -119,9 +124,9 @@ if %inputmb%==6 SET /P rom=Write rom path like (/path/to/your/Rom.zip) && fastbo
 
 if %inputmb%==7 fastboot devices
 
-if %inputmb%==8 fastboot reboot
+if %inputmb%==8 echo Loading... && echo Loading... && fastboot reboot
 
-if %inputmb%==9 fastboot reboot recovery
+if %inputmb%==9 echo Loading... && echo Loading... && echo Loading... && fastboot reboot recovery && goto :menurecovery
 
 pause
 goto menubootloader
@@ -131,7 +136,8 @@ goto menubootloader
 :menusystem
 cls
 echo ========================================================
-echo.
+echo SYSTEM MENU
+echo ========================================================
 echo What do you want to do?
 echo.
 echo 1) REBOOT SMARTPHONE
@@ -153,20 +159,19 @@ echo.
 echo 9) Emulate device (Change Density)
 echo.
 echo 10) Reset (Emulate device)
-echo.
 echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
 SET /P inputmb=Please Select:
 
-if %inputmb%==0 goto menu
+if %inputmb%==0 goto :devicecheck
 
-if %inputmb%==1 adb reboot
+if %inputmb%==1 echo Loading... && adb reboot
 
-if %inputmb%==2 adb reboot recovery
+if %inputmb%==2 echo Loading... && adb reboot recovery && goto :menurecovery
 
-if %inputmb%==3 adb reboot-bootloader
+if %inputmb%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
 
 if %inputmb%==4 adb devices
 
@@ -188,18 +193,18 @@ goto menusystem
 :menurecovery
 cls
 echo ========================================================
-echo.
+echo RECOVERY MENU
+echo ========================================================
 echo What do you want to do?
 echo.
 echo 1) Sideload a zip
-echo.
 echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
 SET /P inputmb=Please Select:
 
-if %inputmb%==0 goto menu
+if %inputmb%==0 goto :devicecheck
 
 if %inputmb%==1 SET /P slzip=Write the zip name like (name.zip) && adb sideload %slzip%
 pause

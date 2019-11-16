@@ -1,13 +1,13 @@
 @echo off
 TITLE ATA Tool by Sway
-
+color 07
 ECHO      ######  ##               ##    ######  ##   ##
 ECHO     ##       ##   ###  ###   ##   ##   ##   ## ##
 ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.4              ::
+ECHO  	:: ATA Tool V0.4.1            ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::
@@ -18,7 +18,7 @@ echo a >> settings.txt
 
 :prelaunch
 for /f %%a in (settings.txt) do (
-if %%a==827361536237637183256253671867278168 (
+if %%a==4920617070726f7665 (
 goto :devicecheck
 ) else (
 goto :disclaimer
@@ -41,17 +41,18 @@ echo You have been warned, Do you accept? (Y/N)
 echo.
 SET /P inputd=Please Select:
 if %inputd%==Y (
-SET inputd=827361536237637183256253671867278168
+SET inputd=4920617070726f7665
 ) else (
 set inputd=546s578eehds7s6553445401x
 )
 echo %inputd% > settings.txt
-if %inputd%==827361536237637183256253671867278168 goto :devicecheck
+if %inputd%==4920617070726f7665 goto :devicecheck
 if %inputd%==546s578eehds7s6553445401x exit
 
 
 :menu
 cls
+color 07
 echo ========================================================
 echo DEVICE INFO
 echo ========================================================
@@ -66,6 +67,8 @@ echo.
 echo 2.  Recovery Commands (Sideload)
 echo.
 echo 3.  System Commands
+echo.
+echo 4.  Credits
 echo ========================================================
 echo 0) EXIT
 echo ========================================================
@@ -75,6 +78,7 @@ SET /P inputmm=Please Select:
 if %inputmm%==1 goto menubootloader
 if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
+if %inputmm%==4 goto credits
 if %inputmm%==0 exit
 
 
@@ -209,3 +213,37 @@ if %inputmb%==0 goto :devicecheck
 if %inputmb%==1 SET /P slzip=Write the zip name like (name.zip) && adb sideload %slzip%
 pause
 goto menurecovery
+
+:credits
+cls
+color 0A
+ECHO      ######  ##               ##    ######  ##   ##
+ECHO     ##       ##   ###  ###   ##   ##   ##   ## ##
+ECHO     ######   ##   ##  ##   ##    #######    ###
+ECHO       ##     ##   ####   ##    ##   ##     ##
+ECHO  ######      #####  #####    ##   ##     ##
+ECHO 	::::::::::::::::::::::::::::::::
+ECHO  	:: ATA Tool V0.4.1            ::
+ECHO  	:: adb and fastboot tool      ::
+ECHO  	:: Created By Sway	      ::
+ECHO  	:: Copyright 2019 Sway	      ::
+ECHO  	::::::::::::::::::::::::::::::::
+echo ========================================================
+echo CREDITS MENU
+echo ========================================================
+echo What do you want to do?
+echo.
+echo 1) Github
+echo.
+echo 2) Twitter
+echo ========================================================
+echo 0) EXIT
+echo ========================================================
+echo.
+SET /P inputmb=Please Select:
+
+if %inputmb%==0 goto :devicecheck
+
+if %inputmb%==1  start "" https://github.com/SwayWasTaken
+
+if %inputmb%==2  start "" https://twitter.com/SWayWasTaken

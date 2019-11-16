@@ -244,6 +244,6 @@ SET /P inputmb=Please Select:
 
 if %inputmb%==0 goto :devicecheck
 
-if %inputmb%==1  start "" https://github.com/SwayWasTaken
+if %inputmb%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 
 if %inputmb%==2  start "" https://twitter.com/SWayWasTaken

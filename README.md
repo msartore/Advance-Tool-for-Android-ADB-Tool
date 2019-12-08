@@ -1,6 +1,9 @@
 # Advance-Tool-for-Android
 Hello dear developers,I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
-ATA Tool V0.4.1  Features: 
+
+ATA Tool V0.4.1  
+
+Features: 
 - UNLOCK BOOTLOADER  
 - FORMAT DATA PARTITION (EXT4) 
 - FORMAT DATA PARTITION (F2FS)  
@@ -22,5 +25,3 @@ ATA Tool V0.4.1  Features:
 - Reset (Emulate device)  
 
 You must put this batch file in the adb folder to make it works 
-
-

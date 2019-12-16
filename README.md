@@ -1,7 +1,7 @@
 # Advance-Tool-for-Android
 Hello dear developers,I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
 
-ATA Tool V0.4.1  
+ATA Tool V0.5
 
 Features: 
 - UNLOCK BOOTLOADER  
@@ -23,5 +23,7 @@ Features:
 - Emulate device (Resize Screen) 
 - Emulate device (Change Density) 
 - Reset (Emulate device)  
+- Screen Recording
+- Smarthphone Status
 
 You must put this batch file in the adb folder to make it works 

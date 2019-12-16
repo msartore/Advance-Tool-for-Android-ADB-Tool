@@ -1,3 +1,4 @@
+
 @echo off
 TITLE ATA Tool by Sway
 color 07
@@ -19,20 +20,62 @@ echo a >> settings.txt
 :prelaunch
 for /f %%a in (settings.txt) do (
 if %%a==4920617070726f7665 (
-goto :devicecheck
+goto :adblaunch
 ) else (
 goto :disclaimer
 )
 )
 
-:devicecheck
+:adblaunch
 set dinfb=1
 set dinos=1
 echo Loading...
 fastboot devices >nul
 adb devices >nul
-)
-goto :menu
+cls
+goto :devicecheck
+
+:devicecheck
+set "ten=10"
+set "nine=9"
+set "eight_1=8.1.0"
+set "eight=8"
+set "seven=7"
+set "seven_1_2=7.1.2"
+set "seven_1_1=7.1.1"
+set "seven_1=7.1"
+set "six=6.0"
+set "six_0_1=6.0.1"
+set "five=5"
+set "five5_0_2=5.0.2"
+set "five5_1=5.1"
+set "five5_0_1=5.0.1"
+set "five5_1_1=5.1.1"
+for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
+echo %version%
+if "%ten%" == "%version%" goto :menu
+if "%nine%" == "%version%" goto :menu
+if "%eight_1%" == "%version%" goto :menu
+if "%eight%" == "%version%" goto :menu
+if "%seven%" == "%version%" goto :menu
+if "%seven_1_2%" == "%version%" goto :menu
+if "%seven_1_1%" == "%version%" goto :menu
+if "%seven_1_2%" == "%version%" goto :menu
+if "%six%" == "%version%" goto :menu
+if "%six_0_1%" == "%version%" goto :menu
+if "%five%" == "%version%" goto :menu
+if "%five5_0_2%" == "%version%" goto :menu
+if "%five5_1%" == "%version%" goto :menu
+if "%five5_0_1%" == "%version%" goto :menu
+if "%five5_1_1%" == "%version%" goto :menu
+goto :devicenotfound
+
+:devicenotfound
+echo try to reconnect the device or able the usb debugging in your settings
+echo after that press forward
+pause
+cls
+goto :devicecheck
 
 :disclaimer
 echo *** Disclaimer ***
@@ -56,7 +99,7 @@ color 07
 echo ========================================================
 echo DEVICE INFO
 echo ========================================================
-if %dinos%==1 adb devices 2>nul && fastboot devices 2>nul && echo Device version: && adb shell getprop ro.build.version.release 2>nul
+if %dinos%==1 adb devices -l 2>nul && fastboot devices 2>nul && echo Device version: && adb shell getprop ro.build.version.release 2>nul 
 if %dinfb%==0 echo no devices connected in fastboot mode
 if %dinos%==0 echo no devices connected
 echo ========================================================
@@ -128,9 +171,9 @@ if %inputmb%==6 SET /P rom=Write rom path like (/path/to/your/Rom.zip) && fastbo
 
 if %inputmb%==7 fastboot devices
 
-if %inputmb%==8 echo Loading... && echo Loading... && fastboot reboot
+if %inputmb%==8 echo Loading. && echo Loading.. && fastboot reboot >nul && echo Loading... && goto :menubootloader
 
-if %inputmb%==9 echo Loading... && echo Loading... && echo Loading... && fastboot reboot recovery && goto :menurecovery
+if %inputmb%==9 echo Loading. && echo Loading.. && fastboot reboot recovery >nul && echo Loading... && goto :menurecovery
 
 pause
 goto menubootloader
@@ -163,6 +206,12 @@ echo.
 echo 9) Emulate device (Change Density)
 echo.
 echo 10) Reset (Emulate device)
+echo.
+echo 11) Change system info (NOT WORKING YET)
+echo.
+echo 12) Screen Recording 
+echo. 
+echo 13) SMARTPHONE Status
 echo ========================================================
 echo 0) EXIT
 echo ========================================================
@@ -171,7 +220,7 @@ SET /P inputmb=Please Select:
 
 if %inputmb%==0 goto :devicecheck
 
-if %inputmb%==1 echo Loading... && adb reboot
+if %inputmb%==1 cls && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
 
 if %inputmb%==2 echo Loading... && adb reboot recovery && goto :menurecovery
 
@@ -190,8 +239,28 @@ if %inputmb%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb s
 if %inputmb%==9 SET /P sd=Write the density of the screen like (288) && adb shell wm density %sd%
 
 if %inputmb%==10 adb shell wm size reset && adb shell wm density reset
+
+if %inputmb%==11 goto changesystemsettings  
+
+if %inputmb%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
+
+if %inputmb%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
+
 pause
 goto menusystem
+
+
+:changesystemsettings
+cls
+echo This process can cause damage to your SMARTPHONE
+echo Select 1 to pull the build prop to C:/ folder, after the pull you can change your 
+echo System info. After the change save it and Select 2
+SET /P inputcss=Please Select 
+if %inputcss%==0 goto menusystem
+if %inputcss%==1 adb pull /system/build.prop "build.prop" 
+if %inputcss%==2 
+pause
+goto changesystemsettings
 
 
 :menurecovery

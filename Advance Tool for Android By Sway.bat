@@ -52,7 +52,6 @@ set "five5_1=5.1"
 set "five5_0_1=5.0.1"
 set "five5_1_1=5.1.1"
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
-echo %version%
 if "%ten%" == "%version%" goto :menu
 if "%nine%" == "%version%" goto :menu
 if "%eight_1%" == "%version%" goto :menu

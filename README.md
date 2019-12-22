@@ -26,9 +26,6 @@ Features:
 - Screen Recording
 - Smarthphone Status
 
-You must put this batch file in the adb folder to make it works 
-
-
 # Precondition
 
 - adb installed and in execution path

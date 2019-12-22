@@ -71,7 +71,7 @@ if "%five5_1_1%" == "%version%" goto :menu
 goto :devicenotfound
 
 :devicenotfound
-echo try to reconnect the device or able the usb debugging in your settings
+echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press forward
 pause
 cls

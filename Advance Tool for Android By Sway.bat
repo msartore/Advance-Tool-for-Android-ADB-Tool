@@ -1,4 +1,3 @@
-
 @echo off
 TITLE ATA Tool by Sway
 color 07

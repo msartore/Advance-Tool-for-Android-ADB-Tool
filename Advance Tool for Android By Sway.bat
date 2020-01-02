@@ -7,7 +7,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.1            ::
+ECHO  	:: ATA Tool V0.5              ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::
@@ -35,38 +35,12 @@ cls
 goto :devicecheck
 
 :devicecheck
-set "ten=10"
-set "nine=9"
-set "eight_1=8.1.0"
-set "eight=8"
-set "seven=7.0"
-set "seven_1_2=7.1.2"
-set "seven_1_1=7.1.1"
-set "seven_1=7.1"
-set "six=6.0"
-set "six_0_1=6.0.1"
-set "five=5"
-set "five5_0_2=5.0.2"
-set "five5_1=5.1"
-set "five5_0_1=5.0.1"
-set "five5_1_1=5.1.1"
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
-if "%ten%" == "%version%" goto :menu
-if "%nine%" == "%version%" goto :menu
-if "%eight_1%" == "%version%" goto :menu
-if "%eight%" == "%version%" goto :menu
-if "%seven%" == "%version%" goto :menu
-if "%seven_1_2%" == "%version%" goto :menu
-if "%seven_1_1%" == "%version%" goto :menu
-if "%seven_1_2%" == "%version%" goto :menu
-if "%six%" == "%version%" goto :menu
-if "%six_0_1%" == "%version%" goto :menu
-if "%five%" == "%version%" goto :menu
-if "%five5_0_2%" == "%version%" goto :menu
-if "%five5_1%" == "%version%" goto :menu
-if "%five5_0_1%" == "%version%" goto :menu
-if "%five5_1_1%" == "%version%" goto :menu
-goto :devicenotfound
+if /I "%version%" GEQ "1" (
+    goto :menu 
+) else ( 
+    goto :devicenotfound
+)
 
 :devicenotfound
 echo try to reconnect the device or enable the usb debugging in your settings
@@ -321,7 +295,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.1            ::
+ECHO  	:: ATA Tool V0.4.1            ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::

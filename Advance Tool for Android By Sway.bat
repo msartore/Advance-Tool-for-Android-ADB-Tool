@@ -7,7 +7,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.1            ::
+ECHO  	:: ATA Tool V0.5.2            ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::
@@ -295,7 +295,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.1            ::
+ECHO  	:: ATA Tool V0.5.2            ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::

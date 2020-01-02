@@ -130,7 +130,7 @@ echo BOOTLOADER/FASTBOOT MENU
 echo ========================================================
 echo What do you want to do?
 echo.
-echo 1) UNLOCK BOOTLOADER
+echo 1) UNLOCK/LOCK BOOTLOADER 
 echo.
 echo 2) FORMAT DATA PARTITION (EXT4)
 echo.
@@ -155,7 +155,7 @@ SET /P inputmb=Please Select:
 
 if %inputmb%==0 goto :devicecheck
 
-if %inputmb%==1 fastboot oem device-info && fastboot oem unlock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+if %inputmb%==1 goto :menubootloaderunlock
 
 if %inputmb%==2 fastboot format:ext4 userdata
 
@@ -176,7 +176,38 @@ if %inputmb%==9 echo Loading. && echo Loading.. && fastboot reboot recovery >nul
 pause
 goto menubootloader
 
+:menubootloaderunlock
+cls
+echo ========================================================
+echo BOOTLOADER UNLOCK/LOCK MENU
+echo ========================================================
+echo What do you want to do?
+echo.
+echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
+echo.
+echo 2) UNLOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
+echo.
+echo 4) LOCK BOOTLOADER For older devices (2014 and earlier) (not all device supported)
+echo.
+echo 3) LOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
+echo.
+echo ========================================================
+echo 0) EXIT
+echo ========================================================
+echo.
+SET /P inputmbul=Please Select:
 
+if %inputmbul%==0 goto :menubootloader
+
+if %inputmbul%==1 fastboot oem device-info && fastboot oem unlock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+
+if %inputmbul%==2 fastboot oem device-info && fastboot flashing unlock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+
+if %inputmbul%==3 fastboot oem device-info && fastboot oem lock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+
+if %inputmbul%==4 fastboot oem device-info && fastboot flashing lock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+pause
+goto menubootloaderunlock
 
 :menusystem
 cls
@@ -214,35 +245,35 @@ echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
-SET /P inputmb=Please Select:
+SET /P inputms=Please Select:
 
-if %inputmb%==0 goto :devicecheck
+if %inputms%==0 goto :devicecheck
 
-if %inputmb%==1 cls && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
+if %inputms%==1 cls && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
 
-if %inputmb%==2 echo Loading... && adb reboot recovery && goto :menurecovery
+if %inputms%==2 echo Loading... && adb reboot recovery && goto :menurecovery
 
-if %inputmb%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
+if %inputms%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
 
-if %inputmb%==4 adb devices
+if %inputms%==4 adb devices
 
-if %inputmb%==5 adb shell getprop ro.build.version.release
+if %inputms%==5 adb shell getprop ro.build.version.release
 
-if %inputmb%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
+if %inputms%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
 
-if %inputmb%==7 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
+if %inputms%==7 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
 
-if %inputmb%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb shell wm size %ss%
+if %inputms%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb shell wm size %ss%
 
-if %inputmb%==9 SET /P sd=Write the density of the screen like (288) && adb shell wm density %sd%
+if %inputms%==9 SET /P sd=Write the density of the screen like (288) && adb shell wm density %sd%
 
-if %inputmb%==10 adb shell wm size reset && adb shell wm density reset
+if %inputms%==10 adb shell wm size reset && adb shell wm density reset
 
-if %inputmb%==11 goto changesystemsettings  
+if %inputms%==11 goto changesystemsettings  
 
-if %inputmb%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
+if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
 
-if %inputmb%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
+if %inputms%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
 
 pause
 goto menusystem
@@ -273,11 +304,11 @@ echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
-SET /P inputmb=Please Select:
+SET /P inputmr=Please Select:
 
-if %inputmb%==0 goto :devicecheck
+if %inputmr%==0 goto :devicecheck
 
-if %inputmb%==1 SET /P slzip=Write the zip name like (name.zip) && adb sideload %slzip%
+if %inputmr%==1 SET /P slzip=Write the zip name like (name.zip) && adb sideload %slzip%
 pause
 goto menurecovery
 
@@ -290,7 +321,7 @@ ECHO     ######   ##   ##  ##   ##    #######    ###
 ECHO       ##     ##   ####   ##    ##   ##     ##
 ECHO  ######      #####  #####    ##   ##     ##
 ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5              ::
+ECHO  	:: ATA Tool V0.4.1            ::
 ECHO  	:: adb and fastboot tool      ::
 ECHO  	:: Created By Sway	      ::
 ECHO  	:: Copyright 2019 Sway	      ::
@@ -307,10 +338,10 @@ echo ========================================================
 echo 0) EXIT
 echo ========================================================
 echo.
-SET /P inputmb=Please Select:
+SET /P inputmc=Please Select:
 
-if %inputmb%==0 goto :devicecheck
+if %inputmc%==0 goto :devicecheck
 
-if %inputmb%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
+if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 
-if %inputmb%==2  start "" https://twitter.com/SWayWasTaken
+if %inputmc%==2  start "" https://twitter.com/SWayWasTaken

@@ -14,10 +14,10 @@ ECHO  	:: Copyright 2019 Sway	      ::
 ECHO  	::::::::::::::::::::::::::::::::
 echo.
 
-echo a >> settings.txt
+echo a >> settings.tmp
 
 :prelaunch
-for /f %%a in (settings.txt) do (
+for /f %%a in (settings.tmp) do (
 if %%a==4920617070726f7665 (
 goto :adblaunch
 ) else (
@@ -61,7 +61,7 @@ SET inputd=4920617070726f7665
 set inputd=546s578eehds7s6553445401x
 )
 echo %inputd% > settings.txt
-if %inputd%==4920617070726f7665 goto :devicecheck
+if %inputd%==4920617070726f7665 goto :prelaunch
 if %inputd%==546s578eehds7s6553445401x exit
 
 

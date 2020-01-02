@@ -4,7 +4,8 @@ Hello dear developers,I have made a tool for those of you that dont like command
 ATA Tool V0.5.1
 
 Features: 
-- UNLOCK BOOTLOADER  
+- UNLOCK BOOTLOADER 
+- LOCK BOOTLOADER 
 - FORMAT DATA PARTITION (EXT4) 
 - FORMAT DATA PARTITION (F2FS)  
 - FLASH RECOVERY (only .img file) 

@@ -1,7 +1,7 @@
 # Advance-Tool-for-Android
 Hello dear developers,I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
 
-ATA Tool V0.5.2
+ATA Tool V0.5.7
 
 Features: 
 - UNLOCK BOOTLOADER 

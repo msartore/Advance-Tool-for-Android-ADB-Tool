@@ -1,18 +1,7 @@
 @echo off
 TITLE ATA Tool by Sway
 color 07
-ECHO      ######  ##               ##    ######  ##   ##
-ECHO     ##       ##   ###  ###   ##   ##   ##   ## ##
-ECHO     ######   ##   ##  ##   ##    #######    ###
-ECHO       ##     ##   ####   ##    ##   ##     ##
-ECHO  ######      #####  #####    ##   ##     ##
-ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.2            ::
-ECHO  	:: adb and fastboot tool      ::
-ECHO  	:: Created By Sway	      ::
-ECHO  	:: Copyright 2019 Sway	      ::
-ECHO  	::::::::::::::::::::::::::::::::
-echo.
+call "Scripts/banner1.bat"
 
 echo a >> settings.tmp
 
@@ -24,15 +13,41 @@ goto :adblaunch
 goto :disclaimer
 )
 )
+:infodevice
+call "Scripts/banner1.bat"
+echo                [          ]
+for /f "delims=" %%v in ('adb shell getprop ro.build.user') do set "ro_build_user=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [..         ]
+for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [...        ]
+for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [.....      ]
+for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [.......    ]
+for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [........   ]
+for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
+cls
+call "Scripts/banner1.bat"
+echo                [...........] 
+goto :devicecheck
 
 :adblaunch
-set dinfb=1
-set dinos=1
 echo Loading...
 fastboot devices >nul
 adb devices >nul
 cls
-goto :devicecheck
+goto :infodevice
 
 :devicecheck
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
@@ -68,15 +83,17 @@ if %inputd%==546s578eehds7s6553445401x exit
 :menu
 cls
 color 07
-echo ========================================================
+echo =============================================================
 echo DEVICE INFO
-echo ========================================================
-if %dinos%==1 adb devices -l 2>nul && fastboot devices 2>nul && echo Device version: && adb shell getprop ro.build.version.release 2>nul 
-if %dinfb%==0 echo no devices connected in fastboot mode
-if %dinos%==0 echo no devices connected
-echo ========================================================
+echo =============================================================
+echo Rom builder name: %ro_build_user%     Board: %ro_product_board%
+echo.
+echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
+echo.
+echo Compitable Apk file: %ro_product_cpu_abilist%
+echo =============================================================
 echo MAIN MENU
-echo ========================================================
+echo =============================================================
 echo 1.  Fastboot/Bootloader Commands
 echo.
 echo 2.  Recovery Commands (Sideload)
@@ -84,9 +101,9 @@ echo.
 echo 3.  System Commands
 echo.
 echo 4.  Credits
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 
 SET /P inputmm=Please Select:
 
@@ -99,9 +116,9 @@ if %inputmm%==0 exit
 
 :menubootloader
 cls
-echo ========================================================
+echo =============================================================
 echo BOOTLOADER/FASTBOOT MENU
-echo ========================================================
+echo =============================================================
 echo What do you want to do?
 echo.
 echo 1) UNLOCK/LOCK BOOTLOADER 
@@ -121,9 +138,9 @@ echo.
 echo 8) Boot into ROM
 echo.
 echo 9) Boot into recovery
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 echo.
 SET /P inputmb=Please Select:
 
@@ -152,9 +169,9 @@ goto menubootloader
 
 :menubootloaderunlock
 cls
-echo ========================================================
+echo =============================================================
 echo BOOTLOADER UNLOCK/LOCK MENU
-echo ========================================================
+echo =============================================================
 echo What do you want to do?
 echo.
 echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
@@ -165,9 +182,9 @@ echo 4) LOCK BOOTLOADER For older devices (2014 and earlier) (not all device sup
 echo.
 echo 3) LOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
 echo.
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 echo.
 SET /P inputmbul=Please Select:
 
@@ -185,9 +202,9 @@ goto menubootloaderunlock
 
 :menusystem
 cls
-echo ========================================================
+echo =============================================================
 echo SYSTEM MENU
-echo ========================================================
+echo =============================================================
 echo What do you want to do?
 echo.
 echo 1) REBOOT SMARTPHONE
@@ -215,9 +232,9 @@ echo.
 echo 12) Screen Recording 
 echo. 
 echo 13) SMARTPHONE Status
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 echo.
 SET /P inputms=Please Select:
 
@@ -268,15 +285,15 @@ goto changesystemsettings
 
 :menurecovery
 cls
-echo ========================================================
+echo =============================================================
 echo RECOVERY MENU
-echo ========================================================
+echo =============================================================
 echo What do you want to do?
 echo.
 echo 1) Sideload a zip
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 echo.
 SET /P inputmr=Please Select:
 
@@ -289,28 +306,18 @@ goto menurecovery
 :credits
 cls
 color 0A
-ECHO      ######  ##               ##    ######  ##   ##
-ECHO     ##       ##   ###  ###   ##   ##   ##   ## ##
-ECHO     ######   ##   ##  ##   ##    #######    ###
-ECHO       ##     ##   ####   ##    ##   ##     ##
-ECHO  ######      #####  #####    ##   ##     ##
-ECHO 	::::::::::::::::::::::::::::::::
-ECHO  	:: ATA Tool V0.5.2            ::
-ECHO  	:: adb and fastboot tool      ::
-ECHO  	:: Created By Sway	      ::
-ECHO  	:: Copyright 2019 Sway	      ::
-ECHO  	::::::::::::::::::::::::::::::::
-echo ========================================================
+call "Scripts/banner2.bat"
+echo =============================================================
 echo CREDITS MENU
-echo ========================================================
+echo =============================================================
 echo What do you want to do?
 echo.
 echo 1) Github
 echo.
 echo 2) Twitter
-echo ========================================================
+echo =============================================================
 echo 0) EXIT
-echo ========================================================
+echo =============================================================
 echo.
 SET /P inputmc=Please Select:
 
@@ -319,3 +326,5 @@ if %inputmc%==0 goto :devicecheck
 if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 
 if %inputmc%==2  start "" https://twitter.com/SWayWasTaken
+
+

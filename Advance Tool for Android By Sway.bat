@@ -40,19 +40,19 @@ for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_produ
 cls
 call "Scripts/banner1.bat"
 echo                [...........] 
-goto :devicecheck
+goto :menu 
 
 :adblaunch
 echo Loading...
 fastboot devices >nul
 adb devices >nul
 cls
-goto :infodevice
+goto :devicecheck
 
 :devicecheck
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
 if /I "%version%" GEQ "1" (
-    goto :menu 
+    goto :infodevice
 ) else ( 
     goto :devicenotfound
 )

@@ -60,7 +60,7 @@ SET inputd=4920617070726f7665
 ) else (
 set inputd=546s578eehds7s6553445401x
 )
-echo %inputd% > settings.txt
+echo %inputd% > settings.tmp
 if %inputd%==4920617070726f7665 goto :prelaunch
 if %inputd%==546s578eehds7s6553445401x exit
 

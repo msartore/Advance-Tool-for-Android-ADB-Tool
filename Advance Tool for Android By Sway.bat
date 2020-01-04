@@ -1,3 +1,4 @@
+mode con:cols=150 lines=50
 @echo off
 TITLE ATA Tool by Sway
 color 07
@@ -13,6 +14,7 @@ goto :adblaunch
 goto :disclaimer
 )
 )
+
 :infodevice
 call "Scripts/banner1.bat"
 echo                [          ]
@@ -50,6 +52,7 @@ cls
 goto :devicecheck
 
 :devicecheck
+cls
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
 if /I "%version%" GEQ "1" (
     goto :infodevice

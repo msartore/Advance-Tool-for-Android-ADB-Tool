@@ -42,6 +42,9 @@ for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_produ
 cls
 call "Scripts/banner1.bat"
 echo                [...........] 
+for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
+cls
+call "Scripts/banner1.bat"
 goto :menu 
 
 :adblaunch
@@ -89,11 +92,11 @@ color 07
 echo =============================================================
 echo DEVICE INFO
 echo =============================================================
-echo Rom builder name: %ro_build_user%     Board: %ro_product_board%
+echo Rom builder name: %ro_build_user%     Board: %ro_product_board%     Android Version: %ro_android_version%
 echo.
 echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
 echo.
-echo Compitable Apk file: %ro_product_cpu_abilist%
+echo Compitable Apk file: %ro_product_cpu_abilist% 
 echo =============================================================
 echo MAIN MENU
 echo =============================================================

@@ -1,7 +1,7 @@
 # Advance-Tool-for-Android
 Hello dear developers,I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
 
-ATA Tool V0.5.7
+ATA Tool V0.5.9
 
 Features: 
 - UNLOCK BOOTLOADER 
@@ -26,6 +26,7 @@ Features:
 - Reset (Emulate device)  
 - Screen Recording
 - Smarthphone Status
+- Change system info
 
 # Precondition
 

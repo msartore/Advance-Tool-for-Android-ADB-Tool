@@ -266,7 +266,7 @@ if %inputms%==9 SET /P sd=Write the density of the screen like (288) && adb shel
 
 if %inputms%==10 adb shell wm size reset && adb shell wm density reset
 
-if %inputms%==11 goto changesystemsettings  
+if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recovery! && goto changesystemsettings  
 
 if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
 
@@ -279,14 +279,26 @@ goto menusystem
 :changesystemsettings
 cls
 echo This process can cause damage to your SMARTPHONE
-echo Select 1 to pull the build prop to C:/ folder, after the pull you can change your 
-echo System info. After the change save it and Select 2
+echo.
+echo Select Mount and then select System from the list of partitions to mount the system partition and then go back.
+echo.
+echo Select 1 to pull the build.prop to ATA folder, after the pull you can change your 
+echo system info. After the change save it and Select 2
+goto :changesystemsettings1
+:changesystemsettings1
 SET /P inputcss=Please Select 
 if %inputcss%==0 goto menusystem
-if %inputcss%==1 adb pull /system/build.prop "build.prop" 
-if %inputcss%==2 
+if %inputcss%==1 adb pull /system/build.prop "build.prop" && goto :changesystemsettings1 
+if %inputcss%==2 adb push "build.prop" /system/ && goto :changesystemsettings2
+:changesystemsettings2
+echo Now you have to write:
+echo cd system
+echo chmod 644 build.prop
+echo exit
+echo Now reboot into the system
+adb shell
 pause
-goto changesystemsettings
+goto :menusystem
 
 
 :menurecovery

@@ -233,7 +233,7 @@ echo 9) Emulate device (Change Density)
 echo.
 echo 10) Reset (Emulate device)
 echo.
-echo 11) Change system info (NOT WORKING YET)
+echo 11) Change system info
 echo.
 echo 12) Screen Recording 
 echo. 

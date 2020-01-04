@@ -304,8 +304,9 @@ echo.
 SET /P inputmr=Please Select:
 
 if %inputmr%==0 goto :devicecheck
-
-if %inputmr%==1 SET /P slzip=Write the zip name like (name.zip) && adb sideload %slzip%
+set slzip=0
+if %inputmr%==1 SET /P slzip=Write the zip name like (name.zip)
+adb sideload %slzip%
 pause
 goto menurecovery
 

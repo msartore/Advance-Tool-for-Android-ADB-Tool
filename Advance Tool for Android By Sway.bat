@@ -57,14 +57,18 @@ cls
 goto :devicecheck
 
 :devicecheck
+cls
+color 07
+call "Scripts/banner1.bat"
 echo Checking if the device is connected...
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
 if /I "%version%" GEQ "1" (
-    goto :infodevice
     cls
+    call "Scripts/banner1.bat"
+    DEVICE FOUND!
+    goto :infodevice
 ) else ( 
     goto :devicenotfound
-    cls
 )
 
 :devicenotfound
@@ -240,7 +244,7 @@ echo 9) Emulate device (Change Density)
 echo.
 echo 10) Reset (Emulate device)
 echo.
-echo 11) Change system info
+echo 11) Change system info 
 echo.
 echo 12) Screen Recording 
 echo. 
@@ -347,7 +351,7 @@ echo =============================================================
 echo.
 SET /P inputmc=Please Select:
 
-if %inputmc%==0 goto :devicecheck
+if %inputmc%==0 goto :devicecheck 
 
 if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 

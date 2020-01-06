@@ -16,54 +16,60 @@ goto :disclaimer
 )
 
 :infodevice
+cls
 call "Scripts/banner1.bat"
-echo                [          ]
+echo                [             ](0/7)
 for /f "delims=" %%v in ('adb shell getprop ro.build.user') do set "ro_build_user=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [..         ]
+echo                [..           ](1/7)
 for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [...        ]
+echo                [...          ](2/7)
 for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [.....      ]
+echo                [.....        ](3/7)
 for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [.......    ]
+echo                [.......      ](4/7)
 for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [........   ]
+echo                [........     ](5/7)
 for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
 cls
 call "Scripts/banner1.bat"
-echo                [...........] 
+echo                [...........  ](6/7)
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 cls
 call "Scripts/banner1.bat"
+echo                [.............](7/7)
 goto :menu 
 
 :adblaunch
 echo Loading...
 fastboot devices >nul
 adb devices >nul
-cls
 goto :devicecheck
 
 :devicecheck
-cls
+echo Checking if the device is connected...
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
 if /I "%version%" GEQ "1" (
     goto :infodevice
+    cls
 ) else ( 
     goto :devicenotfound
+    cls
 )
 
 :devicenotfound
+cls
+call "Scripts/banner1.bat"
+echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press forward
 pause
@@ -233,7 +239,7 @@ echo 9) Emulate device (Change Density)
 echo.
 echo 10) Reset (Emulate device)
 echo.
-echo 11) Change system info
+echo 11) Change system info (NOT WORKING YET)
 echo.
 echo 12) Screen Recording 
 echo. 

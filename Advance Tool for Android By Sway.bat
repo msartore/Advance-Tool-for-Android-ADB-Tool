@@ -53,6 +53,7 @@ goto :menu
 echo Loading...
 fastboot devices >nul
 adb devices >nul
+cls
 goto :devicecheck
 
 :devicecheck

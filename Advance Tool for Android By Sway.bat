@@ -76,7 +76,7 @@ cls
 call "Scripts/banner1.bat"
 echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
-echo after that press forward
+echo after that press enter
 pause
 cls
 goto :devicecheck

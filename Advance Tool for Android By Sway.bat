@@ -76,7 +76,7 @@ cls
 call "Scripts/banner1.bat"
 echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
-echo after that press enter
+echo after that press forward
 pause
 cls
 goto :devicecheck
@@ -249,6 +249,8 @@ echo.
 echo 12) Screen Recording 
 echo. 
 echo 13) SMARTPHONE Status
+echo.
+echo 14) Unistall System App/Bloat 
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
@@ -283,6 +285,7 @@ if %inputms%==12 echo Press Control + C to stop the recording, the file is place
 
 if %inputms%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
 
+if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com%
 pause
 goto menusystem
 
@@ -358,3 +361,10 @@ if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-fo
 if %inputmc%==2  start "" https://twitter.com/SWayWasTaken
 
 
+:optionalreboot
+echo Do you want to reboot the SMARTPHONE(Y/N)?
+set /p inputop=Please Select:
+
+if %inputop%==Y cls && echo Loading... && adb reboot >nul && cls && echo Rebooted! 
+else
+goto :menusystem

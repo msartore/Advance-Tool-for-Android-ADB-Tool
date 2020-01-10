@@ -20,7 +20,7 @@ Features:
 - Check connected devices 
 - Check devices version connected  
 - Install an app 
-- Unistall an app (No System App) 
+- Unistall an app  
 - Emulate device (Resize Screen) 
 - Emulate device (Change Density) 
 - Reset (Emulate device)  

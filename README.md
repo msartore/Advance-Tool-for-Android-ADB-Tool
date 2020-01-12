@@ -28,6 +28,12 @@ Features:
 - Screen Recording
 - Smarthphone Status
 - Change system info
+- Grant WRITE_SECURE_SETTINGS permission
+- Grant DUMP permission
+- Check for granted permissions
+ 
+
+
 
 # Precondition
 

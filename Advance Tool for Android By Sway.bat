@@ -1,4 +1,4 @@
-MODE 150
+mode con:cols=150 lines=50
 @echo off
 TITLE ATA Tool by Sway
 color 07
@@ -251,8 +251,6 @@ echo.
 echo 13) SMARTPHONE Status
 echo.
 echo 14) Unistall System App/Bloat 
-echo.
-echo 15) Grant root permissions (App)
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
@@ -287,9 +285,7 @@ if %inputms%==12 echo Press Control + C to stop the recording, the file is place
 
 if %inputms%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
 
-if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
-
-if %inputms%==15 goto :grantpermissions
+if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com%
 pause
 goto menusystem
 
@@ -363,6 +359,7 @@ if %inputmc%==0 goto :devicecheck
 if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 
 if %inputmc%==2  start "" https://twitter.com/SWayWasTaken
+goto :credits
 
 
 :optionalreboot
@@ -372,33 +369,3 @@ set /p inputop=Please Select:
 if %inputop%==Y cls && echo Loading... && adb reboot >nul && cls && echo Rebooted! 
 else
 goto :menusystem
-
-
-:grantpermissions
-cls
-call "Scripts/banner2.bat"
-echo =============================================================
-echo ROOT PERMISSIONS
-echo =============================================================
-echo What do you want to do?
-echo.
-echo 1) Grant WRITE_SECURE_SETTINGS permission
-echo.
-echo 2) Grant DUMP permission
-echo.
-echo 3) Check for granted permissions
-echo =============================================================
-echo 0) EXIT
-echo =============================================================
-echo.
-SET /P inputgp=Please Select:
-
-if %inputgp%==0 goto :devicecheck 
-
-if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS
-
-if %inputgp%==2 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.DUMP
-
-if %inputgp%==3 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell dumpsys package %app_gp% 
-pause
-goto :grantpermissions

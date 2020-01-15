@@ -189,7 +189,7 @@ cls
 echo =============================================================
 echo BOOTLOADER UNLOCK/LOCK MENU
 echo =============================================================
-echo What do you want to do?
+echo What do you want to do? (To use all commands below you have to boot in bootloader mode)
 echo.
 echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
 echo.

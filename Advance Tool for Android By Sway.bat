@@ -19,34 +19,50 @@ goto :disclaimer
 cls
 call "Scripts/banner1.bat"
 echo                [             ](0/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.build.user') do set "ro_build_user=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [..           ](1/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [...          ](2/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.....        ](3/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.......      ](4/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [........     ](5/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [...........  ](6/7)
+echo.
+echo Log:
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.............](7/7)
+echo.
+echo Log:
 goto :menu 
 
 :adblaunch
@@ -74,10 +90,18 @@ if /I "%version%" GEQ "1" (
 :devicenotfound
 cls
 call "Scripts/banner1.bat"
+echo =============================================================
 echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press enter
+echo =============================================================
+echo fastboot option (Y/N) 
+SET /P inputdnt=Please Select:
+if %inputdnt%==Y (
+    goto :menubootloader
+) else ( 
 pause
+)
 cls
 goto :devicecheck
 
@@ -195,10 +219,15 @@ echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device s
 echo.
 echo 2) UNLOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
 echo.
-echo 4) LOCK BOOTLOADER For older devices (2014 and earlier) (not all device supported)
+echo 3) LOCK BOOTLOADER For older devices (2014 and earlier) (not all device supported)
 echo.
-echo 3) LOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
+echo 4) LOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
 echo.
+echo 5) GET BOOTLOADER INFO 
+echo.
+echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it inside the folder before start the command)
+echo.
+echo 7) Device ID
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
@@ -214,6 +243,12 @@ if %inputmbul%==2 fastboot oem device-info && fastboot flashing unlock && echo c
 if %inputmbul%==3 fastboot oem device-info && fastboot oem lock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
 
 if %inputmbul%==4 fastboot oem device-info && fastboot flashing lock && echo checking. && cls && echo checking.. && cls && echo checking... && fastboot getvar unlocked
+
+if %inputmbul%==5 fastboot getvar all 
+
+if %inputmbul%==6 fastboot flash unlock unlock.bin && fastboot reboot && Done! && Rebooting!
+
+if %inputmbul%==7 fastboot oem device-id
 pause
 goto menubootloaderunlock
 

@@ -27,42 +27,49 @@ call "Scripts/banner1.bat"
 echo                [..           ](1/7)
 echo.
 echo Log:
+echo ro.build.use loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [...          ](2/7)
 echo.
 echo Log:
+echo ro.product.cpu.abilist loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.....        ](3/7)
 echo.
 echo Log:
+echo ro.product.manufacturer loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.......      ](4/7)
 echo.
 echo Log:
+echo ro.product.model loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [........     ](5/7)
 echo.
 echo Log:
+echo ro.product.board loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [...........  ](6/7)
 echo.
 echo Log:
+echo ro.product.device loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 cls
 call "Scripts/banner1.bat"
 echo                [.............](7/7)
 echo.
 echo Log:
+echo ro.build.version.release loaded!
 goto :menu 
 
 :adblaunch

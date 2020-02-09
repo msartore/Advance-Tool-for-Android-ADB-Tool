@@ -131,6 +131,7 @@ if %inputd%==546s578eehds7s6553445401x exit
 :menu
 cls
 color 07
+call "Scripts/banner2.bat"
 echo =============================================================
 echo DEVICE INFO
 echo =============================================================
@@ -295,6 +296,8 @@ echo.
 echo 14) Unistall System App/Bloat 
 echo.
 echo 15) Grant root permissions (App)
+echo.
+echo 16) Interface
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
@@ -332,9 +335,32 @@ if %inputms%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd &
 if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
 
 if %inputms%==15 goto :grantpermissions
+
+if %inputms%==16 goto :Interface
 pause
 goto menusystem
 
+:Interface
+cls
+call "Scripts/banner2.bat"
+echo =============================================================
+echo INTERFACE MENU
+echo =============================================================
+echo 1) Enable Dark Mode
+echo 2) Disable Dark Mode
+echo =============================================================
+echo 0) EXIT
+echo =============================================================
+echo.
+SET /P inputms=Please Select:
+
+if %inputms%==0 goto :devicecheck
+
+if %inputms%==1 adb shell settings put secure ui_night_mode 2 && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
+
+if %inputms%==2 adb shell settings put secure ui_night_mode 1 && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
+pause
+goto :menusystem
 
 :changesystemsettings
 cls

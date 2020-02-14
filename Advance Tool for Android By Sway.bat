@@ -4,7 +4,11 @@ TITLE ATA Tool by Sway
 color 07
 call "Scripts/banner1.bat"
 
-echo a >> settings.tmp
+if exist settings.tmp (
+    goto :prelaunch
+) else (
+    echo a >> settings.tmp
+)
 
 :prelaunch
 for /f %%a in (settings.tmp) do (
@@ -113,19 +117,26 @@ cls
 goto :devicecheck
 
 :disclaimer
+cls
+call "Scripts/banner1.bat"
 echo *** Disclaimer ***
 echo I am not responsible for any damage YOU will do to your device
 echo You have been warned, Do you accept? (Y/N)
 echo.
 SET /P inputd=Please Select:
-if %inputd%==Y (
-SET inputd=4920617070726f7665
-) else (
-set inputd=546s578eehds7s6553445401x
-)
+echo.
+echo log:
+if %inputd%==Y SET inputd=4920617070726f7665
+if %inputd%==y SET inputd=4920617070726f7665
+if %inputd%==N set inputd=546s578eehds7s6553445401x
+if %inputd%==n set inputd=546s578eehds7s6553445401x
 echo %inputd% > settings.tmp
 if %inputd%==4920617070726f7665 goto :prelaunch
 if %inputd%==546s578eehds7s6553445401x exit
+echo Error, Wrong input!
+pause
+cls
+goto :disclaimer
 
 
 :menu
@@ -160,7 +171,10 @@ if %inputmm%==1 goto menubootloader
 if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
 if %inputmm%==4 goto credits
-if %inputmm%==0 exit
+if %inputmm% gtr 4 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
+if %inputmm%==0 goto :exitstatus
+pause
+goto :menu
 
 
 :menubootloader
@@ -464,10 +478,29 @@ SET /P inputgp=Please Select:
 
 if %inputgp%==0 goto :devicecheck 
 
-if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS
+if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS && echo Executed!
 
-if %inputgp%==2 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.DUMP
+if %inputgp%==2 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.DUMP && echo Executed!
 
-if %inputgp%==3 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell dumpsys package %app_gp% 
+if %inputgp%==3 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell dumpsys package %app_gp% && echo Executed!
 pause
 goto :grantpermissions
+
+
+:exitstatus
+tasklist /FI "IMAGENAME eq adb.exe" 2>NUL | find /I /N "adb.exe">NUL
+if "%ERRORLEVEL%"=="0" goto :exit
+exit
+
+:exit 
+cls
+call "Scripts/banner1.bat"
+echo The ADB.exe is still running, Do you want to kill it? (Y/n)
+SET /P inputex=Please Select:
+if %inputex%==Y taskkill /f /im adb.exe && echo Done! && goto :exitstatus
+if %inputex%==y taskkill /f /im adb.exe && echo Done! && goto :exitstatus
+if %inputex%==N exit
+if %inputex%==n exit 
+echo Error, Wrong input!
+pause
+goto :exitstatus

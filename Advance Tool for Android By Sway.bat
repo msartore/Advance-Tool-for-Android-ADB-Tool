@@ -106,14 +106,15 @@ echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press enter
 echo =============================================================
-echo fastboot option (Y/N) 
+echo fastboot mode (Y/N) 
 SET /P inputdnt=Please Select:
-if %inputdnt%==Y (
-    goto :menubootloader
-) else ( 
+if %inputdnt%==Y goto :menubootloader
+if %inputdnt%==y goto :menubootloader
+if %inputdnt%==N pause && cls && goto :devicecheck
+if %inputdnt%==n pause && cls && goto :devicecheck
+echo Error, Wrong input!
 pause
-)
-cls
+cls 
 goto :devicecheck
 
 :disclaimer
@@ -250,6 +251,10 @@ echo.
 echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it inside the folder before start the command)
 echo.
 echo 7) Device ID
+echo.
+echo 8) Oem unlock data (for Motorola devices)
+echo.
+echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
@@ -268,9 +273,13 @@ if %inputmbul%==4 fastboot oem device-info && fastboot flashing lock && echo che
 
 if %inputmbul%==5 fastboot getvar all 
 
-if %inputmbul%==6 fastboot flash unlock unlock.bin && fastboot reboot && Done! && Rebooting!
+if %inputmbul%==6 fastboot flash unlock unlock.bin && fastboot reboot && echo Done! && echo. && echo Rebooting!
 
 if %inputmbul%==7 fastboot oem device-id
+
+if %inputmbul%==8 fastboot oem get_unlock_data
+
+if %inputmbul%==9 SET /P oemcode=Paste the code here && fastboot oem unlock %oemcode% && echo Done! && echo Rebooting!
 pause
 goto menubootloaderunlock
 

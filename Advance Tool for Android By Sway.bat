@@ -22,59 +22,46 @@ goto :disclaimer
 :infodevice
 cls
 call "Scripts/banner1.bat"
-echo                [             ](0/7)
 echo.
 echo Log:
+echo [  OK  ] Device found!
 for /f "delims=" %%v in ('adb shell getprop ro.build.user') do set "ro_build_user=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [..           ](1/7)
-echo.
-echo Log:
-echo ro.build.use loaded!
+echo [  OK  ] ro.build.use loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [...          ](2/7)
-echo.
-echo Log:
-echo ro.product.cpu.abilist loaded!
+echo [  OK  ] ro.product.cpu.abilist loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [.....        ](3/7)
-echo.
-echo Log:
-echo ro.product.manufacturer loaded!
+echo [  OK  ] ro.product.manufacturer loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [.......      ](4/7)
-echo.
-echo Log:
-echo ro.product.model loaded!
+echo [  OK  ] ro.product.model loaded! 
 for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [........     ](5/7)
-echo.
-echo Log:
-echo ro.product.board loaded!
+echo [  OK  ] ro.product.board loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
-cls
-call "Scripts/banner1.bat"
-echo                [...........  ](6/7)
-echo.
-echo Log:
-echo ro.product.device loaded!
+echo [  OK  ] ro.product.device loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
+echo [  OK  ] ro.build.version.release loaded!
+goto :menu 
+
+:notsuccess
 cls
 call "Scripts/banner1.bat"
-echo                [.............](7/7)
 echo.
 echo Log:
-echo ro.build.version.release loaded!
-goto :menu 
+echo [FAILED] Device not found!
+echo [FAILED] ro.build.use loaded!
+timeout /T 2>nul
+echo [FAILED] ro.product.cpu.abilist loaded!
+timeout /T 2>nul
+echo [FAILED] ro.product.manufacturer loaded!
+timeout /T 2>nul
+echo [FAILED] ro.product.model loaded! 
+timeout /T 2>nul
+echo [FAILED] ro.product.board loaded!
+timeout /T 2>nul
+echo [FAILED] ro.product.device loaded!
+timeout /T 2>nul
+echo [FAILED] ro.build.version.release loaded!
+timeout /T 2>nul
+goto :devicenotfound
 
 :adblaunch
 echo Loading...
@@ -92,10 +79,9 @@ for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "v
 if /I "%version%" GEQ "1" (
     cls
     call "Scripts/banner1.bat"
-    DEVICE FOUND!
     goto :infodevice
 ) else ( 
-    goto :devicenotfound
+    goto :notsuccess
 )
 
 :devicenotfound
@@ -443,19 +429,23 @@ echo.
 echo 1) Github
 echo.
 echo 2) Twitter
+echo.
+echo 3) Donate
 echo =============================================================
 echo 0) EXIT
 echo =============================================================
 echo.
 SET /P inputmc=Please Select:
-
+echo log:
 if %inputmc%==0 goto :devicecheck 
 
 if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-for-Android
 
-
 if %inputmc%==2  start "" https://twitter.com/SWayWasTaken
 
+if %inputmc%==3  start "" https://www.paypal.me/SWayGaming && echo Thank you very much for offering to help out with this project!
+pause
+goto :credits
 
 :optionalreboot
 echo Do you want to reboot the SMARTPHONE(Y/N)?

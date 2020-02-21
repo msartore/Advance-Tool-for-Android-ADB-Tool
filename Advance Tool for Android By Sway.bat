@@ -61,6 +61,7 @@ echo [FAILED] ro.product.device loaded!
 timeout /T 2>nul
 echo [FAILED] ro.build.version.release loaded!
 timeout /T 2>nul
+echo Booting into Bootloader menu
 goto :devicenotfound
 
 :adblaunch

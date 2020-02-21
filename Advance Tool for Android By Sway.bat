@@ -257,7 +257,7 @@ if %inputmbul%==8 fastboot oem get_unlock_data
 
 if %inputmbul%==9 SET /P oemcode=Paste the code here && fastboot oem unlock %oemcode% && echo Done && echo Rebooting!
 
-if %inputmbul%==10  echo Erasing process started fastboot erase data &&  fastboot erase cache && echo Erasing process finished!
+if %inputmbul%==10  echo Erasing process started && fastboot erase data &&  fastboot erase cache && echo Erasing process finished!
 pause
 goto menubootloaderunlock
 

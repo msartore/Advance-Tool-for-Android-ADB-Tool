@@ -37,7 +37,6 @@ Features:
 - Enable Dark Mode
 - Disable Dark Mode
 - Sideload a zip
-- Check for granted permissions
  
 
 

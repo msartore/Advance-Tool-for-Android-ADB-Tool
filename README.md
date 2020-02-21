@@ -1,7 +1,7 @@
 # Advance-Tool-for-Android
 Hello dear developers, I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
 
-    ATA Tool V0.6.9.1
+    ATA Tool V0.6.9.5
     
 
 Features: 
@@ -32,6 +32,12 @@ Features:
 - Grant DUMP permission
 - Check for granted permissions
 - Enable/Disable Dark Mode in Q
+- Factory reset
+- Device ID
+- Enable Dark Mode
+- Disable Dark Mode
+- Sideload a zip
+- Check for granted permissions
  
 
 

@@ -85,11 +85,11 @@ if /I "%version%" GEQ "1" (
 :devicenotfound
 cls
 call "Scripts/banner1.bat"
-echo ===================================================================
+echo ==========================================================================
 echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press enter
-echo ===================================================================
+echo ==========================================================================
 echo fastboot mode (Y/N) 
 SET inputd=0
 SET /P inputdnt=Please Select:
@@ -130,17 +130,17 @@ goto :disclaimer
 cls
 color 07
 call "Scripts/banner2.bat"
-echo ===================================================================
+echo ==========================================================================
 echo DEVICE INFO
-echo ===================================================================
+echo ==========================================================================
 echo Rom builder name: %ro_build_user%     Board: %ro_product_board%     Android Version: %ro_android_version%
 echo.
 echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
 echo.
 echo Compitable Apk file: %ro_product_cpu_abilist% 
-echo ===================================================================
+echo ==========================================================================
 echo MAIN MENU
-echo ===================================================================
+echo ==========================================================================
 echo 1.  Fastboot/Bootloader Commands
 echo.
 echo 2.  Recovery Commands (Sideload)
@@ -150,9 +150,9 @@ echo.
 echo 4.  Install platform-tools (SOON!)
 echo.
 echo 5.  Credits
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 
 SET /P inputmm=Please Select:
 
@@ -170,9 +170,9 @@ goto :menu
 :menubootloader
 cls
 call "Scripts/banner1.bat"
-echo ===================================================================
+echo ==========================================================================
 echo BOOTLOADER/FASTBOOT MENU
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) UNLOCK/LOCK BOOTLOADER 
@@ -184,9 +184,10 @@ echo 6) FLASH ROM (You must know what you are doing)
 echo 7) Check connected devices
 echo 8) Boot into ROM
 echo 9) Boot into recovery
-echo ===================================================================
+echo 10) Factory reset
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputmb=Please Select:
 
@@ -210,15 +211,16 @@ if %inputmb%==8 echo Loading. && echo Loading.. && fastboot reboot >nul && echo 
 
 if %inputmb%==9 echo Loading. && echo Loading.. && fastboot reboot recovery >nul && echo Loading... && goto :menurecovery
 
+if %inputmb%==10 echo Erasing process started && fastboot format userdata && fastboot format cache && echo Erasing process finished!
 pause
 goto menubootloader
 
 :menubootloaderunlock
 cls
 call "Scripts/banner1.bat"
-echo ===================================================================
+echo ==========================================================================
 echo BOOTLOADER UNLOCK/LOCK MENU
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do? (To use all commands below you have to boot in bootloader mode)
 echo.
 echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
@@ -230,10 +232,9 @@ echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it in
 echo 7) Device ID
 echo 8) Oem unlock data (for Motorola devices)
 echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
-echo 10) Factory reset
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputmbul=Please Select:
 echo log:
@@ -256,17 +257,15 @@ if %inputmbul%==7 fastboot oem device-id
 if %inputmbul%==8 fastboot oem get_unlock_data
 
 if %inputmbul%==9 SET /P oemcode=Paste the code here && fastboot oem unlock %oemcode% && echo Done && echo Rebooting!
-
-if %inputmbul%==10  echo Erasing process started && fastboot erase data &&  fastboot erase cache && echo Erasing process finished!
 pause
 goto menubootloaderunlock
 
 :menusystem
 cls
 call "Scripts/banner1.bat"
-echo ===================================================================
+echo ==========================================================================
 echo SYSTEM MENU
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) REBOOT SMARTPHONE
@@ -285,9 +284,9 @@ echo 13) SMARTPHONE Status
 echo 14) Unistall System App/Bloat 
 echo 15) Grant root permissions (App)
 echo 16) Interface
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputms=Please Select:
 
@@ -330,14 +329,14 @@ goto menusystem
 :Interface
 cls
 call "Scripts/banner2.bat"
-echo ===================================================================
+echo ==========================================================================
 echo INTERFACE MENU
-echo ===================================================================
+echo ==========================================================================
 echo 1) Enable Dark Mode
 echo 2) Disable Dark Mode
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputms=Please Select:
 
@@ -377,15 +376,15 @@ goto :menusystem
 :menurecovery
 cls
 call "Scripts/banner1.bat"
-echo ===================================================================
+echo ==========================================================================
 echo RECOVERY MENU
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) Sideload a zip
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputmr=Please Select:
 
@@ -400,9 +399,9 @@ goto menurecovery
 cls
 color 0A
 call "Scripts/banner2.bat"
-echo ===================================================================
+echo ==========================================================================
 echo CREDITS MENU
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) Github
@@ -410,9 +409,9 @@ echo.
 echo 2) Twitter
 echo.
 echo 3) Donate
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputmc=Please Select:
 echo log:
@@ -438,17 +437,17 @@ goto :menusystem
 :grantpermissions
 cls
 call "Scripts/banner2.bat"
-echo ===================================================================
+echo ==========================================================================
 echo ROOT PERMISSIONS
-echo ===================================================================
+echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) Grant WRITE_SECURE_SETTINGS permission
 echo 2) Grant DUMP permission
 echo 3) Check for granted permissions
-echo ===================================================================
+echo ==========================================================================
 echo 0) EXIT
-echo ===================================================================
+echo ==========================================================================
 echo.
 SET /P inputgp=Please Select:
 

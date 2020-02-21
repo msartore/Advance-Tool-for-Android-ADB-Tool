@@ -34,8 +34,6 @@ Features:
 - Enable/Disable Dark Mode in Q
 - Factory reset
 - Device ID
-- Enable Dark Mode
-- Disable Dark Mode
 - Sideload a zip
  
 

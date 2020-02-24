@@ -26,7 +26,7 @@ Features:
 - Emulate device (Change Density) 
 - Reset (Emulate device)  
 - Screen Recording
-- Smarthphone Status
+- Smartphone Status
 - Change system info
 - Grant WRITE_SECURE_SETTINGS permission
 - Grant DUMP permission

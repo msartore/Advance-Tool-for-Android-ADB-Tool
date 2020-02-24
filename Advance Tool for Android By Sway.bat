@@ -14,7 +14,7 @@ if exist settings.tmp (
 
 :prelaunch
 for /f %%a in (settings.tmp) do (
-if %%a==4920617070726f7665 (
+if %%a==417070726f766564 (
 goto :adblaunch
 ) else (
 goto :disclaimer
@@ -114,13 +114,13 @@ SET inputd=0
 SET /P inputd=Please Select:
 echo.
 echo log:
-if %inputd%==Y SET inputd=4920617070726f7665
-if %inputd%==y SET inputd=4920617070726f7665
-if %inputd%==N set inputd=546s578eehds7s6553445401x
-if %inputd%==n set inputd=546s578eehds7s6553445401x
+if %inputd%==Y SET inputd=417070726f766564 
+if %inputd%==y SET inputd=417070726f766564 
+if %inputd%==N set inputd=6e6f7420617070726f766564
+if %inputd%==n set inputd=6e6f7420617070726f766564
 echo %inputd% > settings.tmp
-if %inputd%==4920617070726f7665 goto :prelaunch
-if %inputd%==546s578eehds7s6553445401x exit
+if %inputd%==417070726f766564 goto :prelaunch
+if %inputd%==6e6f7420617070726f766564 exit
 echo Error, Wrong input!
 pause
 cls
@@ -150,7 +150,9 @@ echo 3.  System Commands
 echo.
 echo 4.  Install platform-tools (SOON!)
 echo.
-echo 5.  Credits
+echo 5.  Create your own program!
+echo.
+echo 6.  Credits
 echo ==========================================================================
 echo 0) EXIT
 echo ==========================================================================
@@ -161,7 +163,8 @@ if %inputmm%==1 goto menubootloader
 if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
 if %inputmm%==4 call "adbinstaller.bat"
-if %inputmm%==5 goto credits
+if %inputmm%==5 goto creator
+if %inputmm%==6 goto credits
 if %inputmm% gtr 4 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 if %inputmm%==0 goto :exitstatus
 pause
@@ -439,7 +442,7 @@ goto :menusystem
 cls
 call "Scripts/banner2.bat"
 echo ==========================================================================
-echo ROOT PERMISSIONS
+echo ROOT PERMISSIONS MENU
 echo ==========================================================================
 echo What do you want to do?
 echo.
@@ -481,3 +484,86 @@ echo Error, Wrong input!
 pause
 goto :exitstatus
 
+
+:creator
+cls
+call "Scripts/banner2.bat"
+echo.
+echo ==========================================================================
+echo PROGRAM MENU
+echo ==========================================================================
+echo What do you want to do?
+echo.
+echo 1) Create a program (.bat)
+echo 2) Run a program 
+echo ==========================================================================
+echo 0) EXIT
+echo ==========================================================================
+SET /P crinput=Please Select:
+echo.
+echo log:
+if %crinput%==1 goto creator1
+if %crinput%==2 goto runp
+if %crinput%==0 goto menu
+pause
+goto creator
+
+:creator1
+SET /P inputcr=Program name:
+if exist %inputcr%.bat (
+    echo %inputcr% exist, change the name!
+    pause
+) else (
+echo @echo off >> %inputcr%.bat
+echo created!
+goto commandsin
+)
+goto :creator1
+
+:commandsin
+cls
+call "Scripts/banner2.bat"
+echo.
+echo ==========================================================================
+echo REMOTE COMMANDS MENU
+echo ==========================================================================
+echo What do you want to do?
+echo.
+echo 1) Instruction
+echo 2) Text
+echo ==========================================================================
+echo 0) EXIT
+echo ==========================================================================
+SET /P ccinput=Please Select:
+echo.
+echo log:
+if %ccinput%==1 goto instruction
+if %ccinput%==2 goto textc
+if %ccinput%==0 goto creator
+echo Done!
+echo Do you want to continue? (Y/n)
+SET /P inputcr1=Please Select:
+if %inputcr1%==Y goto commandsin
+if %inputcr1%==y goto commandsin
+if %inputcr1%==N goto creator
+if %inputcr1%==n goto creator
+goto commandsin
+
+:instruction
+SET /P inputcom=Instruction number: 
+echo adb shell input keyevent %inputcom% >> %inputcr%.bat
+goto commandsin
+:textc
+SET /P inputcom=Text: 
+echo adb shell input text %inputcom% >> %inputcr%.bat
+goto commandsin
+
+:runp
+SET /P inputcc1=Program name with extension: 
+if exist %inputcc1% (
+    start %inputcc1%
+    echo Launched!
+) else (
+echo The program doesn't exist!
+)
+goto creator

@@ -1,10 +1,13 @@
 # Advance Tool for Android
-Hello dear developers, I have made a tool for those of you that dont like command line ,it's called ATA Tool :)
 
     ATA Tool V0.7.0.0
-    
+	
+##💡Introduction
 
-Features: 
+This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genymobile/scrcpy).
+This tool currently only supports Windows, in future updates I might add support for macOS and Linux.
+
+##✨Features: 
 - UNLOCK BOOTLOADER 
 - LOCK BOOTLOADER 
 - FORMAT DATA PARTITION (EXT4) 
@@ -40,11 +43,21 @@ Features:
 
     keyevent Istruction 
     https://developer.android.com/reference/android/view/KeyEvent.html
+	
+##🌞Requirements
+
+1.	To run Scrcpy the Android device requires at least API 21 (Android 5.0).
+
+2.	Make sure you [enabled adb debugging](https://developer.android.com/studio/command-line/adb.html#Enabling) on your device(s).
+	On some devices, you also need to enable [an additional option](https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323)
+
+##❓What is Scrcpy?
 
 
+[Scrcpy](https://github.com/Genymobile/scrcpy) was created by the team behind the popular Android emulator Genymotion, but it is not an Android emulator itself, it displays and controls Android devices connected via USB or TCP/IP, it does not require any root access. It works with GNU/Linux, Windows, and MacOS.
 
-# Precondition
+Scrcpy works by running a server on your Android device, and the desktop application communicates using USB (or using ADB tunneling wireless). The server streams the H.264 video of the device screen. The client decodes the video frames and displays them. The client captures input (keyboard and mouse) events, sends them to the server, and the server injects them into the device. [The documentation](https://github.com/Genymobile/scrcpy/blob/master/DEVELOP.md) provides more details.
 
-- adb installed and in execution path
+If you want to see your Android screen interact with the app or content on your desktop, record your phone screen or perform other basic tasks, then Scrcpy is a good choice.
 
-      
+In short, Scrcpy is an excellent way to easily view your Android screen on your computer and interact with it in real time.

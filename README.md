@@ -8,36 +8,37 @@ This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genym
 This tool currently only supports Windows, in future updates I might add support for macOS and Linux.
 
 ## ✨Features: 
-- UNLOCK BOOTLOADER 
-- LOCK BOOTLOADER 
-- FORMAT DATA PARTITION (EXT4) 
-- FORMAT DATA PARTITION (F2FS)  
-- FLASH RECOVERY (only .img file) 
-- FLASH KERNEL (only .img file) 
-- FLASH ROM (You must know what you are doing) 
-- Check connected devices 
-- Boot into ROM 
-- Boot into recovery 
-- REBOOT SMARTPHONE  
-- REBOOT INTO THE RECOVERY 
-- REBOOT INTO THE Fastboot/Bootloader 
-- Check connected devices 
-- Check devices version connected  
-- Install an app 
-- Unistall an app  
-- Emulate device (Resize Screen) 
-- Emulate device (Change Density) 
-- Reset (Emulate device)  
-- Screen Recording
-- Smartphone Status
-- Change system info
-- Grant WRITE_SECURE_SETTINGS permission
-- Grant DUMP permission
-- Check for granted permissions
-- Enable/Disable Dark Mode in Q
-- Factory reset
-- Device ID
-- Sideload a zip
+* UNLOCK BOOTLOADER 
+* LOCK BOOTLOADER 
+* FORMAT DATA PARTITION (EXT4) 
+* FORMAT DATA PARTITION (F2FS)  
+* FLASH RECOVERY (only .img file) 
+* FLASH KERNEL (only .img file) 
+* FLASH ROM (You must know what you are doing) 
+* Check connected devices 
+* Boot into ROM 
+* Boot into recovery 
+* REBOOT SMARTPHONE  
+* REBOOT INTO THE RECOVERY 
+* REBOOT INTO THE Fastboot/Bootloader 
+* Check connected devices 
+* Check devices version connected  
+* Install an app 
+* Unistall an app  
+* Emulate device (Resize Screen) 
+* Emulate device (Change Density) 
+* Reset (Emulate device)  
+* Screen Recording
+* Smartphone Status
+* Change system info
+* Grant WRITE_SECURE_SETTINGS permission
+* Grant DUMP permission
+* Check for granted permissions
+* Enable/Disable Dark Mode in Q
+* Factory reset
+* Device ID
+* Sideload a zip
+* **Scrcpy** - Screen mirror
  
 - Create and run a program
 
@@ -56,6 +57,7 @@ This tool currently only supports Windows, in future updates I might add support
     Copyright (C) 2018 Genymobile
     Copyright (C) 2018-2020 Romain Vimont
     Copyright (C) 2016-2019 Google LLC	https://developer.android.com/license
+    Copyright (C) 2019-2020 SwayWasTaken
 
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,7 +77,7 @@ This tool currently only supports Windows, in future updates I might add support
 ## ❓What is Scrcpy?
 
 
-[Scrcpy](https://github.com/Genymobile/scrcpy) was created by the team behind the popular Android emulator Genymotion, but it is not an Android emulator itself, it displays and controls Android devices connected via USB or TCP/IP, it does not require any root access. It works with GNU/Linux, Windows, and MacOS.
+[Scrcpy](https://github.com/Genymobile/scrcpy) was created by the team behind the popular Android emulator Genymotion, but it is not an Android emulator itself, it displays and controls Android devices connected via USB or TCP/IP, it does not require any root access.
 
 Scrcpy works by running a server on your Android device, and the desktop application communicates using USB (or using ADB tunneling wireless). The server streams the H.264 video of the device screen. The client decodes the video frames and displays them. The client captures input (keyboard and mouse) events, sends them to the server, and the server injects them into the device. [The documentation](https://github.com/Genymobile/scrcpy/blob/master/DEVELOP.md) provides more details.
 

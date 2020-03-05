@@ -55,7 +55,7 @@ This tool currently only supports Windows, in future updates I might add support
 
     Copyright (C) 2018 Genymobile
     Copyright (C) 2018-2020 Romain Vimont
-    Copyright (C) SDK Platform Tools https://developer.android.com/license
+    Copyright (C) 2016-2019 Android Developers https://developer.android.com/license
 
 
     Licensed under the Apache License, Version 2.0 (the "License");

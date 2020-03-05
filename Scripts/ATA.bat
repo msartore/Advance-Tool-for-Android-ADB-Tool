@@ -47,19 +47,19 @@ echo Log:
 echo.
 echo [FAILED] ADB launch failed!
 echo [FAILED] Device not found!
-echo [FAILED] ro.build.use loaded!
+echo [FAILED] ro.build.use failed to load!
 timeout /T 2>nul
-echo [FAILED] ro.product.cpu.abilist loaded!
+echo [FAILED] ro.product.cpu.abilist failed to load!
 timeout /T 2>nul
-echo [FAILED] ro.product.manufacturer loaded!
+echo [FAILED] ro.product.manufacturer failed to load!
 timeout /T 2>nul
-echo [FAILED] ro.product.model loaded! 
+echo [FAILED] ro.product.model failed to load! 
 timeout /T 2>nul
-echo [FAILED] ro.product.board loaded!
+echo [FAILED] ro.product.board failed to load!
 timeout /T 2>nul
-echo [FAILED] ro.product.device loaded!
+echo [FAILED] ro.product.device failed to load!
 timeout /T 2>nul
-echo [FAILED] ro.build.version.release loaded!
+echo [FAILED] ro.build.version.release failed to load!
 timeout /T 2>nul
 echo Booting into Bootloader menu
 goto :devicenotfound
@@ -409,10 +409,10 @@ echo ==========================================================================
 echo What do you want to do?
 echo.
 echo 1) Github
-echo.
 echo 2) Twitter
-echo.
 echo 3) Donate
+echo 4) Scrcpy repository
+echo 5) SDK Platform Tools Website
 echo ==========================================================================
 echo 0) EXIT
 echo ==========================================================================
@@ -426,6 +426,10 @@ if %inputmc%==1  start "" https://github.com/MassimilianoSartore/Advance-Tool-fo
 if %inputmc%==2  start "" https://twitter.com/SWayWasTaken
 
 if %inputmc%==3  start "" https://www.paypal.me/SWayGaming && echo Thank you very much for offering to help out with this project!
+
+if %inputmc%==4  start "" https://github.com/Genymobile/scrcpy/
+
+if %inputmc%==5  start "" https://developer.android.com/studio/releases/platform-tools.html
 pause
 goto :credits
 

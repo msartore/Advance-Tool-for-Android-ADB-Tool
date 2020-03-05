@@ -91,13 +91,14 @@ echo DEVICE NOT FOUND!
 echo try to reconnect the device or enable the usb debugging in your settings
 echo after that press enter
 echo ==========================================================================
-echo fastboot mode (Y/N) 
+echo 1. fastboot mode 
+echo 2. adb sideload
+echo 3. Restart the program
 SET inputd=0
 SET /P inputdnt=Please Select:
-if %inputdnt%==Y goto :menubootloader
-if %inputdnt%==y goto :menubootloader
-if %inputdnt%==N pause && cls && goto :devicecheck
-if %inputdnt%==n pause && cls && goto :devicecheck
+if %inputdnt%==1 goto :menubootloader
+if %inputdnt%==2 goto :menurecovery
+if %inputdnt%==3 goto :devicecheck
 echo Error, Wrong input!
 pause
 cls 
@@ -188,13 +189,13 @@ echo 6) FLASH ROM (You must know what you are doing)
 echo 7) Check connected devices
 echo 8) Boot into ROM
 echo 9) Boot into recovery
-echo 10) Factory reset
+echo 10) Hard Reset
 echo ==========================================================================
 echo 0) EXIT
 echo ==========================================================================
 echo.
 SET /P inputmb=Please Select:
-
+echo log:
 if %inputmb%==0 goto :devicecheck
 
 if %inputmb%==1 goto :menubootloaderunlock
@@ -211,11 +212,11 @@ if %inputmb%==6 SET /P rom=Write rom path like (/path/to/your/Rom.zip) && fastbo
 
 if %inputmb%==7 fastboot devices
 
-if %inputmb%==8 echo Loading. && echo Loading.. && fastboot reboot >nul && echo Loading... && goto :menubootloader
+if %inputmb%==8 echo Loading. && echo Loading.. && fastboot reboot >nul && echo Loading... && goto :menusystem
 
 if %inputmb%==9 echo Loading. && echo Loading.. && fastboot reboot recovery >nul && echo Loading... && goto :menurecovery
 
-if %inputmb%==10 echo Erasing process started && fastboot format userdata && fastboot format cache && echo Erasing process finished!
+if %inputmb%==10 echo Erasing process started && fastboot erase userdata && fastboot erase cache && echo Erasing process finished! 
 pause
 goto menubootloader
 

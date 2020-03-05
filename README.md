@@ -2,12 +2,12 @@
 
     ATA Tool V0.7.0.0
 	
-##💡Introduction
+## 💡Introduction
 
 This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genymobile/scrcpy).
 This tool currently only supports Windows, in future updates I might add support for macOS and Linux.
 
-##✨Features: 
+## ✨Features: 
 - UNLOCK BOOTLOADER 
 - LOCK BOOTLOADER 
 - FORMAT DATA PARTITION (EXT4) 
@@ -44,14 +44,14 @@ This tool currently only supports Windows, in future updates I might add support
     keyevent Istruction 
     https://developer.android.com/reference/android/view/KeyEvent.html
 	
-##🌞Requirements
+## 🌞Requirements
 
 1.	To run Scrcpy the Android device requires at least API 21 (Android 5.0).
 
 2.	Make sure you [enabled adb debugging](https://developer.android.com/studio/command-line/adb.html#Enabling) on your device(s).
 	On some devices, you also need to enable [an additional option](https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323)
 
-##❓What is Scrcpy?
+## ❓What is Scrcpy?
 
 
 [Scrcpy](https://github.com/Genymobile/scrcpy) was created by the team behind the popular Android emulator Genymotion, but it is not an Android emulator itself, it displays and controls Android devices connected via USB or TCP/IP, it does not require any root access. It works with GNU/Linux, Windows, and MacOS.

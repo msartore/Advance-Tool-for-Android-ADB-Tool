@@ -1,6 +1,6 @@
 # Advance Tool for Android
 
-    ATA Tool V0.7.5.0
+    ATA Tool v0.7.0.05032020
 	
 ## 💡Introduction
 

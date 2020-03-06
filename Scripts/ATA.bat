@@ -13,12 +13,13 @@ if exist settings.ini (
 )
 
 :prelaunch
+set DeviceCheckVar=0
 for /f %%a in (settings.ini) do (
-if %%a==417070726f766564 (
-goto :adblaunch
-) else (
-goto :disclaimer
-)
+    if %%a==417070726f766564 (
+        goto :adblaunch
+    ) else (
+        goto :disclaimer
+    )
 )
 
 :infodevice
@@ -37,6 +38,18 @@ for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_produ
 echo [  OK  ] ro.product.device loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 echo [  OK  ] ro.build.version.release loaded!
+goto :menu 
+
+:infodevicenul
+echo [  OK  ] Device still connected!
+echo Loading device info again..
+for /f "delims=" %%v in ('adb shell getprop ro.build.user') do set "ro_build_user=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.product.cpu.abilist') do set "ro_product_cpu_abilist=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.product.manufacturer') do set "ro_product_manufacturer=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_product_model=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
+for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 goto :menu 
 
 :notsuccess
@@ -77,7 +90,12 @@ color 07
 echo Checking if the device is connected...
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
 if /I "%version%" GEQ "1" (
-    goto :infodevice
+    if %DeviceCheckVar%==0 (
+        set DeviceCheckVar=1
+        goto :infodevice
+    ) else (
+        goto :infodevicenul
+    )
 ) else ( 
     goto :notsuccess
     pause
@@ -94,7 +112,7 @@ echo ==========================================================================
 echo 1. fastboot mode 
 echo 2. adb sideload
 echo 3. Restart the program
-SET inputd=0
+echo.
 SET /P inputdnt=Please Select:
 if %inputdnt%==1 goto :menubootloader
 if %inputdnt%==2 goto :menurecovery
@@ -111,7 +129,6 @@ echo *** Disclaimer ***
 echo I am not responsible for any damage YOU will do to your device
 echo You have been warned, Do you accept? (Y/N)
 echo.
-SET inputd=0
 SET /P inputd=Please Select:
 echo.
 echo log:
@@ -157,7 +174,6 @@ echo 6.  Credits
 echo ==========================================================================
 echo 0) EXIT
 echo ==========================================================================
-
 SET /P inputmm=Please Select:
 
 if %inputmm%==1 goto menubootloader
@@ -193,8 +209,8 @@ echo 10) Hard Reset
 echo ==========================================================================
 echo 0) EXIT
 echo ==========================================================================
-echo.
 SET /P inputmb=Please Select:
+echo.
 echo log:
 if %inputmb%==0 goto :devicecheck
 

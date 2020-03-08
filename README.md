@@ -1,6 +1,6 @@
 # Advance Tool for Android
 
-    ATA Tool v0.7.5.05032020
+    ATA Tool v0.8.0.08032020
 	
 ## 💡Introduction
 
@@ -39,7 +39,7 @@ This tool currently only supports Windows, in future updates I might add support
 * Device ID
 * Sideload a zip
 * **Scrcpy** - Screen mirror
- 
+* ADB over network working
 - Create and run a program
 
     keyevent Istruction 

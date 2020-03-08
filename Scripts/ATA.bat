@@ -1,5 +1,6 @@
 MODE 150
 @echo off
+:prelaunch
 TITLE ATA Tool by Sway
 color 07
 call "Banners/banner1.bat"
@@ -7,12 +8,12 @@ echo.
 echo Log:
 echo.
 if exist settings.ini (
-    goto :prelaunch
+    goto :disclaimercheck
 ) else (
     echo a >> settings.ini
 )
 
-:prelaunch
+:disclaimercheck
 set DeviceCheckVar=0
 for /f %%a in (settings.ini) do (
     if %%a==417070726f766564 (
@@ -85,11 +86,12 @@ goto :devicecheck
  
 :devicecheck
 cls
+set devicestatus=0
 call "Banners/banner1.bat"
 color 07
 echo Checking if the device is connected...
-for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "version=%%v"
-if /I "%version%" GEQ "1" (
+for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "devicestatus=%%v"
+if /I "%devicestatus%" GEQ "1" (
     if %DeviceCheckVar%==0 (
         set DeviceCheckVar=1
         goto :infodevice
@@ -104,11 +106,14 @@ if /I "%version%" GEQ "1" (
 :devicenotfound
 cls
 call "Banners/banner1.bat"
-echo ==========================================================================
-echo DEVICE NOT FOUND!
-echo try to reconnect the device or enable the usb debugging in your settings
-echo after that press enter
-echo ==========================================================================
+echo =================================================================================
+echo DEVICE NOT FOUND/MULTIPLE DEVICES FOUND!
+echo.
+echo - try to reconnect the device or enable the usb debugging in your settings
+echo   after that press enter
+echo.
+echo - If you are using adb over network, please remove the cable connected to that device
+echo =================================================================================
 echo 1. fastboot mode 
 echo 2. adb sideload
 echo 3. Restart the program
@@ -137,29 +142,64 @@ if %inputd%==y SET inputd=417070726f766564
 if %inputd%==N set inputd=6e6f7420617070726f766564
 if %inputd%==n set inputd=6e6f7420617070726f766564
 echo %inputd% > settings.ini
-if %inputd%==417070726f766564 goto :prelaunch
+if %inputd%==417070726f766564 goto :disclaimercheck
 if %inputd%==6e6f7420617070726f766564 exit
 echo Error, Wrong input!
 pause
 cls
 goto :disclaimer
 
+:adbwlan
+if exist deviceip.tmp (
+    goto adbwlan2
+)
+:adbwlan2
+adb devices 
+adb shell ip route
+echo Write the ip that you will find at the end
+SET /P adbwlanvar=Enter device ip:
+adb tcpip 5555
+for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
+echo %devicewlanstatus%
+if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
+    echo Done!
+    echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
+    set adbwlanstatus="connected to %adbwlanvar%:5555"
+    echo %adbwlanvar% > deviceip.tmp
+) else (
+    echo Failed!
+)
+pause
 
 :menu
+if exist deviceip.tmp (
+    for /f "delims= " %%a in (deviceip.tmp) do ( set adbwlanvar=%%a )
+)
+for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
+echo %devicewlanstatus%
+if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
+    set adbwlanstatus=connected to %adbwlanvar%:5555
+) else (
+    if exist deviceip.tmp (
+        set /p adbwlanstatus=<deviceip.tmp
+    ) else (
+        set adbwlanstatus=Error! Any device connected/found
+    )
+)
 cls
 color 07
 call "Banners/banner2.bat"
-echo ==========================================================================
+echo =================================================================================
 echo DEVICE INFO
-echo ==========================================================================
+echo =================================================================================
 echo Rom builder name: %ro_build_user%     Board: %ro_product_board%     Android Version: %ro_android_version%
 echo.
 echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
 echo.
-echo Compitable Apk file: %ro_product_cpu_abilist% 
-echo ==========================================================================
+echo Compitable Apk file: %ro_product_cpu_abilist%     ip registered(ADB over network): %adbwlanstatus%
+echo =================================================================================
 echo MAIN MENU
-echo ==========================================================================
+echo =================================================================================
 echo 1.  Fastboot/Bootloader Commands
 echo.
 echo 2.  Recovery Commands (Sideload)
@@ -170,10 +210,14 @@ echo 4.  Stream your SMARTPHONE
 echo.
 echo 5.  Create your own program!
 echo.
-echo 6.  Credits
-echo ==========================================================================
+echo 6.  Connect device via ADB over network
+echo.
+echo 7.  Disconnect device from ADB over network
+echo.
+echo 8.  Credits
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 SET /P inputmm=Please Select:
 
 if %inputmm%==1 goto menubootloader
@@ -181,19 +225,46 @@ if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
 if %inputmm%==4 call "scrcpy"
 if %inputmm%==5 goto creator
-if %inputmm%==6 goto credits
-if %inputmm% gtr 4 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
-if %inputmm%==0 goto :exitstatus
+if %inputmm%==6 goto adbwlan
+if %inputmm%==7 goto adbnetworkdisconnect
+if %inputmm%==8 goto credits
+if %inputmm%==0 goto exitstatus
+echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 pause
 goto :menu
 
+:adbnetworkdisconnect
+if "%adbwlanstatus%"=="Error! Any device connected/found" (
+    set adbwlanstatus=Not available
+)
+cls
+call "Banners/banner2.bat"
+echo =================================================================================
+echo ADB OVER NETWORK MENU
+echo =================================================================================
+echo 1. Disconnect (%adbwlanstatus%) (NOT WORKING YET)
+echo.
+echo 2. Disconnect manually
+echo =================================================================================
+echo 0) EXIT
+echo =================================================================================
+SET /P inputand=Please Select:
+if %inputand%==1 adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
+if %inputand%==2 adb shell ip route && SET /P inputandvar=Enter ip displayed: && goto disconnectprocess
+if %inputand%==0 goto devicecheck
+echo. && echo. && echo log: && echo Error! this section doesn't exist. 
+pause
+goto adbnetworkdisconnect
+
+:disconnectprocess
+adb disconnect %inputandvar% && del deviceip.tmp>nul && pause && goto devicecheck
 
 :menubootloader
 cls
 call "Banners/banner1.bat"
-echo ==========================================================================
+echo =================================================================================
 echo BOOTLOADER/FASTBOOT MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) UNLOCK/LOCK BOOTLOADER 
@@ -206,9 +277,9 @@ echo 7) Check connected devices
 echo 8) Boot into ROM
 echo 9) Boot into recovery
 echo 10) Hard Reset
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 SET /P inputmb=Please Select:
 echo.
 echo log:
@@ -239,9 +310,9 @@ goto menubootloader
 :menubootloaderunlock
 cls
 call "Banners/banner1.bat"
-echo ==========================================================================
+echo =================================================================================
 echo BOOTLOADER UNLOCK/LOCK MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do? (To use all commands below you have to boot in bootloader mode)
 echo.
 echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
@@ -253,9 +324,9 @@ echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it in
 echo 7) Device ID
 echo 8) Oem unlock data (for Motorola devices)
 echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputmbul=Please Select:
 echo log:
@@ -284,9 +355,9 @@ goto menubootloaderunlock
 :menusystem
 cls
 call "Banners/banner1.bat"
-echo ==========================================================================
+echo =================================================================================
 echo SYSTEM MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) REBOOT SMARTPHONE
@@ -305,9 +376,9 @@ echo 13) SMARTPHONE Status
 echo 14) Unistall System App/Bloat 
 echo 15) Grant root permissions (App)
 echo 16) Interface
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputms=Please Select:
 
@@ -350,14 +421,14 @@ goto menusystem
 :Interface
 cls
 call "Banners/banner2.bat"
-echo ==========================================================================
+echo =================================================================================
 echo INTERFACE MENU
-echo ==========================================================================
+echo =================================================================================
 echo 1) Enable Dark Mode
 echo 2) Disable Dark Mode
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputms=Please Select:
 
@@ -397,15 +468,15 @@ goto :menusystem
 :menurecovery
 cls
 call "Banners/banner1.bat"
-echo ==========================================================================
+echo =================================================================================
 echo RECOVERY MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) Sideload a zip
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputmr=Please Select:
 
@@ -420,9 +491,9 @@ goto menurecovery
 cls
 color 0A
 call "Banners/banner2.bat"
-echo ==========================================================================
+echo =================================================================================
 echo CREDITS MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) Github
@@ -430,9 +501,9 @@ echo 2) Twitter
 echo 3) Donate
 echo 4) Scrcpy repository
 echo 5) SDK Platform Tools Website
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputmc=Please Select:
 echo log:
@@ -462,17 +533,17 @@ goto :menusystem
 :grantpermissions
 cls
 call "Banners/banner2.bat"
-echo ==========================================================================
+echo =================================================================================
 echo ROOT PERMISSIONS MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) Grant WRITE_SECURE_SETTINGS permission
 echo 2) Grant DUMP permission
 echo 3) Check for granted permissions
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 echo.
 SET /P inputgp=Please Select:
 
@@ -510,16 +581,16 @@ goto :exitstatus
 cls
 call "Banners/banner2.bat"
 echo.
-echo ==========================================================================
+echo =================================================================================
 echo PROGRAM MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) Create a program (.bat)
 echo 2) Run a program 
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 SET /P crinput=Please Select:
 echo.
 echo log:
@@ -545,16 +616,16 @@ goto :creator1
 cls
 call "Banners/banner2.bat"
 echo.
-echo ==========================================================================
+echo =================================================================================
 echo REMOTE COMMANDS MENU
-echo ==========================================================================
+echo =================================================================================
 echo What do you want to do?
 echo.
 echo 1) Instruction
 echo 2) Text
-echo ==========================================================================
+echo =================================================================================
 echo 0) EXIT
-echo ==========================================================================
+echo =================================================================================
 SET /P ccinput=Please Select:
 echo.
 echo log:

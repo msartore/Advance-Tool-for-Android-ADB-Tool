@@ -40,7 +40,7 @@ This tool currently only supports Windows, in future updates I might add support
 * Sideload a zip
 * **Scrcpy** - Screen mirror
 * ADB over network working
-- Create and run a program
+* Create and run a program
 
     keyevent Istruction 
     https://developer.android.com/reference/android/view/KeyEvent.html

@@ -5,9 +5,9 @@
 ## 💡Introduction
 
 This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genymobile/scrcpy).
-This tool currently only supports Windows, in future updates I might add support for macOS and Linux.
+This tool currently only supports Windows and Linux, in future updates I might add support for macOS.
 
-## ✨Features: 
+## ✨ Windows Features: 
 * UNLOCK BOOTLOADER 
 * LOCK BOOTLOADER 
 * FORMAT DATA PARTITION (EXT4) 
@@ -22,7 +22,7 @@ This tool currently only supports Windows, in future updates I might add support
 * REBOOT INTO THE RECOVERY 
 * REBOOT INTO THE Fastboot/Bootloader 
 * Check connected devices 
-* Check devices version connected  
+* Check devices version
 * Install an app 
 * Unistall an app  
 * Emulate device (Resize Screen) 
@@ -44,7 +44,16 @@ This tool currently only supports Windows, in future updates I might add support
 
     keyevent Istruction 
     https://developer.android.com/reference/android/view/KeyEvent.html
-	
+    
+## ✨ Linux Features: 
+* Check connected devices
+* REBOOT SMARTPHONE
+* REBOOT INTO THE RECOVERY 
+* REBOOT INTO THE Fastboot/Bootloader 
+* Check devices version
+* Enable/Disable Dark Mode in Q
+* Device serial number
+
 ## 🌞Requirements
 
 1.	To run Scrcpy the Android device requires at least API 21 (Android 5.0).

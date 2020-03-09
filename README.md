@@ -1,7 +1,8 @@
 # Advance Tool for Android™
 
-    ATA Tool v0.8.0.08032020
-	
+    Windows ATA Tool v0.8.0.08032020
+    Linux ATA Tool v0.0.1.09032020
+
 ## 💡Introduction
 
 This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genymobile/scrcpy).

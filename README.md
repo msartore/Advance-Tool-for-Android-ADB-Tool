@@ -1,4 +1,4 @@
-# Advance Tool for Android
+# Advance Tool for Android™
 
     ATA Tool v0.8.0.08032020
 	
@@ -71,9 +71,9 @@ This tool currently only supports Windows, in future updates I might add support
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-
+    
+    Android is a trademark of Google LLC.
+    
 ## ❓What is Scrcpy?
 
 

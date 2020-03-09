@@ -119,6 +119,8 @@ echo 2. adb sideload
 echo 3. Restart the program
 echo.
 SET /P inputdnt=Please Select:
+echo. 
+echo log:
 if %inputdnt%==1 goto :menubootloader
 if %inputdnt%==2 goto :menurecovery
 if %inputdnt%==3 goto :devicecheck
@@ -150,10 +152,6 @@ cls
 goto :disclaimer
 
 :adbwlan
-if exist deviceip.tmp (
-    goto adbwlan2
-)
-:adbwlan2
 adb devices 
 adb shell ip route
 echo Write the ip that you will find at the end
@@ -219,7 +217,8 @@ echo ===========================================================================
 echo 0) EXIT
 echo =================================================================================
 SET /P inputmm=Please Select:
-
+echo. 
+echo log:
 if %inputmm%==1 goto menubootloader
 if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
@@ -257,7 +256,8 @@ pause
 goto adbnetworkdisconnect
 
 :disconnectprocess
-adb disconnect %inputandvar% && del deviceip.tmp>nul && pause && goto devicecheck
+adb disconnect %inputandvar% && del deviceip.tmp 2>nul && pause && set "adbwlanvar=" && goto devicecheck 
+goto adbnetworkdisconnect
 
 :menubootloader
 cls
@@ -329,6 +329,7 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputmbul=Please Select:
+echo.
 echo log:
 if %inputmbul%==0 goto :menubootloader
 
@@ -381,10 +382,11 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputms=Please Select:
-
+echo.
+echo log:
 if %inputms%==0 goto :devicecheck
 
-if %inputms%==1 cls && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
+if %inputms%==1 echo Loading... && adb reboot >nul && echo Rebooted! 
 
 if %inputms%==2 echo Loading... && adb reboot recovery && goto :menurecovery
 
@@ -431,7 +433,8 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputms=Please Select:
-
+echo.
+echo log:
 if %inputms%==0 goto :devicecheck
 
 if %inputms%==1 adb shell settings put secure ui_night_mode 2 && echo Loading. && cls && adb reboot >nul && cls && echo Rebooted! 
@@ -479,7 +482,8 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputmr=Please Select:
-
+echo.
+echo log:
 if %inputmr%==0 goto :devicecheck
 set slzip=0
 if %inputmr%==1 SET /P slzip=Write the zip name like (name.zip)
@@ -506,6 +510,7 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputmc=Please Select:
+echo.
 echo log:
 if %inputmc%==0 goto :devicecheck 
 
@@ -546,7 +551,8 @@ echo 0) EXIT
 echo =================================================================================
 echo.
 SET /P inputgp=Please Select:
-
+echo.
+echo log:
 if %inputgp%==0 goto :devicecheck 
 
 if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS && echo Executed!

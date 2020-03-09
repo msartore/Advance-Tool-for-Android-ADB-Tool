@@ -5,7 +5,10 @@
 
 ## 💡Introduction
 
-This tool include adb.exe and fastboot.exe and [Scrcpy](https://github.com/Genymobile/scrcpy).
+This tool include: 
+* Adb tool [29.0.5 (October 2019)](https://developer.android.com/studio/releases/platform-tools.html#2905_october_2019)
+* Scrcpy [v1.12.1](https://github.com/Genymobile/scrcpy/releases/tag/v1.12.1) 
+
 This tool currently only supports Windows and Linux, in future updates I might add support for macOS.
 
 ## ✨ Windows Features: 

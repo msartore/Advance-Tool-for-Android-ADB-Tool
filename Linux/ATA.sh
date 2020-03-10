@@ -33,8 +33,14 @@ tput setaf 2; echo  " 6. Device serial number "
 tput setaf 2; echo  " 7. Enable Dark Mode "
 tput setaf 2; echo  " 8. Disable Dark Mode "
 tput setaf 2; echo  "================================================================================="
+tput setaf 2; echo  " RECOVERY MENU "
+tput setaf 2; echo  "================================================================================="
+tput setaf 2; echo  " 9. Sideload (ONLY .zip) "
+tput setaf 2; echo  "================================================================================="
 tput setaf 2; echo  " EXIT Press CTRL + C at the same time"
+tput setaf 2; echo  "================================================================================="
 
+tput setaf 2; echo  "Please Select:"
 read inputmenu
 
 case $inputmenu in
@@ -65,8 +71,12 @@ case $inputmenu in
     ./adb shell settings put secure ui_night_mode 1
     ./adb reboot
     ;;
+   9)
+    tput setaf 2; echo  "Please enter zip name file with exention:"
+    read inputsideload
+    ./adb sideload $inputsideload
     
 esac
 tput setaf 2; echo  "Press [Enter] key to continue..."
-read -n 1 -p prompt
-bash ATA.sh
+read 1 -p prompt
+sh ATA.sh

@@ -1,7 +1,7 @@
 # Advance Tool for Android™
 
     Windows ATA Tool v0.8.0.08032020
-    Linux ATA Tool v0.0.1.09032020
+    Linux ATA Tool v0.0.1.10032020
 
 ## 💡Introduction
 
@@ -57,6 +57,7 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * Check devices version
 * Enable/Disable Dark Mode in Q
 * Device serial number
+* Sideload a zip
 
 ## 🌞Requirements
 

@@ -19,16 +19,12 @@ tput setaf 2; echo  "      ::                   adb and fastboot tool           
 tput setaf 2; echo  "      ::                      Created By Sway	                    ::        "
 tput setaf 2; echo  "      ::                  Copyright 2019-2020 Sway	            ::        "
 tput setaf 2; echo  "      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::        "
-
-
 tput setaf 2; echo  "================================================================================="
-tput setaf 2; echo  " SYSTEM MENU "
+tput setaf 2; echo  " RECOVERY MENU "
 tput setaf 2; echo  "================================================================================="
-tput setaf 2; echo  " 1. System Commands "
-tput setaf 2; echo  " 2. Recovery Commands (Sideload) "
-tput setaf 2; echo  " 3. Fastboot/Bootloader Commands "
+tput setaf 2; echo  " 1. Sideload (ONLY .zip) "
 tput setaf 2; echo  "================================================================================="
-tput setaf 2; echo  " EXIT Press CTRL + C at the same time"
+tput setaf 2; echo  " 0. Return to main menu"
 tput setaf 2; echo  "================================================================================="
 
 tput setaf 2; echo  "Please Select:"
@@ -36,17 +32,18 @@ read inputmenu
 
 case $inputmenu in
 
+   0)
+    sh ATA.sh
+    ;;
    1)
-    sh system.sh
+    tput setaf 2; echo  "Please enter zip name file with exention:"
+    read inputsideload
+    ./adb sideload $inputsideload
     ;;
-   2)
-    sh recovery.sh
-    ;;
-   3)
-    tput setaf 2; echo  "NOT AVAILABLE YET"
-    ;;
-    
+
+
+
 esac
 tput setaf 2; echo  "Press [Enter] key to continue..."
 read 1 -p prompt
-sh ATA.sh
+sh recovery.sh

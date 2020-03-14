@@ -24,29 +24,55 @@ tput setaf 2; echo  "      :::::::::::::::::::::::::::::::::::::::::::::::::::::
 tput setaf 2; echo  "================================================================================="
 tput setaf 2; echo  " SYSTEM MENU "
 tput setaf 2; echo  "================================================================================="
-tput setaf 2; echo  " 1. System Commands "
-tput setaf 2; echo  " 2. Recovery Commands (Sideload) "
-tput setaf 2; echo  " 3. Fastboot/Bootloader Commands "
+tput setaf 2; echo  " 1. Check connected devices "
+tput setaf 2; echo  " 2. REBOOT SMARTPHONE "
+tput setaf 2; echo  " 3. REBOOT INTO THE RECOVERY "
+tput setaf 2; echo  " 4. REBOOT INTO THE Fastboot/Bootloader "
+tput setaf 2; echo  " 5. Device version "
+tput setaf 2; echo  " 6. Device serial number "
+tput setaf 2; echo  " 7. Enable Dark Mode "
+tput setaf 2; echo  " 8. Disable Dark Mode "
 tput setaf 2; echo  "================================================================================="
-tput setaf 2; echo  " EXIT Press CTRL + C at the same time"
+tput setaf 2; echo  " 0. Return to main menu"
 tput setaf 2; echo  "================================================================================="
+
 
 tput setaf 2; echo  "Please Select:"
 read inputmenu
 
 case $inputmenu in
 
+   0)
+    sh ATA.sh
+    ;;
    1)
-    sh system.sh
+    ./adb devices
     ;;
    2)
-    sh recovery.sh
+    ./adb reboot
     ;;
    3)
-    tput setaf 2; echo  "NOT AVAILABLE YET"
+    ./adb reboot recovery
+    ;;
+   4)
+    ./adb reboot-bootloader
+    ;;
+   5)
+    ./adb shell getprop ro.build.version.release
+    ;;
+   6)
+    ./adb get-serialno
+    ;;
+   7)
+    ./adb shell settings put secure ui_night_mode 2
+    ./adb reboot
+    ;;
+   8)
+    ./adb shell settings put secure ui_night_mode 1
+    ./adb reboot
     ;;
     
 esac
 tput setaf 2; echo  "Press [Enter] key to continue..."
 read 1 -p prompt
-sh ATA.sh
+sh system.sh

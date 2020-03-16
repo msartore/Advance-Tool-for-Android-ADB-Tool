@@ -1,7 +1,7 @@
 # Advance Tool for Android™
 
     Windows ATA Tool v0.8.0.08032020
-    Linux ATA Tool v0.0.1.10032020
+    Linux ATA Tool v0.0.1.16032020
 
 ## 💡Introduction
 

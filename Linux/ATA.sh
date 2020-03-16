@@ -14,7 +14,7 @@ tput setaf 2; echo  "                                                           
 tput setaf 2; echo  "                                                          -dddd+           "              
 tput setaf 2; echo  "                                                                           "                                                        
 tput setaf 2; echo 	"      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::        "
-tput setaf 2; echo  "      ::                  ATA Tool v0.0.1.14032020                  ::        "
+tput setaf 2; echo  "      ::                  ATA Tool v0.0.1.16032020                  ::        "
 tput setaf 2; echo  "      ::                   adb and fastboot tool                    ::        "
 tput setaf 2; echo  "      ::                      Created By Sway	                    ::        "
 tput setaf 2; echo  "      ::                  Copyright 2019-2020 Sway	            ::        "
@@ -43,7 +43,7 @@ case $inputmenu in
     sh recovery.sh
     ;;
    3)
-    tput setaf 2; echo  "NOT AVAILABLE YET"
+    sh fastboot.sh
     ;;
     
 esac

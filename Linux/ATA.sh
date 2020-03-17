@@ -27,6 +27,7 @@ tput setaf 2; echo  "===========================================================
 tput setaf 2; echo  " 1. System Commands "
 tput setaf 2; echo  " 2. Recovery Commands (Sideload) "
 tput setaf 2; echo  " 3. Fastboot/Bootloader Commands "
+tput setaf 2; echo  " 4. Stream your SMARTPHONE "
 tput setaf 2; echo  "================================================================================="
 tput setaf 2; echo  " EXIT Press CTRL + C at the same time"
 tput setaf 2; echo  "================================================================================="
@@ -44,6 +45,9 @@ case $inputmenu in
     ;;
    3)
     sh fastboot.sh
+    ;;
+   4)
+    scrcpy
     ;;
     
 esac

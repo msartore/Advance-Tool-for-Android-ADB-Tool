@@ -32,6 +32,7 @@ tput setaf 2; echo  " 5. Device version "
 tput setaf 2; echo  " 6. Device serial number "
 tput setaf 2; echo  " 7. Enable Dark Mode "
 tput setaf 2; echo  " 8. Disable Dark Mode "
+tput setaf 2; echo  " 9. Unistall System App/Bloat  "
 tput setaf 2; echo  "================================================================================="
 tput setaf 2; echo  " 0. Return to main menu"
 tput setaf 2; echo  "================================================================================="
@@ -71,6 +72,10 @@ case $inputmenu in
     ./adb shell settings put secure ui_night_mode 1
     ./adb reboot
     ;;
+   9)
+    tput setaf 2; echo  "Write the app name like com.myAppPackage"
+    read inputsappuni
+    adb shell pm uninstall -k --user 0 $inputsappuni
     
 esac
 tput setaf 2; echo  "Press [Enter] key to continue..."

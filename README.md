@@ -1,7 +1,7 @@
 # Advance Tool for Android™
 
     Windows ATA Tool v0.8.0.08032020
-    Linux ATA Tool v0.0.1.16032020
+    Linux ATA Tool v0.0.1.17032020
 
 ## 💡Introduction
 
@@ -58,6 +58,13 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * Enable/Disable Dark Mode in Q
 * Device serial number
 * Sideload a zip
+* FORMAT DATA PARTITION (EXT4) 
+* FORMAT DATA PARTITION (F2FS)  
+* FLASH RECOVERY (only .img file) 
+* FLASH KERNEL (only .img file) 
+* FLASH ROM (You must know what you are doing) 
+* Hard Reset
+* Stream your smartphone with scrcpy (YOU HAVE TO INSTALL IT!) [How to install it](https://github.com/Genymobile/scrcpy/blob/master/README.md#linux)
 
 ## 🌞Requirements
 

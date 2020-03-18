@@ -117,10 +117,14 @@ echo ===========================================================================
 echo 1. fastboot mode 
 echo 2. adb sideload
 echo 3. Restart the program
+echo =================================================================================
+echo 0) EXIT
+echo =================================================================================
 echo.
 SET /P inputdnt=Please Select:
 echo. 
 echo log:
+if %inputdnt%==0 goto :exitstatus
 if %inputdnt%==1 goto :menubootloader
 if %inputdnt%==2 goto :menurecovery
 if %inputdnt%==3 goto :devicecheck

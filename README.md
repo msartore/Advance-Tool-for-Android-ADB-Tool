@@ -66,13 +66,23 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * Hard Reset
 * Stream your smartphone with scrcpy (YOU HAVE TO INSTALL IT!) [How to install it](https://github.com/Genymobile/scrcpy/blob/master/README.md#linux)
 
-## 🌞Requirements
+## 🌞Windows Requirements 
 
 1.	To run Scrcpy the Android device requires at least API 21 (Android 5.0).
 
 2.	Make sure you [enabled adb debugging](https://developer.android.com/studio/command-line/adb.html#Enabling) on your device(s).
 	On some devices, you also need to enable [an additional option](https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323)
-	
+
+## 🐧Linux Requirements 
+
+
+1.	To run Scrcpy the Android device requires at least API 21 (Android 5.0).
+
+2.	Make sure you [enabled adb debugging](https://developer.android.com/studio/command-line/adb.html#Enabling) on your device(s).
+	On some devices, you also need to enable [an additional option](https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323)
+
+3.	How to Install Scrcpy https://github.com/Genymobile/scrcpy#linux
+
 ## Licence
 
     Copyright (C) 2018 Genymobile

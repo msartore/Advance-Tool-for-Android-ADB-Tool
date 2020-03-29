@@ -1,7 +1,7 @@
 MODE 150
 @echo off
 :prelaunch
-TITLE ATA Tool by Sway
+TITLE ATA Tool by Sway [USER MODE]
 color 07
 call "Banners/banner1.bat"
 echo. 
@@ -83,12 +83,30 @@ echo ADB launch...
 fastboot devices >nul
 adb devices >nul
 goto :devicecheck
- 
+
+:dev
+cls
+call "Banners/devbanner.bat"
+echo.
+echo  ARE YOU SURE?!?
+pause
+cls
+TITLE ATA Tool by Sway [DEV MODE]
+color 0E
+set ro_build_user=NOT LOADED
+set ro_product_cpu_abilist=NOT LOADED
+set ro_product_manufacturer=NOT LOADED
+set ro_product_model=NOT LOADED
+set ro_product_board=NOT LOADED
+set ro_product_device=NOT LOADED
+set ro_android_version=NOT LOADED
+goto menu
+
 :devicecheck
 cls
+if exist admin.dev goto dev
 set devicestatus=0
 call "Banners/banner1.bat"
-color 07
 echo Checking if the device is connected...
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "devicestatus=%%v"
 if /I "%devicestatus%" GEQ "1" (
@@ -189,7 +207,6 @@ if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
     )
 )
 cls
-color 07
 call "Banners/banner2.bat"
 echo =================================================================================
 echo DEVICE INFO
@@ -249,7 +266,7 @@ echo 1. Disconnect (%adbwlanstatus%) (NOT WORKING YET)
 echo.
 echo 2. Disconnect manually
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 SET /P inputand=Please Select:
 if %inputand%==1 adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
@@ -282,7 +299,7 @@ echo 8) Boot into ROM
 echo 9) Boot into recovery
 echo 10) Hard Reset
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 SET /P inputmb=Please Select:
 echo.
@@ -329,7 +346,7 @@ echo 7) Device ID
 echo 8) Oem unlock data (for Motorola devices)
 echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputmbul=Please Select:
@@ -369,7 +386,7 @@ echo 1) REBOOT SMARTPHONE
 echo 2) REBOOT INTO THE RECOVERY
 echo 3) REBOOT INTO THE Fastboot/Bootloader
 echo 4) Check connected devices
-echo 5) Check devices version connected
+echo 5) Interface
 echo 6) Install an app
 echo 7) Unistall an app (No System App)
 echo 8) Emulate device (Resize Screen)
@@ -380,9 +397,9 @@ echo 12) Screen Recording
 echo 13) SMARTPHONE Status
 echo 14) Unistall System App/Bloat 
 echo 15) Grant root permissions (App)
-echo 16) Interface
+echo 16) Device Info
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputms=Please Select:
@@ -398,7 +415,7 @@ if %inputms%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
 
 if %inputms%==4 adb devices
 
-if %inputms%==5 adb shell getprop ro.build.version.release
+if %inputms%==5 goto :Interface
 
 if %inputms%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
 
@@ -420,9 +437,49 @@ if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo
 
 if %inputms%==15 goto :grantpermissions
 
-if %inputms%==16 goto :Interface
+if %inputms%==16 goto :deviceinfo
+
 pause
 goto menusystem
+
+
+:deviceinfo
+if not exist temp\ md temp\>nul
+cls
+call "Banners/banner2.bat"
+echo =================================================================================
+echo DEVICE INFO MENU
+echo =================================================================================
+echo 1) Run Logcat and Display On Screen Only
+echo 2) Run Logcat and Record Text File Locally
+echo 3) Run "getevent" and Display On Screen Only
+echo 4) Run "getevent" and Record Text File Locally
+echo 5) Check devices version connected
+echo 6) View System Info (Data From build.prop, g.prop, and others)
+echo =================================================================================
+echo 0) BACK
+echo =================================================================================
+echo.
+SET /P inputdinfo=Please Select:
+echo.
+echo log:
+if %inputdinfo%==0 goto :menusystem
+
+if %inputdinfo%==1 start "" adb shell logcat
+
+if %inputdinfo%==2 adb shell logcat > "temp\logcat.txt"
+
+if %inputdinfo%==3 start "" adb shell getevent
+
+if %inputdinfo%==4 adb shell getevent > "temp\getevent.txt"
+
+if %inputdinfo%==5 adb shell getprop ro.build.version.release
+
+if %inputdinfo%==6 start view_buildprop_info.bat
+
+pause
+goto deviceinfo
+
 
 :Interface
 cls
@@ -433,7 +490,7 @@ echo ===========================================================================
 echo 1) Enable Dark Mode
 echo 2) Disable Dark Mode
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputms=Please Select:
@@ -482,7 +539,7 @@ echo What do you want to do?
 echo.
 echo 1) Sideload a zip
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputmr=Please Select:
@@ -510,7 +567,7 @@ echo 3) Donate
 echo 4) Scrcpy repository
 echo 5) SDK Platform Tools Website
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputmc=Please Select:
@@ -551,7 +608,7 @@ echo 1) Grant WRITE_SECURE_SETTINGS permission
 echo 2) Grant DUMP permission
 echo 3) Check for granted permissions
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 echo.
 SET /P inputgp=Please Select:
@@ -599,7 +656,7 @@ echo.
 echo 1) Create a program (.bat)
 echo 2) Run a program 
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 SET /P crinput=Please Select:
 echo.
@@ -634,7 +691,7 @@ echo.
 echo 1) Instruction
 echo 2) Text
 echo =================================================================================
-echo 0) EXIT
+echo 0) BACK
 echo =================================================================================
 SET /P ccinput=Please Select:
 echo.

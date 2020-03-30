@@ -88,7 +88,7 @@ goto :devicecheck
 cls
 call "Banners/devbanner.bat"
 echo.
-echo  ARE YOU SURE?!?
+echo  You are now a developer!
 pause
 cls
 TITLE ATA Tool by Sway [DEV MODE]

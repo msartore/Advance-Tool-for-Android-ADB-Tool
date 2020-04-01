@@ -1,11 +1,11 @@
 # Advance Tool for Android™
 
-	Windows ATA Tool v0.8.5.29032020
+	Windows ATA Tool v0.8.5.30032020
 	Linux ATA Tool v0.0.1.17032020 
 
 ## 📦Download 
 
-[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.8.5.29032020-for-Windows-By-Sway.zip) Windows ATA Tool v0.8.5.29032020
+[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.8.5.30032020-for-Windows-By-Sway.zip) Windows ATA Tool v0.8.5.30032020
 
 [Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.0.1.17032020-for-Linux-By-Sway.zip) Linux ATA Tool v0.0.1.17032020 
     
@@ -48,6 +48,12 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * Factory reset
 * Device ID
 * Sideload a zip
+* Logcat and Display On Screen Only
+* Logcat and Record Text File Locally
+* "getevent" and Display On Screen Only
+* "getevent" and Record Text File Locally
+* View System Info (Data From build.prop, g.prop, and others), [External script view_buildprop_info.bat]
+
 * **Scrcpy** - Screen mirror
 * **ADB over network** working
 * Create and run a program

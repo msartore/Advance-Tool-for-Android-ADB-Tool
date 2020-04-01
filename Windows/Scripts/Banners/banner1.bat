@@ -15,7 +15,7 @@ ECHO                                                             oMMMM:
 ECHO                                                            -dddd+                         
 ECHO                                                              ````                                                                   
 ECHO 	::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-ECHO  	::                  ATA Tool v0.8.5.29032020                  ::
+ECHO  	::                  ATA Tool v0.8.6.01042020                  ::
 ECHO  	::                   adb and fastboot tool                    ::
 ECHO  	::                      Created By Sway	                      ::
 ECHO  	::                  Copyright 2019-2020 Sway	              ::

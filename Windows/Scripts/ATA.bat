@@ -345,6 +345,8 @@ echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it in
 echo 7) Device ID
 echo 8) Oem unlock data (for Motorola devices)
 echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
+echo 10) UNLOCK BOOTLOADER FOR VIVO DEVICES
+echo 11) LOCK BOOTLOADER FOR VIVO DEVICES
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -362,16 +364,19 @@ if %inputmbul%==3 fastboot oem device-info && echo Oem locking.. && fastboot oem
 
 if %inputmbul%==4 fastboot oem device-info && echo Oem locking.. && fastboot flashing lock && echo Getting var unlock state.. && fastboot getvar unlocked
 
-if %inputmbul%==5 fastboot getvar all 
+if %inputmbul%==5 fastboot getvar all && echo Done!
 
 if %inputmbul%==6 fastboot flash unlock unlock.bin && fastboot reboot && echo Done! && echo. && echo Rebooting!
 
-if %inputmbul%==7 fastboot oem device-id
+if %inputmbul%==7 fastboot oem device-id && echo Done!
 
-if %inputmbul%==8 fastboot oem get_unlock_data
+if %inputmbul%==8 fastboot oem get_unlock_data && echo Done!
 
 if %inputmbul%==9 SET /P oemcode=Paste the code here && fastboot oem unlock %oemcode% && echo Done && echo Rebooting!
 pause
+if %inputmbul%==10 fastboot bbk unlock_vivo && echo Done!
+
+if %inputmbul%==11 fastboot bbk lock_vivo && echo Done!
 goto menubootloaderunlock
 
 :menusystem

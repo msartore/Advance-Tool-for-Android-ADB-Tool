@@ -1,3 +1,9 @@
+Rem Tool made by Sway 
+Rem github repository: https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-
+Rem twitter: https://twitter.com/SWayWasTaken
+Rem email: massimiliano.sartore@protonmail.com
+Rem Copyright (C) 2019-2020 SwayWasTaken
+
 MODE 150
 @echo off
 :prelaunch
@@ -79,10 +85,43 @@ echo Booting into Bootloader menu
 goto :devicenotfound
 
 :adblaunch
-echo ADB launch...
-fastboot devices >nul
-adb devices >nul
-goto :devicecheck
+echo integrity check started
+if exist adb.exe set /a adbint+=1
+if exist AdbWinApi.dll set /a adbint+=1 
+if exist AdbWinUsbApi.dll set /a adbint+=1
+if exist fastboot.exe  set /a adbint+=1
+if /I "%adbint%" LSS "4" (
+    taskkill /f /im adb.exe 2>nul
+    del AdbWinApi.dll 2>nul
+    del AdbWinUsbApi.dll 2>nul
+    del fastboot.exe 2>nul
+    del adb.exe 2>nul
+    goto :adbinstaller
+) else (
+    echo integrity check finished
+    echo ADB launch...
+    fastboot devices >nul
+    adb devices >nul
+    goto :devicecheck
+)
+
+:adbinstaller
+echo adb installation process started
+if exist j_unzip.vbs (
+    if exist adbinstaller.bat (
+        call "adbinstaller.bat"
+        goto adblaunch
+    ) else (
+        echo You have to download ATA again!
+        pause
+        exit 
+    )
+) else (
+    echo You have to download ATA again!
+    pause
+    exit 
+)
+
 
 :dev
 cls
@@ -103,10 +142,8 @@ set ro_android_version=NOT LOADED
 goto menu
 
 :devicecheck
-cls
 if exist admin.dev goto dev
 set devicestatus=0
-call "Banners/banner1.bat"
 echo Checking if the device is connected...
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "devicestatus=%%v"
 if /I "%devicestatus%" GEQ "1" (
@@ -399,7 +436,6 @@ echo 9) Emulate device (Change Density)
 echo 10) Reset (Emulate device)
 echo 11) Change system info 
 echo 12) Screen Recording 
-echo 13) SMARTPHONE Status
 echo 14) Unistall System App/Bloat 
 echo 15) Grant root permissions (App)
 echo 16) Device Info
@@ -436,8 +472,6 @@ if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recov
 
 if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
 
-if %inputms%==13 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
-
 if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
 
 if %inputms%==15 goto :grantpermissions
@@ -460,7 +494,10 @@ echo 2) Run Logcat and Record Text File Locally
 echo 3) Run "getevent" and Display On Screen Only
 echo 4) Run "getevent" and Record Text File Locally
 echo 5) Check devices version connected
-echo 6) View System Info (Data From build.prop, g.prop, and others)
+echo 6) View System Info (Data From build.prop, g.prop, and others)\
+echo 7) List of system app
+echo 8) List of non system app
+echo 9) SMARTPHONE Status
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -481,6 +518,12 @@ if %inputdinfo%==4 adb shell getevent > "temp\getevent.txt"
 if %inputdinfo%==5 adb shell getprop ro.build.version.release
 
 if %inputdinfo%==6 start view_buildprop_info.bat
+
+if %inputdinfo%==7 adb shell pm list packages -s
+
+if %inputdinfo%==8 adb shell pm list packages -3
+
+if %inputdinfo%==9 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
 
 pause
 goto deviceinfo

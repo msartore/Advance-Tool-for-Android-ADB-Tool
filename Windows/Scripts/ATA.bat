@@ -86,42 +86,109 @@ goto :devicenotfound
 
 :adblaunch
 echo integrity check started
-if exist adb.exe set /a adbint+=1
-if exist AdbWinApi.dll set /a adbint+=1 
-if exist AdbWinUsbApi.dll set /a adbint+=1
-if exist fastboot.exe  set /a adbint+=1
-if /I "%adbint%" LSS "4" (
+set adbint=0
+echo Checking fastboot.exe
+if exist fastboot.exe  set /a adbint=1
+if /I "%adbint%" LSS "1" (
+    echo fastboot not found
     taskkill /f /im adb.exe 2>nul
+    del fastboot.exe 2>nul
+    echo adb installation process started
+    if exist j_unzip.vbs (
+        echo platform-tools download started
+        powershell -command "& { iwr https://dl.google.com/android/repository/platform-tools-latest-windows.zip -OutFile adb.zip }"
+        echo Unzipping adb.zip
+        cscript //B j_unzip.vbs adb.zip
+        set main="%cd%"
+        echo Moving fastboot.exe in %cd%
+        move platform-tools\fastboot.exe %main%
+        echo Deleting platform-tools folder
+        rmdir /Q /S platform-tools
+        echo Deleting adb.zip
+        del adb.zip
+        goto :adblaunch
+    ) else (
+        echo integrity check failed
+        echo You have to download ATA again!
+        pause
+        exit 
+    )
+) else (
+    echo [  OK  ] fastboot.exe found!
+)
+echo Checking adb.exe
+if exist adb.exe set /a scrint+=1
+echo Checking AdbWinApi.dll
+if exist AdbWinApi.dll set /a scrint+=1 
+echo Checking AdbWinUsbApi.dll
+if exist AdbWinUsbApi.dll set /a scrint+=1
+echo Checking avutil-56.dll
+if exist avutil-56.dll set /a scrint+=1
+echo Checking avcodec-58.dll
+if exist avcodec-58.dll set /a scrint+=1
+echo Checking avformat-58.dll
+if exist avformat-58.dll set /a scrint+=1
+echo Checking scrcpy.exe
+if exist scrcpy.exe set /a scrint+=1
+echo Checking scrcpy-noconsole.exe
+if exist scrcpy-noconsole.exe set /a scrint+=1
+echo Checking scrcpy-server
+if exist scrcpy-server set /a scrint+=1
+echo Checking SDL2.dll
+if exist SDL2.dll set /a scrint+=1
+echo Checking swresample-3.dll
+if exist swresample-3.dll set /a scrint+=1
+echo Checking swscale-5.dll
+if exist swscale-5.dll set /a scrint+=1
+if /I "%scrint%" LSS "11" (
+    taskkill /f /im adb.exe 2>nul
+    echo scrcpy broken!
     del AdbWinApi.dll 2>nul
     del AdbWinUsbApi.dll 2>nul
-    del fastboot.exe 2>nul
     del adb.exe 2>nul
-    goto :adbinstaller
+    del avutil-56.dll 2>nul
+    del avcodec-58.dll 2>nul
+    del avformat-58.dll 2>nul
+    del scrcpy.exe 2>nul
+    del scrcpy-noconsole.exe 2>nul
+    del scrcpy-server 2>nul
+    del SDL2.dll 2>nul
+    del swresample-3.dll 2>nul
+    del swscale-5.dll 2>nul
+    echo scrcpy installation process started
+    if exist j_unzip.vbs (
+        echo scrcpy download started
+        powershell -command "& { iwr https://github.com/Genymobile/scrcpy/releases/download/v1.12.1/scrcpy-win64-v1.12.1.zip -OutFile scrcpy.zip }"
+        echo Unzipping scrcpy.zip
+        cscript //B j_unzip.vbs scrcpy.zip
+        echo Deleting scrcpy.zip
+        del scrcpy.zip
+        goto :adblaunch
+    ) else (
+        echo integrity check failed
+        echo You have to download ATA again!
+        pause
+        exit
+    )
 ) else (
+    echo [  OK  ] adb.exe found!
+    echo [  OK  ] AdbWinApi.dll found!
+    echo [  OK  ] AdbWinUsbApi.dll found!
+    echo [  OK  ] avutil-56.dll found!
+    echo [  OK  ] avcodec-58.dll found!
+    echo [  OK  ] avformat-58.dll found!
+    echo [  OK  ] scrcpy.exe found!
+    echo [  OK  ] scrcpy-noconsole.exe found!
+    echo [  OK  ] scrcpy-server found!
+    echo [  OK  ] SDL2.dll found!
+    echo [  OK  ] swresample-3.dll found!
+    echo [  OK  ] swscale-5.dll found!
     echo integrity check finished
     echo ADB launch...
     fastboot devices >nul
     adb devices >nul
     goto :devicecheck
 )
-
-:adbinstaller
-echo adb installation process started
-if exist j_unzip.vbs (
-    if exist adbinstaller.bat (
-        call "adbinstaller.bat"
-        goto adblaunch
-    ) else (
-        echo You have to download ATA again!
-        pause
-        exit 
-    )
-) else (
-    echo You have to download ATA again!
-    pause
-    exit 
-)
-
 
 :dev
 cls

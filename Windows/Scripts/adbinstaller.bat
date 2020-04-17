@@ -1,13 +1,16 @@
+Rem Tool made by Sway 
+Rem github repository: https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-
+Rem twitter: https://twitter.com/SWayWasTaken
+Rem email: massimiliano.sartore@protonmail.com
+Rem Copyright (C) 2019-2020 SwayWasTaken
+
 @echo off
 :adbinstall
-powershell -command "& { iwr https://dl.google.com/android/repository/platform-tools-latest-windows.zip -OutFile adb.zip }"
-cscript //B j_unzip.vbs adb.zip
+taskkill /f /im adb.exe 2>nul
 set main="%cd%"
 cd platform-tools
-move "adb.exe" %main%
 move "fastboot.exe" %main%
-move "AdbWinApi.dll" %main%
-move "AdbWinUsbApi.dll" %main%
 cd %main%
 rmdir /Q /S "platform-tools"
 del adb.zip
+pause

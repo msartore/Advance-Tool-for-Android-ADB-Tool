@@ -1,6 +1,6 @@
 # Advance Tool for Android™
 
-	Windows ATA Tool v0.8.6.01042020
+	Windows ATA Tool v0.8.7.14042020
 	Linux ATA Tool v0.0.1.17032020 
 
 ## 📦Download 
@@ -127,3 +127,9 @@ Scrcpy works by running a server on your Android device, and the desktop applica
 If you want to see your Android screen interact with the app or content on your desktop, record your phone screen or perform other basic tasks, then Scrcpy is a good choice.
 
 In short, Scrcpy is an excellent way to easily view your Android screen on your computer and interact with it in real time.
+
+
+## ❓What is SDK Platform Tools?
+[Android™ SDK Platform-Tools](https://developer.android.com/studio/releases/platform-tools.html) is a component for the Android™ SDK. It includes tools that interface with the Android platform, such as adb, fastboot, and systrace. These tools are required for Android app development. They're also needed if you want to unlock your device bootloader and flash it with a new system image.
+
+Although some new features in these tools are available only for recent versions of Android, the tools are backward compatible, so you need only one version of the SDK Platform-Tools.

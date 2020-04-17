@@ -284,7 +284,6 @@ echo Write the ip that you will find at the end
 SET /P adbwlanvar=Enter device ip:
 adb tcpip 5555
 for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
-echo %devicewlanstatus%
 if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
     echo Done!
     echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
@@ -300,7 +299,6 @@ if exist deviceip.tmp (
     for /f "delims= " %%a in (deviceip.tmp) do ( set adbwlanvar=%%a )
 )
 for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
-echo %devicewlanstatus%
 if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
     set adbwlanstatus=connected to %adbwlanvar%:5555
 ) else (

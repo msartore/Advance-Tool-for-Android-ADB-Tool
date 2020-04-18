@@ -5,7 +5,7 @@
 
 ## 📦Download 
 
-[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.8.6.01042020-for-Windows-By-Sway.zip) Windows ATA Tool v0.8.6.01042020
+[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.8.8.17042020W/ATA-v0.8.8.17042020-for-Windows-By-Sway.zip) Windows ATA Tool v0.8.8.17042020
 
 [Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.0.1.17032020-for-Linux-By-Sway.zip) Linux ATA Tool v0.0.1.17032020 
     

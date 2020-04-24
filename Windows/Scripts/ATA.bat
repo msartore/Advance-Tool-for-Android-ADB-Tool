@@ -85,13 +85,51 @@ echo Booting into Bootloader menu
 goto :devicenotfound
 
 :adblaunch
+echo checking internet connection
+Ping www.google.nl -n 1 -w 1000>nul
+if errorlevel 1 ( 
+    TITLE ATA Tool by Sway [USER OFFLINE MODE]
+    goto :integritycheck 
+) else ( 
+    goto :ATAupdate 
+)
+:ATAupdate
+echo Checking if ATA is up-to-date!
+taskkill /f /im adb.exe>nul
+powershell -command "& { iwr https://github.com/MassimilianoSartore/ATA-updater/raw/master/updatetext.zip -OutFile updatetext.zip }"
+echo Unzipping updatetext.zip
+cscript //B j_unzip.vbs updatetext.zip
+echo Deleting updatetext.zip
+del updatetext.zip
+for /f %%b in (update.txt) do (
+    for /f %%a in (version.txt) do (
+        if %%a==%%b (
+            echo ATA is up-to-date
+            del update.txt
+            goto :integritycheck
+        ) else (
+            if exist ATAupdater.bat (
+                del update.txt
+                start ATAupdater.bat
+                exit
+            ) else (
+                echo update failed!
+                echo You have to download ATA again!
+                start "" https://massimilianosartore.github.io/Advance-Tool-for-Android-ADB-Tool/
+                exit 
+                pause
+            )
+        )
+    )
+)
+:integritycheck
 echo integrity check started
 set adbint=0
 echo Checking fastboot.exe
 if exist fastboot.exe  set /a adbint=1
 if /I "%adbint%" LSS "1" (
     echo fastboot not found
-    taskkill /f /im adb.exe 2>nul
+    taskkill /f /im adb.exe>nul
     del fastboot.exe 2>nul
     echo adb installation process started
     if exist j_unzip.vbs (

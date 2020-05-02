@@ -96,20 +96,20 @@ if errorlevel 1 (
 :ATAupdate
 echo Checking if ATA is up-to-date!
 taskkill /f /im adb.exe>nul
-powershell -command "& { iwr https://github.com/MassimilianoSartore/ATA-updater/raw/master/updatetext.zip -OutFile updatetext.zip }"
-echo Unzipping updatetext.zip
-cscript //B j_unzip.vbs updatetext.zip
-echo Deleting updatetext.zip
-del updatetext.zip
-for /f %%b in (update.txt) do (
-    for /f %%a in (version.txt) do (
+powershell -command "& { iwr https://github.com/MassimilianoSartore/ATA-updater/raw/master/updatecheck.zip -OutFile updatecheck.zip }"
+echo Unzipping updatecheck.zip
+cscript //B j_unzip.vbs updatecheck.zip
+echo Deleting updatecheck.zip
+del updatecheck.zip
+for /f %%b in (update) do (
+    for /f %%a in (version) do (
         if %%a==%%b (
             echo ATA is up-to-date
-            del update.txt
+            del update
             goto :integritycheck
         ) else (
             if exist ATAupdater.bat (
-                del update.txt
+                del update
                 start ATAupdater.bat
                 exit
             ) else (

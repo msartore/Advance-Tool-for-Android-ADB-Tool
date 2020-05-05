@@ -331,6 +331,7 @@ if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
     echo Failed!
 )
 pause
+goto :adbnetworkmenu
 
 :menu
 if exist deviceip.tmp (
@@ -356,6 +357,8 @@ echo.
 echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
 echo.
 echo Compitable Apk file: %ro_product_cpu_abilist%     ip registered(ADB over network): %adbwlanstatus%
+echo.
+echo Wireless debugging: %wirelessDebugging%
 echo =================================================================================
 echo MAIN MENU
 echo =================================================================================
@@ -369,11 +372,9 @@ echo 4.  Stream your SMARTPHONE
 echo.
 echo 5.  Create your own program!
 echo.
-echo 6.  Connect device via ADB over network
+echo 6.  ADB over network menu
 echo.
-echo 7.  Disconnect device from ADB over network
-echo.
-echo 8.  Credits
+echo 7.  Credits
 echo =================================================================================
 echo 0) EXIT
 echo =================================================================================
@@ -385,15 +386,14 @@ if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
 if %inputmm%==4 call "scrcpy"
 if %inputmm%==5 goto creator
-if %inputmm%==6 goto adbwlan
-if %inputmm%==7 goto adbnetworkdisconnect
-if %inputmm%==8 goto credits
+if %inputmm%==6 goto adbnetworkmenu
+if %inputmm%==7 goto credits
 if %inputmm%==0 goto exitstatus
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 pause
 goto :menu
 
-:adbnetworkdisconnect
+:adbnetworkmenu
 if "%adbwlanstatus%"=="Error! Any device connected/found" (
     set adbwlanstatus=Not available
 )
@@ -402,23 +402,31 @@ call "Banners/banner2.bat"
 echo =================================================================================
 echo ADB OVER NETWORK MENU
 echo =================================================================================
-echo 1. Disconnect (%adbwlanstatus%) (NOT WORKING YET)
+echo 1. Connect via ADB over network
 echo.
 echo 2. Disconnect manually
+echo.
+echo 3. Connect with Wireless debugging
+echo.
+echo 4. Disconnect with Wireless debugging
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
-SET /P inputand=Please Select:
-if %inputand%==1 adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
-if %inputand%==2 adb shell ip route && SET /P inputandvar=Enter ip displayed: && goto disconnectprocess
-if %inputand%==0 goto devicecheck
+SET /P inputanm=Please Select:
+rem Disconnect (%adbwlanstatus%) (NOT WORKING YET)
+rem adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
+if %inputanm%==1 goto adbwlan
+if %inputanm%==2 adb shell ip route && SET /P inputanmvar=Enter ip displayed: && goto disconnectprocess
+if %inputanm%==3 SET /P ipaddr=Write IP address: && SET /P port=Write port number: && adb pair %ipaddr%:%port% && adb connect %ipaddr%:%port%
+if %inputanm%==4 adb disconnect %ipaddr%:%port%
+if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 pause
-goto adbnetworkdisconnect
+goto adbnetworkmenu
 
 :disconnectprocess
-adb disconnect %inputandvar% && del deviceip.tmp 2>nul && pause && set "adbwlanvar=" && goto devicecheck 
-goto adbnetworkdisconnect
+adb disconnect %inputanmvar% && del deviceip.tmp 2>nul && pause && set "adbwlanvar=" && goto devicecheck 
+goto adbnetworkmenu
 
 :menubootloader
 cls
@@ -431,13 +439,12 @@ echo.
 echo 1) UNLOCK/LOCK BOOTLOADER 
 echo 2) FORMAT DATA PARTITION (EXT4)
 echo 3) FORMAT DATA PARTITION (F2FS)
-echo 4) FLASH RECOVERY (only .img file)
-echo 5) FLASH KERNEL (only .img file)
-echo 6) FLASH ROM (You must know what you are doing)
-echo 7) Check connected devices
-echo 8) Boot into ROM
-echo 9) Boot into recovery
-echo 10) Hard Reset
+echo 4) FLASH MENU
+echo 5) Check connected devices
+echo 6) Boot into ROM
+echo 7) Boot into recovery
+echo 8) Hard Reset
+echo 9) Fastboot reboot
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -452,21 +459,62 @@ if %inputmb%==2 fastboot format:ext4 userdata
 
 if %inputmb%==3 fastboot format:f2fs userdata
 
-if %inputmb%==4 SET /P recovery=Write recovery name like (recoveryname.img) && fastboot flash recovery %recovery%
+if %inputmb%==4 goto :menufastbootflash
 
-if %inputmb%==5 SET /P kernel=Write kernel name like (kernelname.img) && fastboot flash boot %kernel%
+if %inputmb%==5 fastboot devices
 
-if %inputmb%==6 SET /P rom=Write rom path like (/path/to/your/Rom.zip) && fastboot -w && fastboot update %rom%
+if %inputmb%==6 echo Loading. && echo Loading.. && fastboot reboot >nul && echo Loading... && goto :menusystem
 
-if %inputmb%==7 fastboot devices
+if %inputmb%==7 echo Loading. && echo Loading.. && fastboot reboot recovery >nul && echo Loading... && goto :menurecovery
 
-if %inputmb%==8 echo Loading. && echo Loading.. && fastboot reboot >nul && echo Loading... && goto :menusystem
+if %inputmb%==8 echo Erasing process started && fastboot erase userdata && fastboot erase cache && echo Erasing process finished! 
 
-if %inputmb%==9 echo Loading. && echo Loading.. && fastboot reboot recovery >nul && echo Loading... && goto :menurecovery
-
-if %inputmb%==10 echo Erasing process started && fastboot erase userdata && fastboot erase cache && echo Erasing process finished! 
+if %inputmb%==9 echo rebooting.. && fastboot reboot && echo done!
 pause
 goto menubootloader
+
+:menufastbootflash
+cls
+call "Banners/banner1.bat"
+echo =================================================================================
+echo BOOTLOADER/FASTBOOT FLASH MENU
+echo =================================================================================
+echo What do you want to do?
+echo.
+echo 1) FLASH BOOT (only .img file)
+echo 2) FLASH BOOTLOADER (only .img file)
+echo 3) FLASH RADIO (only .img file)
+echo 4) FLASH RECOVERY (only .img file)
+echo 5) FLASH SYSTEM (only .img file)
+echo 6) FLASH VENDOR (only .img file)
+echo 7) FLASH CACHE (only .img file)
+echo 8) FLASH ROM (You must know what you are doing)
+echo =================================================================================
+echo 0) BACK
+echo =================================================================================
+SET /P inputmfb=Please Select:
+echo.
+echo log:
+if %inputmfb%==0 goto :menubootloader
+
+if %inputmfb%==1 SET /P boot=Write boot name like (bootname.img) && fastboot flash boot %boot%
+
+if %inputmfb%==2 SET /P bootloader=Write bootloader name like (bootloadername.img) && fastboot flash bootloader %boot% && echo Rebooting.. && fastboot reboot-bootloader && echo done!
+
+if %inputmfb%==3 SET /P radio=Write radio name like (radioname.img) && fastboot flash radio %radio%
+
+if %inputmfb%==4 SET /P recovery=Write recovery name like (recoveryname.img) && fastboot flash recovery %recovery%
+
+if %inputmfb%==5 SET /P system=Write system name like (systemname.img) && fastboot flash system %system%
+
+if %inputmfb%==6 SET /P vendor=Write vendor name like (vendorname.img) && fastboot flash vendor %vendor%
+
+if %inputmfb%==7 SET /P cache=Write cache name like (cachename.img) && fastboot flash cache %cache%
+
+if %inputmfb%==8 SET /P rom=Write rom path like (/path/to/your/Rom.zip) && fastboot -w && fastboot update %rom%
+
+goto :menufastbootflash
+
 
 :menubootloaderunlock
 cls
@@ -779,6 +827,7 @@ goto :grantpermissions
 :exitstatus
 tasklist /FI "IMAGENAME eq adb.exe" 2>NUL | find /I /N "adb.exe">NUL
 if "%ERRORLEVEL%"=="0" goto :exit
+adb disconnect %ipaddr%:%port%>nul
 exit
 
 :exit 

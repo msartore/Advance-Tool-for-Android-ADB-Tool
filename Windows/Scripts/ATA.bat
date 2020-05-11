@@ -827,7 +827,6 @@ goto :grantpermissions
 :exitstatus
 tasklist /FI "IMAGENAME eq adb.exe" 2>NUL | find /I /N "adb.exe">NUL
 if "%ERRORLEVEL%"=="0" goto :exit
-adb disconnect %ipaddr%:%port%>nul
 exit
 
 :exit 
@@ -835,8 +834,18 @@ cls
 call "Banners/banner1.bat"
 echo The ADB.exe is still running, Do you want to kill it? (Y/n)
 SET /P inputex=Please Select:
-if %inputex%==Y taskkill /f /im adb.exe && echo Done! && goto :exitstatus
-if %inputex%==y taskkill /f /im adb.exe && echo Done! && goto :exitstatus
+if %inputex%==Y (
+    adb disconnect %ipaddr%:%port%>nul
+    taskkill /f /im adb.exe
+    echo Done! 
+    goto :exitstatus
+)
+if %inputex%==y (
+    adb disconnect %ipaddr%:%port%>nul
+    taskkill /f /im adb.exe
+    echo Done! 
+    goto :exitstatus
+)
 if %inputex%==N exit
 if %inputex%==n exit 
 echo Error, Wrong input!

@@ -315,37 +315,14 @@ pause
 cls
 goto :disclaimer
 
-:adbwlan
-adb devices 
-adb shell ip route
-echo Write the ip that you will find at the end
-SET /P adbwlanvar=Enter device ip:
-adb tcpip 5555
-for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
-if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
-    echo Done!
-    echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
-    set adbwlanstatus="connected to %adbwlanvar%:5555"
-    echo %adbwlanvar% > deviceip.tmp
-) else (
-    echo Failed!
-)
-pause
-goto :adbnetworkmenu
 
 :menu
-if exist deviceip.tmp (
-    for /f "delims= " %%a in (deviceip.tmp) do ( set adbwlanvar=%%a )
-)
-for /f "delims=" %%v in ('adb connect %adbwlanvar%') do set "devicewlanstatus=%%v"
-if "%devicewlanstatus%"=="connected to %adbwlanvar%:5555" (
+set errorlevelaon=1
+adb connect %adbwlanvar% | findstr "%adbwlanvar%:5555" && if %ERRORLEVEL%==0 set errorlevelaon=0
+if %errorlevelaon%==0 ( 
     set adbwlanstatus=connected to %adbwlanvar%:5555
 ) else (
-    if exist deviceip.tmp (
-        set /p adbwlanstatus=<deviceip.tmp
-    ) else (
-        set adbwlanstatus=Error! Any device connected/found
-    )
+    set adbwlanstatus=Error! Any device connected/found
 )
 cls
 call "Banners/banner2.bat"
@@ -394,9 +371,6 @@ pause
 goto :menu
 
 :adbnetworkmenu
-if "%adbwlanstatus%"=="Error! Any device connected/found" (
-    set adbwlanstatus=Not available
-)
 cls
 call "Banners/banner2.bat"
 echo =================================================================================
@@ -416,17 +390,50 @@ SET /P inputanm=Please Select:
 rem Disconnect (%adbwlanstatus%) (NOT WORKING YET)
 rem adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
 if %inputanm%==1 goto adbwlan
-if %inputanm%==2 adb shell ip route && SET /P inputanmvar=Enter ip displayed: && goto disconnectprocess
-if %inputanm%==3 SET /P ipaddr=Write IP address: && SET /P port=Write port number: && adb pair %ipaddr%:%port% && adb connect %ipaddr%:%port%
+if %inputanm%==2 goto disconnectprocess
+if %inputanm%==3 (
+    SET /P ipaddr=Write IP address: 
+    SET /P port=Write port number: 
+    adb pair %ipaddr%:%port% 
+    adb connect %ipaddr%:%port%
+)
 if %inputanm%==4 adb disconnect %ipaddr%:%port%
 if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
-pause
 goto adbnetworkmenu
 
 :disconnectprocess
-adb disconnect %inputanmvar% && del deviceip.tmp 2>nul && pause && set "adbwlanvar=" && goto devicecheck 
-goto adbnetworkmenu
+adb shell ip route 
+SET /P inputanmvar=Enter ip displayed:
+adb disconnect %inputanmvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
+if %errorlevelaon%==0 ( 
+    pause 
+    set adbwlanvar=""
+    set adbwlanstatus=Error! Any device connected/found
+    goto devicecheck 
+) else (
+    echo Error!
+    goto adbnetworkmenu
+)
+
+:adbwlan
+set errorlevelaon=1
+adb devices 
+adb shell ip route
+echo Write the ip that you will find at the end
+SET /P adbwlanvar=Enter device ip:
+adb tcpip 5555
+adb connect %adbwlanvar% | findstr "%adbwlanvar%:5555" && if %ERRORLEVEL%==0 set errorlevelaon=0
+if %errorlevelaon%==0 ( 
+    echo Done!
+    echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
+    set adbwlanstatus=connected to %adbwlanvar%:5555
+) else (
+    echo Failed!
+    set adbwlanstatus=Error! Any device connected/found
+)
+pause
+goto :adbnetworkmenu
 
 :menubootloader
 cls
@@ -835,14 +842,21 @@ call "Banners/banner1.bat"
 echo The ADB.exe is still running, Do you want to kill it? (Y/n)
 SET /P inputex=Please Select:
 if %inputex%==Y (
-    adb disconnect %ipaddr%:%port%>nul
+    if DEFINED adbwlanvar (
+        adb disconnect %adbwlanvar%
+    )
+    if DEFINED ipaddr (
+        adb disconnect %ipaddr%:%port%
+    )
     taskkill /f /im adb.exe
+    del deviceip.tmp
     echo Done! 
     goto :exitstatus
 )
 if %inputex%==y (
     adb disconnect %ipaddr%:%port%>nul
     taskkill /f /im adb.exe
+    del deviceip.tmp
     echo Done! 
     goto :exitstatus
 )

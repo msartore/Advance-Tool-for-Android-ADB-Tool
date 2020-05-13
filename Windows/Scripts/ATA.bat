@@ -196,7 +196,7 @@ if /I "%scrint%" LSS "11" (
     echo scrcpy installation process started
     if exist j_unzip.vbs (
         echo scrcpy download started
-        powershell -command "& { iwr https://github.com/Genymobile/scrcpy/releases/download/v1.12.1/scrcpy-win64-v1.12.1.zip -OutFile scrcpy.zip }"
+        powershell -command "& { iwr https://github.com/Genymobile/scrcpy/releases/download/v1.13/scrcpy-win64-v1.13.zip -OutFile scrcpy.zip }"
         echo Unzipping scrcpy.zip
         cscript //B j_unzip.vbs scrcpy.zip
         echo Deleting scrcpy.zip
@@ -369,6 +369,71 @@ if %inputmm%==0 goto exitstatus
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 pause
 goto :menu
+
+:menusystem
+cls
+call "Banners/banner1.bat"
+echo =================================================================================
+echo SYSTEM MENU
+echo =================================================================================
+echo What do you want to do?
+echo.
+echo 1) REBOOT SMARTPHONE
+echo 2) REBOOT INTO THE RECOVERY
+echo 3) REBOOT INTO THE Fastboot/Bootloader
+echo 4) Check connected devices
+echo 5) Interface
+echo 6) Install an app
+echo 7) Unistall an app (No System App)
+echo 8) Emulate device (Resize Screen)
+echo 9) Emulate device (Change Density)
+echo 10) Reset (Emulate device)
+echo 11) Change system info 
+echo 12) Screen Recording 
+echo 14) Unistall System App/Bloat 
+echo 15) Grant root permissions (App)
+echo 16) Device Info
+echo =================================================================================
+echo 0) BACK
+echo =================================================================================
+echo.
+SET /P inputms=Please Select:
+echo.
+echo log:
+if %inputms%==0 goto :devicecheck
+
+if %inputms%==1 echo Loading... && adb reboot >nul && echo Rebooted! 
+
+if %inputms%==2 echo Loading... && adb reboot recovery && goto :menurecovery
+
+if %inputms%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
+
+if %inputms%==4 adb devices
+
+if %inputms%==5 goto :Interface
+
+if %inputms%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
+
+if %inputms%==7 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
+
+if %inputms%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb shell wm size %ss%
+
+if %inputms%==9 SET /P sd=Write the density of the screen like (288) && adb shell wm density %sd%
+
+if %inputms%==10 adb shell wm size reset && adb shell wm density reset
+
+if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recovery! && goto changesystemsettings  
+
+if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
+
+if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
+
+if %inputms%==15 goto :grantpermissions
+
+if %inputms%==16 goto :deviceinfo
+
+pause
+goto menusystem
 
 :adbnetworkmenu
 cls
@@ -574,71 +639,6 @@ if %inputmbul%==10 fastboot bbk unlock_vivo && echo Done!
 if %inputmbul%==11 fastboot bbk lock_vivo && echo Done!
 goto menubootloaderunlock
 
-:menusystem
-cls
-call "Banners/banner1.bat"
-echo =================================================================================
-echo SYSTEM MENU
-echo =================================================================================
-echo What do you want to do?
-echo.
-echo 1) REBOOT SMARTPHONE
-echo 2) REBOOT INTO THE RECOVERY
-echo 3) REBOOT INTO THE Fastboot/Bootloader
-echo 4) Check connected devices
-echo 5) Interface
-echo 6) Install an app
-echo 7) Unistall an app (No System App)
-echo 8) Emulate device (Resize Screen)
-echo 9) Emulate device (Change Density)
-echo 10) Reset (Emulate device)
-echo 11) Change system info 
-echo 12) Screen Recording 
-echo 14) Unistall System App/Bloat 
-echo 15) Grant root permissions (App)
-echo 16) Device Info
-echo =================================================================================
-echo 0) BACK
-echo =================================================================================
-echo.
-SET /P inputms=Please Select:
-echo.
-echo log:
-if %inputms%==0 goto :devicecheck
-
-if %inputms%==1 echo Loading... && adb reboot >nul && echo Rebooted! 
-
-if %inputms%==2 echo Loading... && adb reboot recovery && goto :menurecovery
-
-if %inputms%==3 echo Loading... && adb reboot-bootloader && goto :menubootloader
-
-if %inputms%==4 adb devices
-
-if %inputms%==5 goto :Interface
-
-if %inputms%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
-
-if %inputms%==7 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
-
-if %inputms%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb shell wm size %ss%
-
-if %inputms%==9 SET /P sd=Write the density of the screen like (288) && adb shell wm density %sd%
-
-if %inputms%==10 adb shell wm size reset && adb shell wm density reset
-
-if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recovery! && goto changesystemsettings  
-
-if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
-
-if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
-
-if %inputms%==15 goto :grantpermissions
-
-if %inputms%==16 goto :deviceinfo
-
-pause
-goto menusystem
-
 
 :deviceinfo
 if not exist temp\ md temp\>nul
@@ -792,14 +792,6 @@ if %inputmc%==4  start "" https://github.com/Genymobile/scrcpy/
 if %inputmc%==5  start "" https://developer.android.com/studio/releases/platform-tools.html
 pause
 goto :credits
-
-:optionalreboot
-echo Do you want to reboot the SMARTPHONE(Y/N)?
-set /p inputop=Please Select:
-
-if %inputop%==Y cls && echo Loading... && adb reboot >nul && cls && echo Rebooted! 
-else
-goto :menusystem
 
 
 :grantpermissions

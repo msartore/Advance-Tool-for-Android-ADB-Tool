@@ -2,22 +2,20 @@
 :banner
 ECHO.
 ECHO.                                  
-ECHO         :shdddhy+..yyyyo    oyyyy.   :yyyy:./shdddhyo- -yyyy+     `yyyyo                 
-ECHO        `hMMMNNNMMMN+yMMMM-  :MMMMMy   dMMMm+NMMNNNNMMMMy`yMMMM/    hMMMN.                 
-ECHO        -MMMM+.`:s/- `NMMMy `mMMMMMM: :MMMM/ -oo-.``/NMMM+ hMMMN-  oMMMM:                  
-ECHO         oNMMMMNdho-  +MMMM.oMMMhMMMm`dMMMh `+hNMMMNmNMMMs `mMMMm.:MMMM+                   
-ECHO          `/oshmMMMMh  dMMMdNMMm`yMMMhMMMN. dMMMmswayNMMMs  .NMMMmNMMMs                    
-ECHO        :ohNh:..oMMMM- -MMMMMMM: `NMMMMMMo .MMMM:   :NMMMs   -NMMMMMMy                     
-ECHO        -mMMMMMMMMMMs   sMMMMMy   +MMMMMd   yMMMMmdNMMMMMs    :MMMMMd`                     
-ECHO          :ohdmmdyo.    `yyyyy.    syyyy-    :sdmmds-oyyy+     dMMMm.                      
-ECHO                                                              sMMMN-                       
-ECHO                                                             oMMMM:                        
-ECHO                                                            -dddd+                         
-ECHO                                                              ````                                                                   
-ECHO 	::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-ECHO  	::                  ATA Tool v0.9.0.05122020                  ::
-ECHO  	::                   adb and fastboot tool                    ::
-ECHO  	::                      Created By Sway	                      ::
-ECHO  	::                  Copyright 2019-2020 Sway	              ::
-ECHO  	::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ECHO  	               -/oyo  :MMMMMMMMMMMMMM+  +o/-                
+ECHO  	         -/shmMMMMMs  .sssssMMMMyssss-  yMMMMmhs/-          
+ECHO  	  .:+shmNMMMMMMdyo/.        MMMM.       -oydmMMMMMMmhs+:.   
+ECHO   	hmNMMNmdhs+yMMN             MMMM.            NMMhshdmNMMMmdy
+ECHO  	MMMmy+:.   oMMN             MMMM.            NMMo   .:+ymMMM
+ECHO  	hdNMMMNmdhshMMN             MMMM.            NMMy+sydmNMMMNd
+ECHO  	   ./oydmMMMMMMmhs+-        MMMM.       .:+shMMMMMMMmdyo:.  
+ECHO  	         .:+shmMMMMy        MMMM.       sMMMMMmhs+:.        
+ECHO  	                -+s+        mmmm.       ohs/-                  
+ECHO.         
+ECHO    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ECHO    ::                  ATA Tool v0.9.0.05042020                  ::
+ECHO    ::                   adb and fastboot tool                    ::
+ECHO    ::                      Created By Sway	                    ::
+ECHO    ::                  Copyright 2019-2020 Sway	                ::
+ECHO    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo.

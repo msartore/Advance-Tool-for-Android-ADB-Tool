@@ -1,5 +1,5 @@
 Rem Tool made by Sway 
-Rem Version: 0.01
+Rem Version: 0.02
 Rem github repository: https://github.com/MassimilianoSartore/ATA-updater
 Rem twitter: https://twitter.com/SWayWasTaken
 Rem email: massimiliano.sartore@protonmail.com
@@ -7,9 +7,16 @@ Rem Copyright (C) 2019-2020 SwayWasTaken
 
 MODE 150
 @echo off
-:adbinstall
 TITLE ATA updater tool by Sway
 call "Banners/updatebanner.bat"
+echo New update is avaiable, do you want to install it?
+SET /P inputup=Please Select:
+if %inputup%==Y goto :adbupdate
+if %inputup%==y goto :adbupdate
+if %inputup%==N start ATA.bat && exit
+if %inputup%==n start ATA.bat && exit
+
+:adbupdate
 if exist j_unzip.vbs (
     echo DON'T CLOSE THIS BATCH! 
     echo ATA update started!

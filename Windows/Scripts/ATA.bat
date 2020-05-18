@@ -333,7 +333,7 @@ echo Rom builder name: %ro_build_user%     Board: %ro_product_board%     Android
 echo.
 echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     Device Product: %ro_product_device%
 echo.
-echo Compitable Apk file: %ro_product_cpu_abilist%     ip registered(ADB over network): %adbwlanstatus%
+echo Compitable Apk file: %ro_product_cpu_abilist%     ip registered(ADB over network): %adbwlanstatus% 
 echo.
 echo Wireless debugging: %wirelessDebugging%
 echo =================================================================================
@@ -445,24 +445,38 @@ echo 1. Connect via ADB over network
 echo.
 echo 2. Disconnect manually
 echo.
-echo 3. Connect with Wireless debugging
+echo 3. Disconnect (%adbwlanvar%)
 echo.
-echo 4. Disconnect with Wireless debugging
+echo 4. Connect with Wireless debugging
+echo.
+echo 5. Disconnect with Wireless debugging
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
 SET /P inputanm=Please Select:
-rem Disconnect (%adbwlanstatus%) (NOT WORKING YET)
+
 rem adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
 if %inputanm%==1 goto adbwlan
 if %inputanm%==2 goto disconnectprocess
 if %inputanm%==3 (
+    adb disconnect %adbwlanvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
+    if %errorlevelaon%==0 ( 
+        pause 
+        set adbwlanvar=""
+        set adbwlanstatus=Error! Any device connected/found
+        goto devicecheck 
+    ) else (
+        echo Error!
+        goto adbnetworkmenu
+)
+)
+if %inputanm%==4 (
     SET /P ipaddr=Write IP address: 
     SET /P port=Write port number: 
     adb pair %ipaddr%:%port% 
     adb connect %ipaddr%:%port%
 )
-if %inputanm%==4 adb disconnect %ipaddr%:%port%
+if %inputanm%==5 adb disconnect %ipaddr%:%port%
 if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 goto adbnetworkmenu
@@ -834,10 +848,10 @@ call "Banners/banner1.bat"
 echo The ADB.exe is still running, Do you want to kill it? (Y/n)
 SET /P inputex=Please Select:
 if %inputex%==Y (
-    if DEFINED adbwlanvar (
+    IF "%adbwlanvar%"=="" (
         adb disconnect %adbwlanvar%
     )
-    if DEFINED ipaddr (
+    IF "%ipaddr%"=="" (
         adb disconnect %ipaddr%:%port%
     )
     taskkill /f /im adb.exe

@@ -45,7 +45,16 @@ for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_produ
 echo [  OK  ] ro.product.device loaded!
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
 echo [  OK  ] ro.build.version.release loaded!
-goto :menu 
+adb shell dumpsys battery | findstr "level:">batterylevel.tmp
+for /f "tokens=2 delims=:" %%a in ('type batterylevel.tmp^|find "level: "') do (
+  set batterylevel=%%a & goto :continue
+)
+set batterylevel=Not found!
+goto :menu
+
+:continue
+set batterylevel=%batterylevel:~1%
+goto :menu
 
 :infodevicenul
 echo [  OK  ] Device still connected!
@@ -57,7 +66,16 @@ for /f "delims=" %%v in ('adb shell getprop ro.product.model') do set "ro_produc
 for /f "delims=" %%v in ('adb shell getprop ro.product.board') do set "ro_product_board=%%v"
 for /f "delims=" %%v in ('adb shell getprop ro.product.device') do set "ro_product_device=%%v"
 for /f "delims=" %%v in ('adb shell getprop ro.build.version.release') do set "ro_android_version=%%v"
+adb shell dumpsys battery | findstr "level:">batterylevel.tmp
+for /f "tokens=2 delims=:" %%a in ('type batterylevel.tmp^|find "level: "') do (
+  set batterylevel=%%a & goto :continue
+)
+set batterylevel=Not found!
 goto :menu 
+
+:continue
+set batterylevel=%batterylevel:~1%
+goto :menu
 
 :notsuccess
 cls
@@ -277,6 +295,7 @@ echo ===========================================================================
 echo 1. fastboot mode 
 echo 2. adb sideload
 echo 3. Restart the program
+echo 4. Connect device via ADB over network
 echo =================================================================================
 echo 0) EXIT
 echo =================================================================================
@@ -288,6 +307,7 @@ if %inputdnt%==0 goto :exitstatus
 if %inputdnt%==1 goto :menubootloader
 if %inputdnt%==2 goto :menurecovery
 if %inputdnt%==3 goto :devicecheck
+if %inputdnt%==4 goto :adbnetworkmenu
 echo Error, Wrong input!
 pause
 cls 
@@ -335,7 +355,7 @@ echo Manufacturer: %ro_product_manufacturer%     Model: %ro_product_model%     D
 echo.
 echo Compitable Apk file: %ro_product_cpu_abilist%     ip registered(ADB over network): %adbwlanstatus% 
 echo.
-echo Wireless debugging: %wirelessDebugging%
+echo Battery: %batterylevel%%%
 echo =================================================================================
 echo MAIN MENU
 echo =================================================================================

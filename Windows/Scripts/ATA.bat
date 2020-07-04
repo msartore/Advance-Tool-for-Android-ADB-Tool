@@ -109,36 +109,7 @@ if errorlevel 1 (
     TITLE ATA Tool by Sway [USER OFFLINE MODE]
     goto :integritycheck 
 ) else ( 
-    goto :ATAupdate 
-)
-:ATAupdate
-echo Checking if ATA is up-to-date!
-taskkill /f /im adb.exe>nul
-powershell -command "& { iwr https://github.com/MassimilianoSartore/ATA-updater/raw/master/updatecheck.zip -OutFile updatecheck.zip }"
-echo Unzipping updatecheck.zip
-cscript //B j_unzip.vbs updatecheck.zip
-echo Deleting updatecheck.zip
-del updatecheck.zip
-for /f %%b in (update) do (
-    for /f %%a in (version) do (
-        if %%a==%%b (
-            echo ATA is up-to-date
-            del update
-            goto :integritycheck
-        ) else (
-            if exist ATAupdater.bat (
-                del update
-                start ATAupdater.bat
-                exit
-            ) else (
-                echo update failed!
-                echo You have to download ATA again!
-                start "" https://massimilianosartore.github.io/Advance-Tool-for-Android-ADB-Tool/
-                exit 
-                pause
-            )
-        )
-    )
+    goto :integritycheck 
 )
 :integritycheck
 echo integrity check started
@@ -150,11 +121,11 @@ if /I "%adbint%" LSS "1" (
     taskkill /f /im adb.exe>nul
     del fastboot.exe 2>nul
     echo adb installation process started
-    if exist j_unzip.vbs (
+    if exist ATAHelper.exe (
         echo platform-tools download started
-        powershell -command "& { iwr https://dl.google.com/android/repository/platform-tools-latest-windows.zip -OutFile adb.zip }"
-        echo Unzipping adb.zip
-        cscript //B j_unzip.vbs adb.zip
+        ATAHelper d https://dl.google.com/android/repository/platform-tools-latest-windows.zip adb.zip
+        echo Unzipping adb.zip cd 
+        ATAHelper e %cd%\adb.zip %cd%
         set main="%cd%"
         echo Moving fastboot.exe in %cd%
         move platform-tools\fastboot.exe %main%
@@ -212,11 +183,11 @@ if /I "%scrint%" LSS "11" (
     del swresample-3.dll 2>nul
     del swscale-5.dll 2>nul
     echo scrcpy installation process started
-    if exist j_unzip.vbs (
+    if exist ATAHelper.exe (
         echo scrcpy download started
-        powershell -command "& { iwr https://github.com/Genymobile/scrcpy/releases/download/v1.13/scrcpy-win64-v1.13.zip -OutFile scrcpy.zip }"
+        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.14/scrcpy-win64-v1.14.zip scrcpy.zip
         echo Unzipping scrcpy.zip
-        cscript //B j_unzip.vbs scrcpy.zip
+        ATAHelper e %cd%\scrcpy.zip %cd%
         echo Deleting scrcpy.zip
         del scrcpy.zip
         goto :adblaunch
@@ -317,7 +288,8 @@ goto :devicecheck
 cls
 call "Banners/banner1.bat"
 echo *** Disclaimer ***
-echo I am not responsible for any damage YOU will do to your device
+echo - ATA is able to repair itself, if you accept this Disclaimer ATA will repair itself if a connection is available
+echo - I am not responsible for any damage YOU will do to your device
 echo You have been warned, Do you accept? (Y/N)
 echo.
 SET /P inputd=Please Select:
@@ -381,7 +353,7 @@ echo log:
 if %inputmm%==1 goto menubootloader
 if %inputmm%==2 goto menurecovery
 if %inputmm%==3 goto menusystem
-if %inputmm%==4 call "scrcpy"
+if %inputmm%==4 goto menuscrcpy
 if %inputmm%==5 goto creator
 if %inputmm%==6 goto adbnetworkmenu
 if %inputmm%==7 goto credits
@@ -455,6 +427,31 @@ if %inputms%==16 goto :deviceinfo
 pause
 goto menusystem
 
+:menuscrcpy
+cls
+call "Banners/banner2.bat"
+echo =================================================================================
+echo SCRCPY MENU
+echo =================================================================================
+echo What do you want to do?
+echo.
+echo 1) Stream your SMARTPHONE [STANDARD MODE]
+echo 2) Stream your SMARTPHONE [STAY AWAKE MODE]
+echo 3) Stream your SMARTPHONE [TURN SCREEN OFF MODE]
+echo =================================================================================
+echo 0) BACK
+echo =================================================================================
+echo.
+SET /P inputsc=Please Select:
+echo.
+echo log:
+if %inputsc%==0 goto :devicecheck
+if %inputsc%==1 scrcpy
+if %inputsc%==2 scrcpy -w  
+if %inputsc%==3 scrcpy -Sw
+pause
+goto menuscrcpy
+
 :adbnetworkmenu
 cls
 call "Banners/banner2.bat"
@@ -475,7 +472,6 @@ echo 0) BACK
 echo =================================================================================
 SET /P inputanm=Please Select:
 
-rem adb disconnect %adbwlanvar%:5555 && del deviceip.tmp && goto devicecheck
 if %inputanm%==1 goto adbwlan
 if %inputanm%==2 goto disconnectprocess
 if %inputanm%==3 (
@@ -509,7 +505,7 @@ if %errorlevelaon%==0 (
     pause 
     set adbwlanvar=""
     set adbwlanstatus=Error! Any device connected/found
-    goto devicecheck 
+    goto devicecheck
 ) else (
     echo Error!
     goto adbnetworkmenu

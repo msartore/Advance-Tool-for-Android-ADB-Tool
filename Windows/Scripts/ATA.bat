@@ -167,7 +167,7 @@ echo Checking swresample-3.dll
 if exist swresample-3.dll set /a scrint+=1
 echo Checking swscale-5.dll
 if exist swscale-5.dll set /a scrint+=1
-if /I "%scrint%" LSS "11" (
+if /I "%scrint%" LSS "12" (
     taskkill /f /im adb.exe 2>nul
     echo scrcpy broken!
     del AdbWinApi.dll 2>nul
@@ -281,7 +281,6 @@ if %inputdnt%==3 goto :devicecheck
 if %inputdnt%==4 goto :adbnetworkmenu
 echo Error, Wrong input!
 pause
-cls 
 goto :devicecheck
 
 :disclaimer
@@ -458,23 +457,26 @@ call "Banners/banner2.bat"
 echo =================================================================================
 echo ADB OVER NETWORK MENU
 echo =================================================================================
-echo 1. Connect via ADB over network
+echo 1. Connect via ADB over network [Automatically]
 echo.
-echo 2. Disconnect manually
+echo 2. Connect via ADB over network [Manually]
 echo.
-echo 3. Disconnect (%adbwlanvar%)
+echo 3. Disconnect [Manually]
 echo.
-echo 4. Connect with Wireless debugging
+echo 4. Disconnect (%adbwlanvar%)
 echo.
-echo 5. Disconnect with Wireless debugging
+echo 5. Connect with Wireless debugging [Android 11]
+echo.
+echo 6. Disconnect with Wireless debugging [Android 11]
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
 SET /P inputanm=Please Select:
 
 if %inputanm%==1 goto adbwlan
-if %inputanm%==2 goto disconnectprocess
-if %inputanm%==3 (
+if %inputanm%==2 goto adbwlanmanully
+if %inputanm%==3 goto disconnectprocess
+if %inputanm%==4 (
     adb disconnect %adbwlanvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
     if %errorlevelaon%==0 ( 
         pause 
@@ -484,21 +486,20 @@ if %inputanm%==3 (
     ) else (
         echo Error!
         goto adbnetworkmenu
+    )
 )
-)
-if %inputanm%==4 (
+if %inputanm%==5 (
     SET /P ipaddr=Write IP address: 
     SET /P port=Write port number: 
     adb pair %ipaddr%:%port% 
     adb connect %ipaddr%:%port%
 )
-if %inputanm%==5 adb disconnect %ipaddr%:%port%
+if %inputanm%==6 adb disconnect %ipaddr%:%port%
 if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 goto adbnetworkmenu
 
 :disconnectprocess
-adb shell ip route 
 SET /P inputanmvar=Enter ip displayed:
 adb disconnect %inputanmvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
 if %errorlevelaon%==0 ( 
@@ -511,20 +512,35 @@ if %errorlevelaon%==0 (
     goto adbnetworkmenu
 )
 
-:adbwlan
+:adbwlanmanully
 set errorlevelaon=1
-adb devices 
-adb shell ip route
-echo Write the ip that you will find at the end
 SET /P adbwlanvar=Enter device ip:
 adb tcpip 5555
 adb connect %adbwlanvar% | findstr "%adbwlanvar%:5555" && if %ERRORLEVEL%==0 set errorlevelaon=0
 if %errorlevelaon%==0 ( 
     echo Done!
+    echo Connected to && adb shell getprop ro.product.model
     echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
     set adbwlanstatus=connected to %adbwlanvar%:5555
 ) else (
-    echo Failed!
+    echo Failed, check if your device is connected via usb!
+    set adbwlanstatus=Error! Any device connected/found
+)
+pause
+goto :adbnetworkmenu
+
+:adbwlan
+set errorlevelaon=1
+for /f "tokens=9* delims=, " %%d in ('adb shell ip route') do set "adbwlanvar=%%d">nul
+adb tcpip 5555
+adb connect %adbwlanvar% | findstr "%adbwlanvar%:5555" && if %ERRORLEVEL%==0 set errorlevelaon=0
+if %errorlevelaon%==0 ( 
+    echo Done!
+    echo Connected to && adb shell getprop ro.product.model
+    echo now you can detach the cable from your smartphone, you can only use system commands via WLAN
+    set adbwlanstatus=connected to %adbwlanvar%:5555
+) else (
+    echo Failed, check if your device is connected via usb!
     set adbwlanstatus=Error! Any device connected/found
 )
 pause

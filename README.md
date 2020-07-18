@@ -9,6 +9,8 @@
 
 [Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-/releases/download/v1.0/ATA-v0.0.1.17032020-for-Linux-By-Sway.zip) Linux ATA Tool v0.0.1.17032020 
     
+## Donate
+[![paypal](https://img.xda-cdn.com/t-5mJuzW3mDe18fr5PcYKckXMj4=/https%3A%2F%2Fi.postimg.cc%2Fd3rLD20q%2Fpaypal-bottom-by-sw-ay.png)](http://paypal.me/SWayGaming)
 ## 💡Introduction
 
 This tool include: 

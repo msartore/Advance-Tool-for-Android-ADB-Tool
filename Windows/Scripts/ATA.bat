@@ -185,7 +185,7 @@ if /I "%scrint%" LSS "12" (
     echo scrcpy installation process started
     if exist ATAHelper.exe (
         echo scrcpy download started
-        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.14/scrcpy-win64-v1.14.zip scrcpy.zip
+        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.15/scrcpy-win64-v1.15.zip scrcpy.zip
         echo Unzipping scrcpy.zip
         ATAHelper e %cd%\scrcpy.zip %cd%
         echo Deleting scrcpy.zip
@@ -287,7 +287,7 @@ goto :devicecheck
 cls
 call "Banners/banner1.bat"
 echo *** Disclaimer ***
-echo - ATA is able to repair itself, if you accept this Disclaimer ATA will repair itself if a connection is available
+echo - ATA is able to repair itself[Missing Files], if you accept this Disclaimer ATA will repair itself if a connection is available
 echo - I am not responsible for any damage YOU will do to your device
 echo You have been warned, Do you accept? (Y/N)
 echo.

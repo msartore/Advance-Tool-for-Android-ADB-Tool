@@ -5,12 +5,12 @@
 
 # 📦Download 
 
-## Fast [Require framework 4.7.2]
+## Fast [Require .NET Framework 4.7.2]
 [Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.1.19072020/ATA-v0.9.1.19072020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.1.19072020
 
    _(SHA-256: 5ec417aca47e9447a7f27f3cf1a8ab230b2967cbd3145ad536d924f85e209697)_
    
-[Download](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-web-installer) Framework 4.7.2
+[Download](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-web-installer) .NET Framework 4.7.2
 ## Slow 
 [Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.0.05122020W/ATA-v0.9.0.05122020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.0.05122020
 

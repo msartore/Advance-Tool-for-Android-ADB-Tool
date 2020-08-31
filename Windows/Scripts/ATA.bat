@@ -445,9 +445,9 @@ SET /P inputsc=Please Select:
 echo.
 echo log:
 if %inputsc%==0 goto :devicecheck
-if %inputsc%==1 scrcpy
-if %inputsc%==2 scrcpy -w  
-if %inputsc%==3 scrcpy -Sw
+if %inputsc%==1 start scrcpy
+if %inputsc%==2 start scrcpy -w  
+if %inputsc%==3 start scrcpy -Sw
 pause
 goto menuscrcpy
 

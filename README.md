@@ -2,7 +2,7 @@
 
 	Windows ATA Tool v0.9.1.19072020
 	Linux ATA Tool v0.0.1.17032020 
-
+![ata interface](https://i.postimg.cc/4XJ0rRgd/sample.png)
 # 📦Download 
 
 ## Fast [Require .NET Framework 4.7.2]

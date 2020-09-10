@@ -384,6 +384,7 @@ echo 12) Screen Recording
 echo 14) Unistall System App/Bloat 
 echo 15) Grant root permissions (App)
 echo 16) Device Info
+echo 17) Automated Apks installer (in Apks folder)
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -423,8 +424,23 @@ if %inputms%==15 goto :grantpermissions
 
 if %inputms%==16 goto :deviceinfo
 
+if %inputms%==17 goto :apksinstaller
 pause
 goto menusystem
+
+:apksinstaller
+dir /b /s %cd%\Apks\*.* > list1.txt
+for /f "tokens=*" %%A in (list1.txt) do echo %%~nxA >> list.txt
+del list1.txt
+for /f "tokens=*" %%a in (list.txt) do (
+    move Apks\%%a %main%
+    adb install -r %%a
+    del %%a
+)
+del list.txt
+echo done!
+pause
+goto :menusystem
 
 :menuscrcpy
 cls

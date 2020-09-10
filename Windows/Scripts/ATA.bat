@@ -429,7 +429,7 @@ pause
 goto menusystem
 
 :apksinstaller
-dir /b /s %cd%\Apks\*.* > list1.txt
+dir /b /s %cd%\Apks\*.apk > list1.txt
 for /f "tokens=*" %%A in (list1.txt) do echo %%~nxA >> list.txt
 del list1.txt
 for /f "tokens=*" %%a in (list.txt) do (

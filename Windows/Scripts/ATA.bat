@@ -373,18 +373,14 @@ echo 1) REBOOT SMARTPHONE
 echo 2) REBOOT INTO THE RECOVERY
 echo 3) REBOOT INTO THE Fastboot/Bootloader
 echo 4) Check connected devices
-echo 5) Interface
-echo 6) Install an app
-echo 7) Unistall an app (No System App)
+echo 5) Interface MENU
+echo 6) Device Info
+echo 7) Screen Recording 
 echo 8) Emulate device (Resize Screen)
 echo 9) Emulate device (Change Density)
 echo 10) Reset (Emulate device)
 echo 11) Change system info 
-echo 12) Screen Recording 
-echo 14) Unistall System App/Bloat 
-echo 15) Grant root permissions (App)
-echo 16) Device Info
-echo 17) APK menu
+echo 12) APK MENU
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -404,9 +400,9 @@ if %inputms%==4 adb devices
 
 if %inputms%==5 goto :Interface
 
-if %inputms%==6 SET /P i=Write the app name like (app.apk) && adb install -r %i%
+if %inputms%==6 goto :deviceinfo
 
-if %inputms%==7 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
+if %inputms%==7 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
 
 if %inputms%==8 SET /P ss=Write the size of the screen like (2048x1536) && adb shell wm size %ss%
 
@@ -416,15 +412,7 @@ if %inputms%==10 adb shell wm size reset && adb shell wm density reset
 
 if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recovery! && goto changesystemsettings  
 
-if %inputms%==12 echo Press Control + C to stop the recording, the file is placed in /storage/emulated/0/ && adb shell screenrecord --verbose /storage/emulated/0/demo.mp4
-
-if %inputms%==14 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
-
-if %inputms%==15 goto :grantpermissions
-
-if %inputms%==16 goto :deviceinfo
-
-if %inputms%==17 goto :apksinstallermenu
+if %inputms%==12 goto :apksinstallermenu
 pause
 goto menusystem
 
@@ -439,6 +427,10 @@ echo What do you want to do?
 echo.
 echo 1) Install multiple apks (in folder Apks)
 echo 2) Open Apks folder
+echo 3) Install an app
+echo 4) Unistall an app (No System App)
+echo 5) Unistall System App/Bloat 
+echo 6) Grant root permissions (App)
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -449,6 +441,10 @@ echo log:
 if %inputaim%==0 goto :menusystem
 if %inputaim%==1 goto :apksinstaller
 if %inputaim%==2 start %windir%\explorer.exe "%cd%\Apks"
+if %inputaim%==3 SET /P i=Write the app name like (app.apk) && adb install -r %i%
+if %inputaim%==4 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
+if %inputaim%==5 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
+if %inputaim%==6 goto :grantpermissions
 pause
 goto :apksinstallermenu
 
@@ -898,7 +894,7 @@ echo.
 SET /P inputgp=Please Select:
 echo.
 echo log:
-if %inputgp%==0 goto :devicecheck 
+if %inputgp%==0 goto :menusystem 
 
 if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS && echo Executed!
 

@@ -185,7 +185,7 @@ if /I "%scrint%" LSS "12" (
     echo scrcpy installation process started
     if exist ATAHelper.exe (
         echo scrcpy download started
-        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.15/scrcpy-win64-v1.15.zip scrcpy.zip
+        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.16/scrcpy-win64-v1.16.zip scrcpy.zip
         echo Unzipping scrcpy.zip
         ATAHelper e %cd%\scrcpy.zip %cd%
         echo Deleting scrcpy.zip
@@ -678,14 +678,14 @@ echo BOOTLOADER UNLOCK/LOCK MENU
 echo =================================================================================
 echo What do you want to do? (To use all commands below you have to boot in bootloader mode)
 echo.
-echo 1) UNLOCK BOOTLOADER for older devices (2014 and earlier) (not all device supported)
+echo 1) UNLOCK BOOTLOADER For older devices (2014 and earlier) (not all device supported)
 echo 2) UNLOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
 echo 3) LOCK BOOTLOADER For older devices (2014 and earlier) (not all device supported)
 echo 4) LOCK BOOTLOADER For newer devices (2015 and later) (not all device supported)
 echo 5) GET BOOTLOADER INFO 
-echo 6) UNLOCK BOOTLOADER for device that have an unlock.bin to flash (Put it inside the folder before start the command)
+echo 6) UNLOCK BOOTLOADER For device that have an unlock.bin to flash (Put it inside the folder before start the command)
 echo 7) Device ID
-echo 8) Oem unlock data (for Motorola devices)
+echo 8) Oem unlock data (For Motorola devices)
 echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
 echo 10) UNLOCK BOOTLOADER FOR VIVO DEVICES
 echo 11) LOCK BOOTLOADER FOR VIVO DEVICES

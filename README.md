@@ -6,7 +6,7 @@
 # 📦Download 
 
 ## Fast [Require .NET Framework 4.7.2]
-[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.2.14092020/ATA-v0.9.2.14092020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.2.14092020
+[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.2.14092020W/ATA-v0.9.2.14092020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.2.14092020
 
    _(SHA256: B94708108A64034BBC19C2C01937447457E30E29A4C37D36F24B8A227C60CE7D)_
    

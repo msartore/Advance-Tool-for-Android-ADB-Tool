@@ -460,7 +460,7 @@ for /f "tokens=*" %%a in (list.txt) do (
 del list.txt
 echo done!
 pause
-goto :menusystem
+goto :apksinstallermenu
 
 :menuscrcpy
 cls
@@ -894,7 +894,7 @@ echo.
 SET /P inputgp=Please Select:
 echo.
 echo log:
-if %inputgp%==0 goto :menusystem 
+if %inputgp%==0 goto :apksinstallermenu 
 
 if %inputgp%==1 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm grant %app_gp% android.permission.WRITE_SECURE_SETTINGS && echo Executed!
 

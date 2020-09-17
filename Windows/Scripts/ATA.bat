@@ -381,6 +381,7 @@ echo 9) Emulate device (Change Density)
 echo 10) Reset (Emulate device)
 echo 11) Change system info 
 echo 12) APK MENU
+echo 13) Input text in smartphone
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -413,6 +414,13 @@ if %inputms%==10 adb shell wm size reset && adb shell wm density reset
 if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recovery! && goto changesystemsettings  
 
 if %inputms%==12 goto :apksinstallermenu
+
+if %inputms%==13 SET /P inputcom=Text: && goto inputtext
+pause
+goto menusystem
+
+:inputtext
+adb shell input text %inputcom%
 pause
 goto menusystem
 

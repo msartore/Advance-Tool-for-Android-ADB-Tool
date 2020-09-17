@@ -431,6 +431,8 @@ echo 3) Install an app
 echo 4) Unistall an app (No System App)
 echo 5) Unistall System App/Bloat 
 echo 6) Grant root permissions (App)
+echo 7) List of system app
+echo 8) List of non system app
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -445,6 +447,8 @@ if %inputaim%==3 SET /P i=Write the app name like (app.apk) && adb install -r %i
 if %inputaim%==4 SET /P appcom=Write the app name like (com.myAppPackage) && adb uninstall %appcom%
 if %inputaim%==5 SET /P app_com=Write the app name like com.myAppPackage && echo Loading.. && adb shell pm uninstall -k --user 0 %app_com% 
 if %inputaim%==6 goto :grantpermissions
+if %inputaim%==7 adb shell pm list packages -s
+if %inputaim%==8 adb shell pm list packages -3
 pause
 goto :apksinstallermenu
 
@@ -493,16 +497,13 @@ call "Banners/banner2.bat"
 echo =================================================================================
 echo ADB OVER NETWORK MENU
 echo =================================================================================
+echo What do you want to do?
+echo.
 echo 1. Connect via ADB over network [Automatically]
-echo.
 echo 2. Connect via ADB over network [Manually]
-echo.
 echo 3. Disconnect [Manually]
-echo.
 echo 4. Disconnect (%adbwlanvar%)
-echo.
 echo 5. Connect with Wireless debugging [Android 11]
-echo.
 echo 6. Disconnect with Wireless debugging [Android 11]
 echo =================================================================================
 echo 0) BACK
@@ -734,10 +735,8 @@ echo 2) Run Logcat and Record Text File Locally
 echo 3) Run "getevent" and Display On Screen Only
 echo 4) Run "getevent" and Record Text File Locally
 echo 5) Check devices version connected
-echo 6) View System Info (Data From build.prop, g.prop, and others)\
-echo 7) List of system app
-echo 8) List of non system app
-echo 9) SMARTPHONE Status
+echo 6) View System Info (Data From build.prop, g.prop, and others)
+echo 7) SMARTPHONE Status
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -759,11 +758,7 @@ if %inputdinfo%==5 adb shell getprop ro.build.version.release
 
 if %inputdinfo%==6 start view_buildprop_info.bat
 
-if %inputdinfo%==7 adb shell pm list packages -s
-
-if %inputdinfo%==8 adb shell pm list packages -3
-
-if %inputdinfo%==9 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
+if %inputdinfo%==7 cls && adb get-serialno && adb shell netstat && adb shell pwd && adb shell dumpsys battery && adb shell pm list features && adb shell service list && adb shell ps && adb shell wm size 
 
 pause
 goto deviceinfo

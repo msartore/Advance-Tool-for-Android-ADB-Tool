@@ -1,7 +1,7 @@
 ![ata logo](https://i.postimg.cc/vTP4sccG/ata-tool.png)
 
 	Windows ATA Tool v0.9.2.14092020
-	Linux ATA Tool v0.0.1.17032020 
+	Linux ATA Tool v0.0.2.28092020
 ![ata interface](https://i.postimg.cc/4XJ0rRgd/sample.png)
 # 📦Download 
 
@@ -16,7 +16,7 @@
 
    _(SHA256: 3274686bc31c213aef4ab59d4a6a7d45724cc14f0b147d7f3197d1504525ae69)_
 
-[Download Master](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/archive/master.zip) Linux ATA Tool v0.0.1.17032020 
+[Download Master](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.0.2.28092020L/ATA-v0.0.2.28092020-for-Linux-By-Sway.zip) Linux ATA Tool v0.0.2.28092020
     
 ## 🎁Donate
 [![paypal](https://img.xda-cdn.com/t-5mJuzW3mDe18fr5PcYKckXMj4=/https%3A%2F%2Fi.postimg.cc%2Fd3rLD20q%2Fpaypal-bottom-by-sw-ay.png)](http://paypal.me/SWayGaming)
@@ -92,7 +92,10 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * FLASH KERNEL (only .img file) 
 * FLASH ROM (You must know what you are doing) 
 * Hard Reset
-* Stream your smartphone with scrcpy (YOU HAVE TO INSTALL IT!) [How to install it](https://github.com/Genymobile/scrcpy/blob/master/README.md#linux)
+* List of non system app
+* List of system app
+* Install an app
+* Unistall an app (No System App/System App)
 
 ## 🌞Windows Requirements 
 

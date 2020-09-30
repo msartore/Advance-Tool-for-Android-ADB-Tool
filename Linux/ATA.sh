@@ -129,6 +129,7 @@ mainmenu(){
     echo  " 1. System Commands "
     echo  " 2. Recovery Commands (Sideload) "
     echo  " 3. Fastboot/Bootloader Commands "
+    echo  " 4. Credits "
     echo  "================================================================================="
     echo  " 0. EXIT "
     echo  "================================================================================="
@@ -148,6 +149,9 @@ mainmenu(){
         ;;
     3)
         mainFastboot
+        ;;    
+    4)
+        credits
         ;;       
     esac
     pause
@@ -242,8 +246,9 @@ mainSystem()
     echo  " 7. Enable Dark Mode "
     echo  " 8. Disable Dark Mode "
     echo  " 9. APK MENU  "
+    echo  " 10. Input text in smartphone  "
     echo  "================================================================================="
-    echo  " 0. Return to mainSystem menu"
+    echo  " 0. BACK"
     echo  "================================================================================="
 
 
@@ -284,6 +289,11 @@ mainSystem()
     9)
         APKmenu
         ;;
+    10)
+        echo "Text:"
+        read inputcom
+        ./adb shell input text $inputcom
+        ;;
     esac
     pause
     mainSystem
@@ -301,8 +311,9 @@ APKmenu()
     echo "3) Install an app"
     echo "4) Unistall an app (No System App)"
     echo "5) Unistall System App/Bloat "
+    echo "6) Grant root permissions (App) "
     echo  "================================================================================="
-    echo  " 0. Return to mainSystem menu"
+    echo  " 0. BACK"
     echo  "================================================================================="
     echo  "Please Select:"
     read inputmenuapk
@@ -333,8 +344,99 @@ APKmenu()
     read inputapkname
         ./adb shell pm uninstall -k --user 0 $inputapkname
         ;;
+    6)
+        grantPermissions
+        ;;
     esac
     pause
     APKmenu
+}
+
+grantPermissions(){
+    reset 
+    banner
+    echo "================================================================================="
+    echo "ROOT PERMISSIONS MENU"
+    echo "================================================================================="
+    echo "What do you want to do?"
+    echo "1) Grant WRITE_SECURE_SETTINGS permission"
+    echo "2) Grant DUMP permission"
+    echo "3) Check for granted permissions"
+    echo "================================================================================="
+    echo "0) BACK"
+    echo "================================================================================="
+    echo  "Please Select:"
+    read inputrpm
+    case $inputrpm in
+    
+    0)
+        APKmenu
+        ;;
+    1)
+        echo  "Write the app name like com.myAppPackage"
+        read app_gp
+        ./adb shell pm grant $app_gp android.permission.WRITE_SECURE_SETTINGS
+        ;;
+    2)
+        echo  "Write the app name like com.myAppPackage"
+        read app_gp
+        ./adb shell pm grant $app_gp android.permission.DUMP
+        ;;
+    3)
+        echo  "Write the app name like (com.myAppPackage)"
+        read app_gp
+        ./adb shell dumpsys package $app_gp
+        ;;
+    esac
+    pause
+    unset app_gp
+    grantPermissions
+}
+
+credits(){
+    reset 
+    banner
+    echo "================================================================================="
+    echo "CREDITS MENU"
+    echo "================================================================================="
+    echo "What do you want to do?"
+    echo "1) Github"
+    echo "2) Twitter"
+    echo "3) Donate"
+    echo "4) Scrcpy repository"
+    echo "5) SDK Platform Tools Website"
+    echo "6) License"
+    echo "================================================================================="
+    echo "0) BACK"
+    echo "================================================================================="
+    echo  "Please Select:"
+    read inputc
+    case $inputc in
+    
+    0)
+        mainmenu
+        ;;
+    1)
+        xdg-open "https://github.com/MassimilianoSartore/Advance-Tool-for-Android"
+        ;;
+    2)
+        xdg-open "https://twitter.com/SWayWasTaken"
+        ;;
+    3)
+        xdg-open "https://www.paypal.me/SWayGaming"
+        echo "Thank you very much for offering to help out with this project!"
+        ;;
+    4)
+        xdg-open "https://github.com/Genymobile/scrcpy/"
+        ;;
+    5)
+        xdg-open "https://developer.android.com/studio/releases/platform-tools.html"
+        ;;
+    6)
+        xdg-open "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        ;;
+    esac
+    pause
+    credits
 }
 checkdisclaimer

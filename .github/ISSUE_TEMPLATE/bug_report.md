@@ -26,6 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows]
  - Version [e.g. 2004]
+ - ATA Version [e.g v0.0.2.28092020L]
 
 **Device (please complete the following information):**
  - Device: [e.g. Xiaomi mi 10]

@@ -382,6 +382,8 @@ echo 10) Reset (Emulate device)
 echo 11) Change system info 
 echo 12) APK MENU
 echo 13) Input text in smartphone
+echo 14) ADB backup
+echo 15) ADB restore 
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -416,6 +418,10 @@ if %inputms%==11 echo Loading... && adb reboot recovery && echo Booting to recov
 if %inputms%==12 goto :apksinstallermenu
 
 if %inputms%==13 SET /P inputcom=Text: && goto inputtext
+
+if %inputms%==14 adb backup -all
+
+if %inputms%==15 SET /P inputbk=Backup name: && adb restore %inputbk%
 pause
 goto menusystem
 

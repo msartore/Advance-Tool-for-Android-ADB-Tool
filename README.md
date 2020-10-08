@@ -1,14 +1,14 @@
 ![ata logo](https://i.postimg.cc/vTP4sccG/ata-tool.png)
 
-	Windows ATA Tool v0.9.2.14092020
+	Windows ATA Tool v0.9.3.10072020
 	Linux ATA Tool v0.0.2.28092020
 ![ata interface](https://i.postimg.cc/4XJ0rRgd/sample.png)
 # 📦Download 
 
 ## Fast [Require .NET Framework 4.7.2]
-[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.2.14092020W/ATA-v0.9.2.14092020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.2.14092020
+[Download](https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool/releases/download/v0.9.3.10072020W/ATA-v0.9.3.10072020-for-Windows-By-Sway.zip) Windows ATA Tool v0.9.3.10072020
 
-   _(SHA256: B94708108A64034BBC19C2C01937447457E30E29A4C37D36F24B8A227C60CE7D)_
+   _(SHA256: 68f5b3a9a1b585cd7ef5d98d6d8c21500e59ce546680a2e570a028e5a0db08ca)_
    
 [Download](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-web-installer) .NET Framework 4.7.2
 ## Slow 

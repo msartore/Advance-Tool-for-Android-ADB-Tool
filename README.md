@@ -69,6 +69,7 @@ This tool currently only supports Windows and Linux, in future updates I might a
 * "getevent" and Display On Screen Only
 * "getevent" and Record Text File Locally
 * View System Info (Data From build.prop, g.prop, and others), [External script view_buildprop_info.bat]
+* adb backup and restore
 
 * **Scrcpy** - Screen mirror
 * **ADB over network** working

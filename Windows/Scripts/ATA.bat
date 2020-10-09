@@ -458,8 +458,8 @@ if %inputaim%==0 goto :menusystem
 if %inputaim%==1 goto :apksinstaller
 if %inputaim%==2 start %windir%\explorer.exe "%cd%\Apks"
 if %inputaim%==3 SET /P i=Write the app name like (app.apk) && adb install -r %i%
-if %inputaim%==4 adb shell pm list packages -3 > nonSystemApk.tmp && ATAHelper apkNS nonSystemApk.tmp && del nonSystemApk.tmp
-if %inputaim%==5 adb shell pm list packages -s > SystemApk.tmp && ATAHelper apkS SystemApk.tmp && del SystemApk.tmp
+if %inputaim%==4 adb shell pm list packages -3 > nonSystemApk.tmp && ATAHelper apkNSM nonSystemApk.tmp && del nonSystemApk.tmp
+if %inputaim%==5 adb shell pm list packages -s > SystemApk.tmp && ATAHelper apkSM SystemApk.tmp && del SystemApk.tmp
 if %inputaim%==6 goto :grantpermissions
 if %inputaim%==7 adb shell pm list packages -s
 if %inputaim%==8 adb shell pm list packages -3

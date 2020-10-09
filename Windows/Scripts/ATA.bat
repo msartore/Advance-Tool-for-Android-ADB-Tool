@@ -442,8 +442,8 @@ echo.
 echo 1) Install multiple apks (in folder Apks)
 echo 2) Open Apks folder
 echo 3) Install an app
-echo 4) Unistall an app (No System App)
-echo 5) Unistall System App/Bloat 
+echo 4) Uninstall app (No System App)
+echo 5) Uninstall System App/Bloat 
 echo 6) Grant root permissions (App)
 echo 7) List of system app
 echo 8) List of non system app

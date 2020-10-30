@@ -442,9 +442,9 @@ echo.
 echo 1) Install multiple apks (in folder Apks)
 echo 2) Open Apks folder
 echo 3) Install an app
-echo 4) Uninstall app (No System App)
+echo 4) Uninstall an app (No System App)
 echo 5) Uninstall System App/Bloat 
-echo 6) Grant root permissions (App)
+echo 6) Package Manager Menu (App)
 echo 7) List of system app
 echo 8) List of non system app
 echo =================================================================================
@@ -460,7 +460,7 @@ if %inputaim%==2 start %windir%\explorer.exe "%cd%\Apks"
 if %inputaim%==3 SET /P i=Write the app name like (app.apk) && adb install -r %i%
 if %inputaim%==4 adb shell pm list packages -3 > nonSystemApk.tmp && ATAHelper apkNSM nonSystemApk.tmp && del nonSystemApk.tmp
 if %inputaim%==5 adb shell pm list packages -s > SystemApk.tmp && ATAHelper apkSM SystemApk.tmp && del SystemApk.tmp
-if %inputaim%==6 goto :grantpermissions
+if %inputaim%==6 goto :packagemanagermenu
 if %inputaim%==7 adb shell pm list packages -s
 if %inputaim%==8 adb shell pm list packages -3
 pause
@@ -885,11 +885,11 @@ pause
 goto :credits
 
 
-:grantpermissions
+:packagemanagermenu
 cls
 call "Banners/banner2.bat"
 echo =================================================================================
-echo ROOT PERMISSIONS MENU
+echo PACKAGE MANAGER MENU
 echo =================================================================================
 echo What do you want to do?
 echo.
@@ -911,7 +911,7 @@ if %inputgp%==2 SET /P app_gp=Write the app name like com.myAppPackage && echo L
 
 if %inputgp%==3 SET /P app_gp=Write the app name like com.myAppPackage && echo Loading.. && adb shell dumpsys package %app_gp% && echo Executed!
 pause
-goto :grantpermissions
+goto :packagemanagermenu
 
 
 :exitstatus

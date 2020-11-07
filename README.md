@@ -24,7 +24,7 @@
 
 This tool include: 
 * Adb tool [30.0.4 (July 2020)](https://developer.android.com/studio/releases/platform-tools#3004_july_2020)
-* Scrcpy [v1.15](https://github.com/Genymobile/scrcpy/releases/tag/v1.15) 
+* Scrcpy [v1.16](https://github.com/Genymobile/scrcpy/releases/tag/v1.16) 
 
 This tool currently only supports Windows and Linux, in future updates I might add support for macOS.
 

@@ -518,7 +518,7 @@ echo 2. Connect via ADB over network [Manually]
 echo 3. Disconnect [Manually]
 echo 4. Disconnect (%adbwlanvar%)
 echo 5. Connect with Wireless debugging [Android 11]
-echo 6. Disconnect with Wireless debugging [Android 11]
+echo 6. Disconnect from Wireless debugging [Android 11]
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -539,15 +539,25 @@ if %inputanm%==4 (
         goto adbnetworkmenu
     )
 )
-if %inputanm%==5 (
-    SET /P ipaddr=Write IP address: 
-    SET /P port=Write port number: 
-    adb pair %ipaddr%:%port% 
-    adb connect %ipaddr%:%port%
-)
-if %inputanm%==6 adb disconnect %ipaddr%:%port%
+if %inputanm%==5 goto wdc11
+if %inputanm%==6 goto wdd11
 if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
+goto adbnetworkmenu
+
+:wdd11
+SET /P inputanmvar=Enter ip displayed:
+SET /P port=Write port number: 
+adb disconnect %ipaddr%:%port%
+echo trying to disconnect.. 
+goto adbnetworkmenu
+
+:wdc11
+SET /P ipaddr=Write IP address: 
+SET /P port=Write port number: 
+adb pair %ipaddr%:%port% 
+adb connect %ipaddr%:%port%
+pause
 goto adbnetworkmenu
 
 :disconnectprocess

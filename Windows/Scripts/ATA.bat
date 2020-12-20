@@ -517,8 +517,9 @@ echo 1. Connect via ADB over network [Automatically]
 echo 2. Connect via ADB over network [Manually]
 echo 3. Disconnect [Manually]
 echo 4. Disconnect (%adbwlanvar%)
-echo 5. Connect with Wireless debugging [Android 11]
-echo 6. Disconnect from Wireless debugging [Android 11]
+echo 5. Pair with Wireless debugging [Android 11] 
+echo 6. Connect with Wireless debugging [Android 11] (Pair needed)
+echo 7. Disconnect from Wireless debugging [Android 11]
 echo =================================================================================
 echo 0) BACK
 echo =================================================================================
@@ -527,36 +528,47 @@ SET /P inputanm=Please Select:
 if %inputanm%==1 goto adbwlan
 if %inputanm%==2 goto adbwlanmanully
 if %inputanm%==3 goto disconnectprocess
-if %inputanm%==4 (
-    adb disconnect %adbwlanvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
-    if %errorlevelaon%==0 ( 
-        pause 
-        set adbwlanvar=""
-        set adbwlanstatus=Error! Any device connected/found
-        goto devicecheck 
-    ) else (
-        echo Error!
-        goto adbnetworkmenu
-    )
-)
-if %inputanm%==5 goto wdc11
-if %inputanm%==6 goto wdd11
+if %inputanm%==4 goto autoDisconnect
+if %inputanm%==5 goto wdp11
+if %inputanm%==6 goto wdc11
+if %inputanm%==7 goto wdd11
 if %inputanm%==0 goto devicecheck
 echo. && echo. && echo log: && echo Error! this section doesn't exist. 
 goto adbnetworkmenu
 
-:wdd11
-SET /P inputanmvar=Enter ip displayed:
-SET /P port=Write port number: 
-adb disconnect %ipaddr%:%port%
-echo trying to disconnect.. 
-goto adbnetworkmenu
+:autoDisconnect
+adb disconnect %adbwlanvar% | findstr "disconnect" && if %ERRORLEVEL%==0 set errorlevelaon=0
+if %errorlevelaon%==0 ( 
+    pause 
+    set adbwlanvar=""
+    set adbwlanstatus=Error! Any device connected/found
+    goto devicecheck 
+) else (
+    echo Error!
+    goto adbnetworkmenu
+)
 
 :wdc11
-SET /P ipaddr=Write IP address: 
-SET /P port=Write port number: 
-adb pair %ipaddr%:%port% 
-adb connect %ipaddr%:%port%
+SET /P ipwdpvar=Enter ip displayed:
+SET /P portwdp=Write port number:
+echo trying to connect...
+adb connect %ipwdpvar%:%portwdp%
+pause
+goto adbnetworkmenu
+
+:wdd11
+SET /P ipwddvar=Enter ip displayed:
+SET /P portwdd=Write port number:
+echo trying to disconnect...
+adb disconnect %ipwddvar%:%portwdd% 
+pause
+goto adbnetworkmenu
+
+:wdp11
+SET /P ipaddr=Write IP address:
+SET /P portwdp=Write port number:
+echo trying to pair...
+adb pair %ipaddr%:%portwdp% 
 pause
 goto adbnetworkmenu
 

@@ -2,7 +2,7 @@ Rem Tool made by Sway
 Rem github repository: https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-
 Rem twitter: https://twitter.com/SWayWasTaken
 Rem email: massimiliano.sartore@protonmail.com
-Rem Copyright (C) 2019-2020 SwayWasTaken
+Rem Copyright (C) 2019-2021 SwayWasTaken
 
 MODE 150
 @echo off
@@ -185,7 +185,7 @@ if /I "%scrint%" LSS "12" (
     echo scrcpy installation process started
     if exist ATAHelper.exe (
         echo scrcpy download started
-        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.16/scrcpy-win64-v1.16.zip scrcpy.zip
+        ATAHelper d https://github.com/Genymobile/scrcpy/releases/download/v1.17/scrcpy-win64-v1.17.zip scrcpy.zip
         echo Unzipping scrcpy.zip
         ATAHelper e %cd%\scrcpy.zip %cd%
         echo Deleting scrcpy.zip
@@ -342,7 +342,7 @@ echo 5.  Create your own program!
 echo.
 echo 6.  ADB over network menu
 echo.
-echo 7.  Credits
+echo 7.  ABOUT
 echo =================================================================================
 echo 0) EXIT
 echo =================================================================================
@@ -723,7 +723,7 @@ echo 5) GET BOOTLOADER INFO
 echo 6) UNLOCK BOOTLOADER For device that have an unlock.bin to flash (Put it inside the folder before start the command)
 echo 7) Device ID
 echo 8) Oem unlock data (For Motorola devices)
-echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (I MUST HAVE YOUR OEM UNLOCK CODE)
+echo 9) UNLOCK BOOTLOADER FOR MOTOROLA DEVICES (OEM UNLOCK CODE REQUIRED)
 echo 10) UNLOCK BOOTLOADER FOR VIVO DEVICES
 echo 11) LOCK BOOTLOADER FOR VIVO DEVICES
 echo =================================================================================
@@ -876,7 +876,10 @@ cls
 color 0A
 call "Banners/banner2.bat"
 echo =================================================================================
-echo CREDITS MENU
+echo ABOUT MENU
+echo =================================================================================
+echo ATA is a GUI for ADB and Scrcpy
+echo license: Apache-2.0
 echo =================================================================================
 echo What do you want to do?
 echo.

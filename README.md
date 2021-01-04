@@ -23,8 +23,8 @@
 ## 💡Introduction
 
 This tool include: 
-* Adb tool [30.0.4 (July 2020)](https://developer.android.com/studio/releases/platform-tools#3004_july_2020)
-* Scrcpy [v1.16](https://github.com/Genymobile/scrcpy/releases/tag/v1.16) 
+* Adb tool [30.0.5 (November 2020)](https://developer.android.com/studio/releases/platform-tools#3005_november_2020)
+* Scrcpy [v1.17](https://github.com/Genymobile/scrcpy/releases/tag/v1.17) 
 
 This tool currently only supports Windows and Linux, in future updates I might add support for macOS.
 
@@ -117,7 +117,7 @@ This tool currently only supports Windows and Linux, in future updates I might a
 
 ## ATA Licence
 
-    Copyright (C) 2019-2020 SwayWasTaken
+    Copyright (C) 2019-2021 SwayWasTaken
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ In short, Scrcpy is an excellent way to easily view your Android screen on your 
     limitations under the License.
           
     Copyright (C) 2018 Genymobile
-    Copyright (C) 2018-2020 Romain Vimont
+    Copyright (C) 2018-2021 Romain Vimont
 
 
 ## ❓What is SDK Platform Tools?

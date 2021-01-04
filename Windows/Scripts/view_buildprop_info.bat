@@ -2,7 +2,7 @@ Rem Tool made by Sway
 Rem github repository: https://github.com/MassimilianoSartore/Advance-Tool-for-Android-ADB-Tool-
 Rem twitter: https://twitter.com/SWayWasTaken
 Rem email: massimiliano.sartore@protonmail.com
-Rem Copyright (C) 2019-2020 SwayWasTaken
+Rem Copyright (C) 2019-2021 SwayWasTaken
 
 @echo off
 TITLE ATA Tool by Sway [device info]

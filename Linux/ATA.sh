@@ -83,10 +83,10 @@ banner(){
     echo  "  	  	                -+s+        mmmm.       ohs/-               "
     echo  "  	                                                                           "                                                        
     echo 	"      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::        "
-    echo  "      ::                  ATA Tool v0.0.2.28092020                  ::        "
+    echo  "      ::                  ATA Tool v0.0.3.03022021                  ::        "
     echo  "      ::                   adb and fastboot tool                    ::        "
     echo  "      ::                      Created By Sway	                    ::        "
-    echo  "      ::                  Copyright 2019-2020 Sway	            ::        "
+    echo  "      ::                  Copyright 2019-2021 Sway	            ::        "
     echo  "      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::        "
 }
 
@@ -197,7 +197,7 @@ mainFastboot()
         fastboot flash boot $inputfk
         ;;
     3)
-        echo  " Write rom path like (/path/to/your/Rom.zip) "
+        echo  " Write rom path like (rom.zip) "
         read inputfrom
         fastboot -w
         fastboot update $inputfrom
@@ -247,6 +247,11 @@ mainSystem()
     echo  " 8. Disable Dark Mode "
     echo  " 9. APK MENU  "
     echo  " 10. Input text in smartphone  "
+    echo  " 11. Screen Recording  "
+    echo  " 12. ADB backup"
+    echo  " 13. Restore ADB backup"
+    echo  " 14. Run Logcat and Display On Screen Only"
+    echo  " 15. Run getevent and Display On Screen Only"
     echo  "================================================================================="
     echo  " 0. BACK"
     echo  "================================================================================="
@@ -294,6 +299,27 @@ mainSystem()
         read inputcom
         ./adb shell input text $inputcom
         ;;
+    11)
+        echo "Press Control + C to stop the recording, the file is placed in /storage/emulated/0/"
+        echo "Enter recording name:"
+        read inputRecName
+        ./adb shell screenrecord --verbose /storage/emulated/0/$inputRecName.mp4
+        ;;
+    12) 
+        echo "check your phone.."
+        ./adb backup -all
+        ;;
+    13) 
+        echo "Enter Backup name:"
+        read inputBName
+        ./adb restore $inputBName
+        ;;
+    14)
+        ./adb shell logcat
+        ;;
+    15)
+        ./adb shell getevent
+        ;;
     esac
     pause
     mainSystem
@@ -311,7 +337,7 @@ APKmenu()
     echo "3) Install an app"
     echo "4) Unistall an app (No System App)"
     echo "5) Unistall System App/Bloat "
-    echo "6) Grant root permissions (App) "
+    echo "6) Package Manager Menu (App) "
     echo  "================================================================================="
     echo  " 0. BACK"
     echo  "================================================================================="
@@ -356,7 +382,7 @@ grantPermissions(){
     reset 
     banner
     echo "================================================================================="
-    echo "ROOT PERMISSIONS MENU"
+    echo "PACKAGE MANAGER MENU"
     echo "================================================================================="
     echo "What do you want to do?"
     echo "1) Grant WRITE_SECURE_SETTINGS permission"

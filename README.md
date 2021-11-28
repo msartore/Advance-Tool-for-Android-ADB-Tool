@@ -1,8 +1,12 @@
-![ata logo](https://i.postimg.cc/vTP4sccG/ata-tool.png)
+# ATA
+
+<img src="Resources/banner.png">
+
+![GitHub all releases](https://img.shields.io/github/downloads/msartore/Advance-Tool-for-Android-ADB-Tool/total) ![GitHub](https://img.shields.io/github/license/msartore/Advance-Tool-for-Android-ADB-Tool)
 
 	Windows ATA Tool v0.9.3.10072020
 	Linux ATA Tool v0.0.2.28092020
-![ata interface](https://i.postimg.cc/4XJ0rRgd/sample.png)
+
 # 📦Download 
 
 ## Fast [Require .NET Framework 4.7.2]
